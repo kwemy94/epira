@@ -1,1 +1,5 @@
-@include('auth.login')
+
+
+
+    <div>Comming soon...</div>
+
