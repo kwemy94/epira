@@ -6,27 +6,40 @@
         </li>
     </ul>
 
+
+
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+        <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <img src="{{ asset('badge.png') }}" class="user-image img-circle elevation-2"
+                    alt="User Image">
+                <span class="d-none d-md-inline">{{ Auth::user()->name ?? 'Utilisateur' }}</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">15 Notifications</span>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                    <span class="float-right text-muted text-sm">12 hours</span>
-                </a>
-                <div class="dropdown-divider"></div>
-            </div>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header bg-primary">
+                    <img src="{{ asset('badge.png') }}" class="img-circle elevation-2"
+                        alt="User Image">
+                    <p>
+                        {{ Auth::user()->name ?? 'Utilisateur' }}
+                        <small>Membre depuis {{ Auth::user()->created_at->format('M Y') ?? '...' }}</small>
+                    </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat">Profil</a>
+                    <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Déconnexion
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
         </li>
+
     </ul>
 </nav>
