@@ -24,7 +24,9 @@
                         alt="User Image">
                     <p>
                         {{ Auth::user()->name ?? 'Utilisateur' }}
-                        <small>Membre depuis {{ Auth::user()->created_at->format('M Y') ?? '...' }}</small>
+                        <small>Membre depuis ...
+                            {{-- {{ Auth::user()->created_at->format('M Y') ?? '...' }} --}}
+                        </small>
                     </p>
                 </li>
                 <!-- Menu Footer-->

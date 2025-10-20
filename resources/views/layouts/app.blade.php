@@ -91,6 +91,7 @@
     <script src="{{ asset('template_old/plugins/summernote/summernote-bs4.min.js') }}"></script>
     {{-- <!-- overlayScrollbars --> --}}
     <script src="{{ asset('template_old/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <script src=""{{ asset('js/custom.js') }}></script>
     {{-- <!-- AdminLTE App --> --}}
     <script src="{{ asset('template_old/dist/js/adminlte.js') }}"></script>
     {{-- <!-- AdminLTE for demo purposes --> --}}

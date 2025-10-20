@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('insurers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('employer')->nullable();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('insurance_number')->nullable();
+            $table->string('card_number')->nullable();
+            $table->string('percentage')->nullable();
+            $table->string('max_insurance')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

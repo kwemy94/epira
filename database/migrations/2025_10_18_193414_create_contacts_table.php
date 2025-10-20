@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('contact_name')->nullable();
+            $table->string('sexe')->nullable();
+            $table->string('contact_job')->nullable();
+            $table->string('contact_employer')->nullable();
+            $table->string('contact_address')->nullable();
+            $table->string('contact_phone')->nullable();
+            $table->string('cni')->nullable();
+            $table->string('contact_other_phone')->nullable();
+            $table->text('employer')->nullable();
+            $table->string('comment')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
