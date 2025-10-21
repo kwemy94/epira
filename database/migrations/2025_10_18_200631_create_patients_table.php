@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('birth_date')->nullable();
             $table->unsignedBigInteger('matrimonial_id')->nullable();
             $table->string('birth_place')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('matrimonial_id')->references('id')->on('matrimonials');
             
             $table->string('mother_name')->nullable();
             $table->string('maiden_name')->nullable();
@@ -29,16 +31,18 @@ return new class extends Migration
             $table->string('other_phone')->nullable();
             $table->unsignedBigInteger('document_type')->nullable();
             $table->string('document_number')->nullable();
+            $table->foreign('country_id')->references('id')->on('countries');
 
             $table->string('father_name')->nullable();
             $table->string('job')->nullable();
-            $table->unsignedBigInteger('level_study_id')->nullable();
+            $table->unsignedBigInteger('study_level_id')->nullable();
             $table->string('other_level_study')->nullable();
             $table->integer('spouce_age')->nullable();
             $table->string('spouce_job')->nullable();
             $table->string('nationality')->nullable();
             $table->string('employer')->nullable();
             $table->string('inter_reference')->nullable();
+            $table->foreign('study_level_id')->references('id')->on('study_levels');
 
             # Groupe sanguin & habitude de vie
             $table->string('blood_group')->nullable();

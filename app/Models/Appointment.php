@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     use HasFactory;
+
+    protected $guarded =['id'];
+
+    public function patient(){
+        return $this->belongsToMany(Patient::class);
+    }
+    public function doctor(){
+        return $this->belongsToMany(Doctor::class);
+    }
 }
