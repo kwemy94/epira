@@ -2,36 +2,50 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patient extends Model
 {
     use HasFactory;
 
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
-    public function pathology(){
-        return $this->belongsToMany(Doctor::class, 'pathology_patients', 'patient_id', 'pathology_id');
+    public function getAgeAttribute()
+    {
+        # Calculer l'age du patient
+        return $this->birth_date ? Carbon::parse($this->birth_date)->age : null;
     }
 
-    public function doctor(){
+    public function pathology()
+    {
+        return $this->belongsToMany(Doctor::class, 'pathology_patient', 'patient_id', 'pathology_id');
+    }
+
+    public function doctor()
+    {
         return $this->belongsToMany(Doctor::class, 'appointments', 'patient_id', 'doctor_id');
     }
-    public function insurer(){
+    public function insurer()
+    {
         return $this->belongsToMany(Insurer::class, 'insurer_patient', 'patient_id', 'insurer_id');
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-    public function country(){
+    public function country()
+    {
         return $this->belongsTo(Country::class);
     }
-    public function matrimonial(){
+    public function matrimonial()
+    {
         return $this->belongsTo(Matrimonial::class);
     }
-    public function levelStudy(){
+    public function levelStudy()
+    {
         return $this->belongsTo(StudyLevel::class);
     }
 }

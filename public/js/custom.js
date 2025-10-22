@@ -3,10 +3,10 @@ function ControlRequiredFields(inputs = $('.required')) {
     console.log('Nombre de champ requis : '+inputs.length);
     for (let i = 0; i < inputs.length; i++) {
         if ($(inputs[i]).val() == null || $(inputs[i]).val().trim() == '') { // trim permet d'enlever les tabulation inutile sur un champ
-            $(inputs[i]).addClass('error');
+            $(inputs[i]).addClass('error-field');
             success = false;
         } else {
-            $(inputs[i]).removeClass('error');
+            $(inputs[i]).removeClass('error-field');
         }
     }
 

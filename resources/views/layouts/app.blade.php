@@ -26,6 +26,12 @@
     <link rel="stylesheet" href="{{ asset('template_old/plugins/daterangepicker/daterangepicker.css') }}">
 
     <link rel="stylesheet" href="{{ asset('template_old/plugins/summernote/summernote-bs4.min.css') }}">
+    <style>
+        .error-field{
+            border-color: red;
+        }
+    </style>
+    @yield('admin-css')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
@@ -91,8 +97,9 @@
     <script src="{{ asset('template_old/plugins/summernote/summernote-bs4.min.js') }}"></script>
     {{-- <!-- overlayScrollbars --> --}}
     <script src="{{ asset('template_old/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    <script src=""{{ asset('js/custom.js') }}></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     {{-- <!-- AdminLTE App --> --}}
+    @yield('admin-js')
     <script src="{{ asset('template_old/dist/js/adminlte.js') }}"></script>
     {{-- <!-- AdminLTE for demo purposes --> --}}
     <script src="{{ asset('template_old/dist/js/demo.js') }}"></script>
