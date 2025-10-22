@@ -42,22 +42,26 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
+                                        <th>Référence</th>
                                         <th>Patient</th>
                                         <th>Sexe</th>
                                         <th>Age</th>
                                         <th>Catégorie</th>
-                                        <th>Nationalité</th>
+                                        <th>Télephone</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($patients as $patient)
                                         <tr>
+                                            <td>{{ $patient->reference }}</td>
                                             <td>{{ $patient->firstname }} {{ $patient->lastname }}</td>
                                             <td>{{ $patient->sexe }}</td>
                                             <td>{{ $patient->age }}</td>
-                                            <td><span class="tag tag-success">{{ isset($patient->category)? $patient->category->name : '' }}</span></td>
-                                            <td>{{ isset($patient->country) ? $patient->country->name : '' }}</td>
+                                            <td><span
+                                                    class="tag tag-success">{{ isset($patient->category) ? $patient->category->name : '' }}</span>
+                                            </td>
+                                            <td>{{ isset($patient->phone)}}</td>
                                             <td>
                                                 <div class="btn-group" style="z-index: 9999;">
                                                     <button type="button" class="btn btn-default btn-sm dropdown-toggle"
@@ -65,14 +69,15 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                                        <a class="dropdown-item" href="{{ route('patient.show', $patient->id) }}">
-                                                            <i class="fas fa-eye text-primary"></i>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('patient.show', $patient->id) }}"
+                                                            title="Détails">
+                                                            <i class="fas fa-eye text-primary"></i> Détails
                                                         </a>
-                                                        <a class="dropdown-item" 
-                                                        href="{{ route('patient.edit', $patient->id) }}"
-                                                        title=""
-                                                            >
-                                                            <i class="fas fa-file text-success"></i>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('patient.edit', $patient->id) }}"
+                                                            title="Ajouter une prestation">
+                                                            <i class="fas fa-plus text-success"></i> Prestation
                                                         </a>
                                                         {{-- <form action="{{ route('patient.destroy', $patient->id) }}" method="POST"
                                                             onsubmit="return confirm('Voulez-vous vraiment supprimer ce patient ?');">

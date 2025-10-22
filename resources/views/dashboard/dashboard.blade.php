@@ -39,14 +39,14 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box" style="background: white">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>_</h3>
 
                             <h3>Les patients</h3>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer" style="color: black">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('patient.index') }}" class="small-box-footer" style="color: black">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 
