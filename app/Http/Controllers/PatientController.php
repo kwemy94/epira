@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use App\Repositories\CategoryRepository;
+use App\Repositories\CountryRepository;
+use App\Repositories\MatrimonialRepository;
 use Illuminate\Http\Request;
 use App\Repositories\PatientRepository;
 
@@ -12,12 +14,18 @@ class PatientController extends Controller
 
     private $patientRepository;
     private $categoryRepository;
+    private $matrimonialRepository;
+    private $countryRepository;
     public function __construct(
         PatientRepository $patientRepository,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
+        MatrimonialRepository $matrimonialRepository,
+        CountryRepository $countryRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->matrimonialRepository = $matrimonialRepository;
+        $this->countryRepository = $countryRepository;
     }
 
     public function index()
@@ -30,7 +38,9 @@ class PatientController extends Controller
     public function create()
     {
         $categories = $this->categoryRepository->getAll();
-        return view('dashboard.patient.create', compact('categories'));
+        $matrimonials = $this->matrimonialRepository->getAll();
+        $countries = $this->countryRepository->getAll();
+        return view('dashboard.patient.create', compact('categories', 'matrimonials', 'countries'));
     }
 
     public function store(Request $request)

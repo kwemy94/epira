@@ -17,7 +17,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class=" flex justify-content-between align-items-center">
-                                <a href="{{ route('patient.create') }}" type="button" class="btn bg-gradient-success btn-sm"
+                                <a href="{{ route('patient.create') }}" type="button" class="btn bg-gradient-primary btn-sm"
                                     title="Nouveau patient">
                                     <i class="fa fa-plus"></i> Add
                                 </a>

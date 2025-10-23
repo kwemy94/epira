@@ -73,7 +73,7 @@
                 <a href="{{ route('home') }}" class="h1"><b>EPIRA</b></a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">Démarrer votre session</p>
 
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
