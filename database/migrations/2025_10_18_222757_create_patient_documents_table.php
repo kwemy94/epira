@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('patient_documents', function (Blueprint $table) {
             $table->id();
+            $table->string('doc_name');
             $table->timestamps();
         });
     }

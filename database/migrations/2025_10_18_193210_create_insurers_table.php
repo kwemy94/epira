@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('insurers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('employer')->nullable();
+            $table->string('insurer_name');
+            $table->string('insurer_employer')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->string('insurance_number')->nullable();

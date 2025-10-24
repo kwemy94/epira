@@ -61,7 +61,7 @@
                                             <td><span
                                                     class="tag tag-success">{{ isset($patient->category) ? $patient->category->name : '' }}</span>
                                             </td>
-                                            <td>{{ isset($patient->phone)}}</td>
+                                            <td>{{ $patient->phone}}</td>
                                             <td>
                                                 <div class="btn-group" style="z-index: 9999;">
                                                     <button type="button" class="btn btn-default btn-sm dropdown-toggle"

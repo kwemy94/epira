@@ -27,7 +27,7 @@
 
     <link rel="stylesheet" href="{{ asset('template_old/plugins/summernote/summernote-bs4.min.css') }}">
     <style>
-        .error-field{
+        .error-field {
             border-color: red;
         }
     </style>
@@ -52,11 +52,31 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-sm-6 col-md-6 mt-2">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             @yield('admin-content')
-            
+
         </div>
-        
+
 
         @include('layouts.partials._footer')
 
@@ -99,8 +119,9 @@
     <script src="{{ asset('template_old/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
     {{-- <!-- AdminLTE App --> --}}
-    @yield('admin-js')
     <script src="{{ asset('template_old/dist/js/adminlte.js') }}"></script>
+    <script src="{{ asset('template_old/dist/js/adminlte.min.js') }}"></script>
+    @yield('admin-js')
     {{-- <!-- AdminLTE for demo purposes --> --}}
     <script src="{{ asset('template_old/dist/js/demo.js') }}"></script>
     {{-- <!-- AdminLTE dashboard demo (This is only for demo purposes) --> --}}
