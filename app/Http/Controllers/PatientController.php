@@ -72,15 +72,18 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-        
+
         try {
-            $inputs['reference'] = $this->generate('patients','reference', 'P');
+            $inputs['reference'] = $this->generate('patients', 'reference', 'P');
 
             // if($request->compl_info){
             //     $contact[''] = $inputs[''];
             // }
             DB::beginTransaction();
-            if($request->contact1_info){
+            $patient = $this->patientRepository->store($inputs);
+
+            if ($request->contact1_info) {
+                $contact['patient_id'] = $patient->id;
                 $contact['contact_type_id'] = $inputs['contact_type_id'];
                 $contact['contact_name'] = $inputs['contact_name'];
                 $contact['contact_job'] = $inputs['contact_job'];
@@ -88,13 +91,14 @@ class PatientController extends Controller
                 $contact['contact_address'] = $inputs['contact_address'];
                 $contact['contact_phone'] = $inputs['contact_phone'];
                 $contact['contact_other_phone'] = $inputs['contact_other_phone'];
-                
-                $this->contactRepository->store($contact);
+
+                $contact = $this->contactRepository->store($contact);
+                $patient->contacts()->attach($contact->id);
             }
-            if($request->contact2_info){
+            if ($request->contact2_info) {
                 // dump('contact2');
             }
-            if($request->insurer_info){
+            if ($request->insurer_info) {
                 $assurances['insurer_name'] = $inputs['insurer_name'];
                 $assurances['insurer_employer'] = $inputs['insurer_employer'];
                 $assurances['start_date'] = $inputs['start_date'];
@@ -104,16 +108,17 @@ class PatientController extends Controller
                 $assurances['percentage'] = $inputs['percentage'];
                 $assurances['max_insurance'] = $inputs['max_insurance'];
 
-                $this->insurerRepository->store($assurances);
-                
+                $insurer = $this->insurerRepository->store($assurances);
+                $patient->insurer()->attach($insurer->id);
+
             }
-    
-            $this->patientRepository->store($inputs);
+
+            
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
-            Log::info("Erreur store patient: ".$th->getMessage());
+            // dd($th);
+            Log::info("Erreur store patient: " . $th->getMessage());
             return redirect()->back()->with("error", "Erreur de création du patient");
         }
         return redirect()->route('patient.index')->with("success", "Patient crée avec succès");
@@ -121,7 +126,15 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
     {
-        return view('dashboard.patient.show');
+        $categories = $this->categoryRepository->getAll();
+        $matrimonials = $this->matrimonialRepository->getAll();
+        $countries = $this->countryRepository->getAll();
+        $contacts = $this->contactRepository->getAll();
+        $contactTypes = $this->contactTypeRepository->getAll();
+        $documents = $this->documentRepository->getAll();
+        $levels = $this->levelRepository->getAll();
+        
+        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient'));
     }
 
     public function edit(Patient $patient)

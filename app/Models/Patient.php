@@ -48,4 +48,8 @@ class Patient extends Model
     {
         return $this->belongsTo(StudyLevel::class);
     }
+    public function contacts()
+    {
+        return $this->belongsToMany(Contact::class, 'contact_patient', 'patient_id', 'contact_id');
+    }
 }

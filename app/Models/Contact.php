@@ -12,7 +12,7 @@ class Contact extends Model
     protected $guarded =['id'];
 
     public function patient(){
-        return $this->belongsToMany(Patient::class);
+        return $this->belongsToMany(Patient::class, 'contact_patient', 'contact_id', 'patient_id');
     }
 
     public function typeContact(){

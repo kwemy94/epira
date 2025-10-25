@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\InsurerController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +21,8 @@ Route::middleware('auth')->group(function () {
 
     # Patient
     Route::resource('/patient', PatientController::class);
+    Route::resource('/insurer', InsurerController::class);
+    Route::resource('/contact', ContactController::class);
 });
 
 require __DIR__.'/auth.php';

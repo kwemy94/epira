@@ -16,13 +16,13 @@ class PatientRepository extends ResourceRepository {
 
     public function getById($id){
         return $this->model
-        ->with('pathology', 'doctor', 'insurer', 'category', 'country', 'matrimonial', 'levelStudy')
+        ->with( 'contacts.typeContact', 'pathology', 'doctor', 'insurer', 'category', 'country', 'matrimonial', 'levelStudy')
         ->where('id', $id)
         ->first();
     }
     public function getAll(){
         return $this->model
-        ->with('pathology', 'doctor', 'insurer', 'category', 'country', 'matrimonial', 'levelStudy')
+        ->with( 'contacts.typeContact', 'pathology', 'doctor', 'insurer', 'category', 'country', 'matrimonial', 'levelStudy')
         ->orderBy('id','DESC')
         ->get();
     }

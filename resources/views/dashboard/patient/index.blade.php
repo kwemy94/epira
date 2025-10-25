@@ -64,7 +64,7 @@
                                             <td>{{ $patient->phone}}</td>
                                             <td>
                                                 <div class="btn-group" style="z-index: 9999;">
-                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                                    <button type="button" class="btn btn-default btn-sm"
                                                         data-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </button>

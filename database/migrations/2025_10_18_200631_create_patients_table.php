@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('maiden_name')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('other_phone')->nullable();
             $table->unsignedBigInteger('document_type')->nullable();
             $table->string('document_number')->nullable();

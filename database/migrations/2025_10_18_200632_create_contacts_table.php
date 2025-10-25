@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_type_id')->nullable();
+            $table->unsignedBigInteger('patient_id');
             $table->string('contact_name')->nullable();
             $table->string('sexe')->nullable();
             $table->string('contact_job')->nullable();
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->text('employer')->nullable();
             $table->string('comment')->nullable();
             $table->foreign('contact_type_id')->references('id')->on('contact_types');
+            $table->foreign('patient_id')->references('id')->on('patients');
             $table->softDeletes();
             $table->timestamps();
         });
