@@ -33,44 +33,44 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Nom complet</label>
-            <input type="text" class="form-control" id="" name="contact_name" value="{{ old('contact_name', $patient->contacts[0]->contact_name ?? '') }}" >
+            <label for="ad1">Nom complet</label>
+            <input type="text" class="form-control" id="ad1" name="contact_name" value="{{ old('contact_name', $patient->contacts[0]->contact_name ?? '') }}" >
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Profession</label>
-            <input type="text" class="form-control" id="" name="contact_job" value="{{ old('contact_job', $patient->contacts[0]->contact_job ?? '') }}">
+            <label for="ad2">Profession</label>
+            <input type="text" class="form-control" id="ad2" name="contact_job" value="{{ old('contact_job', $patient->contacts[0]->contact_job ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Employeur</label>
-            <input type="text" class="form-control" id="" name="contact_employer" value="{{ old('contact_employer', $patient->contacts[0]->contact_employer ?? '') }}">
+            <label for="ad3">Employeur</label>
+            <input type="text" class="form-control" id="ad3" name="contact_employer" value="{{ old('contact_employer', $patient->contacts[0]->contact_employer ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Adresse</label>
-            <input type="text" class="form-control" id="" name="contact_address" value="{{ old('contact_address', $patient->contacts[0]->contact_address ?? '') }}">
+            <label for="ad4">Adresse</label>
+            <input type="text" class="form-control" id="ad4" name="contact_address" value="{{ old('contact_address', $patient->contacts[0]->contact_address ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Numéro mobile</label>
-            <input type="text" class="form-control" id="" name="contact_phone" value="{{ old('contact_phone', $patient->contacts[0]->contact_phone ?? '') }}">
+            <label for="ad5">Numéro mobile</label>
+            <input type="text" class="form-control" id="ad5" name="contact_phone" value="{{ old('contact_phone', $patient->contacts[0]->contact_phone ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Autre Numéro</label>
-            <input type="text" class="form-control" id="" name="contact_other_phone" value="{{ old('contact_other_phone', $patient->contacts[0]->contact_other_phone ?? '') }}">
+            <label for="ad6">Autre Numéro</label>
+            <input type="text" class="form-control" id="ad6" name="contact_other_phone" value="{{ old('contact_other_phone', $patient->contacts[0]->contact_other_phone ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Profession</label>
-            <input type="text" class="form-control" id="" name="job" value="{{ old('job', $patient->contacts[0]->job ?? '') }}">
+            <label for="ad7">Profession</label>
+            <input type="text" class="form-control" id="ad7" name="job" value="{{ old('job', $patient->contacts[0]->job ?? '') }}">
         </div>
     </div>
 

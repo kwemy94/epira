@@ -6,7 +6,7 @@
 
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
-                        <button type="button" data-toggle="modal" data-target="#new-prise"
+                        <button type="button" data-toggle="modal" data-target="#new-insurer"
                             class="btn bg-gradient-primary btn-sm">
                             <i class="fa fa-plus"></i> Prise en charge
                         </button>
@@ -50,14 +50,23 @@
                                         <div class="dropdown-menu dropdown-menu-right"
                                             aria-labelledby="actionsDropdown{{ $insurer->id }}">
                                             <!-- Show -->
-                                            <a class="dropdown-item text-success"
-                                                href="{{ route('insurer.show', $insurer->id) }}" title="Voir">
+                                            <a href="#" class="dropdown-item text-success btn-show-insurer"
+                                                data-id="{{ $insurer->id }}" title="Détails">
                                                 <i class="fas fa-eye mr-2"></i>
                                             </a>
 
                                             <!-- Edit -->
-                                            <a class="dropdown-item text-primary"
-                                                href="{{ route('insurer.edit', $insurer->id) }}" title="Editer">
+                                            <a href="#" class="dropdown-item text-primary btn-edit-insurer"
+                                                data-id="{{ $insurer->id }}"
+                                                data-insurer_name="{{ $insurer->insurer_name }}"
+                                                data-insurer_employer="{{ $insurer->insurer_employer }}"
+                                                data-start_date="{{ $insurer->start_date }}"
+                                                data-end_date="{{ $insurer->end_date }}"
+                                                data-insurance_number="{{ $insurer->insurance_number }}"
+                                                data-card_number="{{ $insurer->card_number }}"
+                                                data-percentage="{{ $insurer->percentage }}"
+                                                data-max_insurance="{{ $insurer->max_insurance }}"
+                                                title="Editer">
                                                 <i class="fas fa-edit mr-2"></i>
                                             </a>
 
@@ -92,12 +101,12 @@
                 </table>
             </div>
 
-            <div class="modal fade" id="new-prise">
+            <div class="modal fade" id="new-insurer">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form action="{{ route('insurer.store') }}" method="POST" id="formInsurer">
                             <div class="modal-header">
-                                <h4 class="modal-title">Nouveau assureur</h4>
+                                <h4 class="modal-title" id="insurerModalTitle">Nouveau assureur</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -176,6 +185,37 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Show modal --}}
+
+            <div class="modal fade" id="showInsurerModal" tabindex="-1" role="dialog"
+                aria-labelledby="showContactModalLabel" aria-hidden="true" data-backdrop="static"
+                data-keyboard="false">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="showContactModalLabel">Détails assureur</h5>
+                            <button type="button" class="close text-white" data-dismiss="modal"
+                                aria-label="Fermer">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered">
+                                <tbody id="insurerDetails">
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">Chargement...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

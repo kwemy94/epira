@@ -29,7 +29,7 @@
                         @forelse ($patient->contacts as $contact)
                             <tr>
                                 <td>{{ $contact->contact_name }}</td>
-                                <td>{{ $contact->typeContact }}</td>
+                                <td>{{ isset($contact->typeContact)? $contact->typeContact->type_name : '' }}</td>
                                 <td>{{ $contact->contact_phone }}</td>
                                 <td>{{ $contact->contact_other_phone }}</td>
                                 <td class="text-right">
@@ -43,16 +43,23 @@
                                         <div class="dropdown-menu dropdown-menu-right"
                                             aria-labelledby="actionsDropdown{{ $contact->id }}">
                                             <!-- Show -->
-                                            <a class="dropdown-item text-success"
-                                                href="{{ route('contact.show', $contact->id) }}" title="Détails">
+                                            <a href="#" class="dropdown-item text-success btn-show-contact"
+                                                data-id="{{ $contact->id }}" title="Détails">
                                                 <i class="fas fa-eye mr-2"></i>
                                             </a>
 
                                             <!-- Edit -->
-                                            <a class="dropdown-item text-primary"
-                                                href="{{ route('contact.edit', $contact->id) }}" title="Editer">
+                                            <a href="#" class="dropdown-item text-primary btn-edit-contact"
+                                                data-id="{{ $contact->id }}" data-name="{{ $contact->contact_name }}"
+                                                data-type="{{ $contact->contact_type_id }}"
+                                                data-phone="{{ $contact->contact_phone }}"
+                                                data-other-phone="{{ $contact->contact_other_phone }}"
+                                                data-job="{{ $contact->contact_job }}"
+                                                data-employer="{{ $contact->contact_employer }}"
+                                                data-address="{{ $contact->contact_address }}" title="Editer">
                                                 <i class="fas fa-edit mr-2"></i>
                                             </a>
+
 
                                             <div class="dropdown-divider"></div>
 
@@ -85,12 +92,12 @@
                 </table>
             </div>
 
-            <div class="modal fade" id="new-contact">
+            <div class="modal fade" id="new-contact" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form action="{{ route('contact.store') }}" method="POST" id="formContact">
                             <div class="modal-header">
-                                <h4 class="modal-title">Nouveau contact</h4>
+                                <h4 class="modal-title" id="contactModalTitle">Nouveau contact</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -99,6 +106,8 @@
                                 <div class="row">
                                     @csrf
                                     <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+                                    <input type="hidden" id="contact_id" name="contact_id" value="">
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="category_id">Type de contact <em
@@ -124,8 +133,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="ad">Profession</label>
-                                            <input type="text" class="form-control" id="" name="contact_job"
-                                                value="">
+                                            <input type="text" class="form-control" id=""
+                                                name="contact_job" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -174,6 +183,38 @@
                     </div>
                 </div>
             </div>
+
+
+            {{-- Show modal --}}
+
+            <div class="modal fade" id="showContactModal" tabindex="-1" role="dialog"
+                aria-labelledby="showContactModalLabel" aria-hidden="true" data-backdrop="static"
+                data-keyboard="false">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="showContactModalLabel">Détails du contact</h5>
+                            <button type="button" class="close text-white" data-dismiss="modal"
+                                aria-label="Fermer">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered">
+                                <tbody id="contactDetails">
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">Chargement...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

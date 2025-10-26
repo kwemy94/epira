@@ -14,7 +14,7 @@ class ContactController extends Controller
 
     public function __construct(
         ContactRepository $contactRepository
-    ){
+    ) {
         $this->contactRepository = $contactRepository;
     }
     /**
@@ -47,7 +47,7 @@ class ContactController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            Log::error("Erreur create contact : ".$th->getMessage());
+            Log::error("Erreur create contact : " . $th->getMessage());
             return redirect()->back()->with('error', 'Echec création contact');
         }
         return redirect()->back()->with('success', 'Contact crée avec succès');
@@ -58,7 +58,8 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
+        $contact->load('typeContact');
+        return response()->json($contact);
     }
 
     /**
@@ -74,7 +75,15 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+        try {
+            $inputs = $request->all();
+            $this->contactRepository->update($contact->id, $inputs);
+
+        } catch (\Throwable $th) {
+            Log::error("Erreur update contact : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec de mise à jour du contact');
+        }
+        return redirect()->back()->with('success', 'Contact mise à jour avec succès');
     }
 
     /**
@@ -82,6 +91,18 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        // dd($contact);
+        try {
+            DB::beginTransaction();
+            $contact->patient()->detach();
+            $this->contactRepository->destroy($contact->id);
+            DB::commit();
+            return redirect()->back()->with('success', 'Contact supprimé avec succès');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error("Erreur delete contact : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec de suppression du contact');
+        }
     }
 }

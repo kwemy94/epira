@@ -113,7 +113,7 @@ class PatientController extends Controller
 
             }
 
-            
+
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -133,7 +133,7 @@ class PatientController extends Controller
         $contactTypes = $this->contactTypeRepository->getAll();
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
-        
+
         return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient'));
     }
 
@@ -144,7 +144,17 @@ class PatientController extends Controller
 
     public function update(Request $request, Patient $patient)
     {
-        //
+        try {
+            $inputs = $request->all();
+            $this->patientRepository->update($patient->id, $inputs);
+
+            
+        } catch (\Throwable $th) {
+            // dd($th);
+            Log::info("Erreur update patient: " . $th->getMessage());
+            return redirect()->back()->with("error", "Erreur de modification du patient");
+        }
+        return redirect()->back()->with("success", "Patient mise à jour avec succès");
     }
 
     public function destroy(Patient $patient)

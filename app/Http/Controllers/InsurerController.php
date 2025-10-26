@@ -58,7 +58,7 @@ class InsurerController extends Controller
      */
     public function show(Insurer $insurer)
     {
-        //
+        return response()->json($insurer);
     }
 
     /**
@@ -77,11 +77,12 @@ class InsurerController extends Controller
         try {
             $inputs = $request->all();
             $this->insurerRepository->update($insurer->id, $inputs);
+            return redirect()->back()->with('success', "Assureur mis à jour");
+            
         } catch (\Throwable $th) {
             Log::info("erreur update insurer" . $th->getMessage());
             return redirect()->back()->with('error', "Echec de mise à jour de l'assureur");
         }
-        return redirect()->back()->with('success', "Assureur mis à jour");
     }
 
     /**
@@ -89,6 +90,17 @@ class InsurerController extends Controller
      */
     public function destroy(Insurer $insurer)
     {
-        //
+         try {
+            DB::beginTransaction();
+            $insurer->patient()->detach();
+            $this->insurerRepository->destroy($insurer->id);
+            DB::commit();
+            return redirect()->back()->with('success', 'Assureur supprimé avec succès');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error("Erreur delete assurer : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec de suppression de l\'assureur');
+        }
     }
 }

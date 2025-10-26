@@ -30,7 +30,8 @@
                 </div>
                 <div class="col-sm-4">
                     <h6><strong>Nom de jeune fille</strong> :{{ $patient->maiden_name }}</h6>
-                    <h6><strong>Statut matrimonial</strong> :{{ $patient->matrimonial->name }}</h6>
+                    <h6><strong>Statut matrimonial</strong>
+                        :{{ isset($patient->matrimonial->name) ? $patient->matrimonial->name : '' }}</h6>
                     <h6><strong>Nom de la mère</strong> :{{ $patient->mother_name }}</h6>
                     <h6><strong>Nom du père</strong> :{{ $patient->father_name }}</h6>
                     <h6><strong>Nationalité</strong> :{{ $patient->nationality }}</h6>
@@ -75,6 +76,7 @@
                                     aria-labelledby="custom-tabs-four-home-tab">
                                     <form action="{{ route('patient.update', $patient->id) }}" method="POST">
                                         @csrf
+                                        @method('patch')
                                         <p class="text-primary" style="font-weight: bold">
                                             Identité du patient - Informations Principales
                                         </p>
@@ -144,23 +146,223 @@
                 $('#delete-form-insurer-' + id).submit();
             }
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+            console.log("start");
 
-        $('#saveContactBtn').click((e) => {
-            e.preventDefault();
-            if (!ControlRequiredFields($('#formContact .required'))) {
-                return -1;
-            }
+            // Mode création
+            $('#saveContactBtn').click((e) => {
+                e.preventDefault();
+                if (!ControlRequiredFields($('#formContact .required'))) {
+                    return -1;
+                }
 
-            $('#formContact').submit();
+                $('#formContact').submit();
+            });
+
+            // Quand on clique sur "modifier"
+            $('.btn-edit-contact').on('click', function(e) {
+                e.preventDefault();
+                console.log("dsf 1");
+                // Récupérer les données
+                let id = $(this).data('id');
+                let name = $(this).data('name');
+                let type = $(this).data('type');
+                let phone = $(this).data('phone');
+                let other_phone = $(this).data('other-phone');
+                let job = $(this).data('job');
+                let employer = $(this).data('employer');
+                let address = $(this).data('address');
+
+                // Modifier le titre du modal
+                $('#contactModalTitle').text('Modifier le contact');
+                console.log("dsf 2");
+
+                // Remplir les champs
+                $('input[name="contact_name"]').val(name);
+                $('select[name="contact_type_id"]').val(type).trigger('change');
+                $('input[name="contact_phone"]').val(phone);
+                $('input[name="contact_other_phone"]').val(other_phone);
+                $('input[name="contact_job"]').val(job);
+                $('input[name="contact_employer"]').val(employer);
+                $('input[name="contact_address"]').val(address);
+                $('#contact_id').val(id);
+                console.log("dsf 3");
+
+                // Changer l’action du formulaire vers la route "update"
+                $('#formContact').attr('action', '/contact/' + id);
+                $('#formContact').append('<input type="hidden" name="_method" value="PUT">');
+
+                // Ouvrir le modal
+                console.log("dsf 4");
+                $('#new-contact').modal('show');
+            });
+
+            // Quand on ferme le modal → réinitialiser le formulaire
+            $('#new-contact').on('hidden.bs.modal', function() {
+                $('#formContact')[0].reset();
+                $('#contactModalTitle').text('Nouveau contact');
+                $('#contact_id').val('');
+                $('#formContact').attr('action', '{{ route('contact.store') }}');
+                $('#formContact input[name="_method"]').remove();
+            });
+
+        })
+    </script>
+
+    {{-- script detail contact --}}
+    <script>
+        $(document).ready(function() {
+            $('.btn-show-contact').on('click', function(e) {
+                e.preventDefault();
+                let contactId = $(this).data('id');
+
+                // Afficher le modal immédiatement avec "Chargement..."
+                $('#contactDetails').html(
+                    '<tr><td colspan="2" class="text-center text-muted">Chargement...</td></tr>');
+                $('#showContactModal').modal('show');
+
+                // Requête AJAX pour récupérer les détails du contact
+                $.ajax({
+                    url: '/contact/' + contactId, // route('contact.show')
+                    type: 'GET',
+                    success: function(response) {
+                        // Vérifie si tu renvoies du JSON
+                        let contact = response.contact ?? response;
+                        console.log(contact);
+
+                        let html = `
+                    <tr><th>Nom complet</th><td>${contact.contact_name ?? ''}</td></tr>
+                    <tr><th>Type</th><td>${contact.type_contact?.type_name ?? ''}</td></tr>
+                    <tr><th>Profession</th><td>${contact.contact_job ?? ''}</td></tr>
+                    <tr><th>Employeur</th><td>${contact.contact_employer ?? ''}</td></tr>
+                    <tr><th>Adresse</th><td>${contact.contact_address ?? ''}</td></tr>
+                    <tr><th>Téléphone principal</th><td>${contact.contact_phone ?? ''}</td></tr>
+                    <tr><th>Autre téléphone</th><td>${contact.contact_other_phone ?? ''}</td></tr>
+                `;
+
+                        $('#contactDetails').html(html);
+                    },
+                    error: function() {
+                        $('#contactDetails').html(
+                            '<tr><td colspan="2" class="text-center text-danger">Erreur lors du chargement des données</td></tr>'
+                        );
+                    }
+                });
+            });
         });
+    </script>
 
-        $('#saveInsurerBtn').click((e) => {
-            e.preventDefault();
-            if (!ControlRequiredFields($('#formInsurer .required'))) {
-                return -1;
-            }
 
-            $('#formInsurer').submit();
+    {{-- script detail insurer --}}
+    <script>
+        $(document).ready(function() {
+            $('.btn-show-insurer').on('click', function(e) {
+                e.preventDefault();
+                let insurerId = $(this).data('id');
+
+                // Afficher le modal immédiatement avec "Chargement..."
+                $('#insurerDetails').html(
+                    '<tr><td colspan="2" class="text-center text-muted">Chargement...</td></tr>');
+                $('#showInsurerModal').modal('show');
+
+
+                $.ajax({
+                    url: '/insurer/' + insurerId,
+                    success: function(response) {
+                        // Vérifie si tu renvoies du JSON
+                        let insurer = response.insurer ?? response;
+                        console.log(insurer);
+
+                        let html = `
+                    <tr><th>Assureur</th><td>${insurer.insurer_name ?? ''}</td></tr>
+                    <tr><th>Employeur</th><td>${insurer.insurer_employer ?? ''}</td></tr>
+                    <tr><th>Validité</th><td>${insurer.start_date ?? ''} - ${insurer.end_date?? ''}</td></tr>
+                    <tr><th>Numéro d'assuré</th><td>${insurer.insurance_number ?? ''}</td></tr>
+                    <tr><th>Numéro de carte</th><td>${insurer.card_number ?? ''}</td></tr>
+                    <tr><th>Pourcentage</th><td>${insurer.percentage ?? ''}</td></tr>
+                    <tr><th>Plafond</th><td>${insurer.max_insurance ?? ''}</td></tr>
+                `;
+
+                        $('#insurerDetails').html(html);
+                    },
+                    error: function() {
+                        $('#insurerDetails').html(
+                            '<tr><td colspan="2" class="text-center text-danger">Erreur lors du chargement des données</td></tr>'
+                        );
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    {{-- edit insurer --}}
+    <script>
+        $(document).ready(function() {
+            console.log("start");
+
+            // Mode création
+            $('#saveInsurerBtn').click((e) => {
+                e.preventDefault();
+                if (!ControlRequiredFields($('#formInsurer .required'))) {
+                    return -1;
+                }
+
+                $('#formInsurer').submit();
+            })
+
+            // Quand on clique sur "modifier"
+            $('.btn-edit-insurer').on('click', function(e) {
+                e.preventDefault();
+                console.log("ins 1");
+                // Récupérer les données
+                let id = $(this).data('id');
+                let insurer_name = $(this).data('insurer_name');
+                let insurer_employer = $(this).data('insurer_employer');
+                let start_date = $(this).data('start_date');
+                let end_date = $(this).data('end_date');
+                let insurance_number = $(this).data('insurance_number');
+                let card_number = $(this).data('card_number');
+                let percentage = $(this).data('percentage');
+                let max_insurance = $(this).data('max_insurance');
+
+                // Modifier le titre du modal
+                $('#insurerModalTitle').text("Modifier l'assureur");
+                console.log("ins 2");
+                console.log(start_date);
+
+                // Remplir les champs
+                $('input[name="insurer_name"]').val(insurer_name);
+                $('input[name="insurer_employer"]').val(insurer_employer);
+                $('input[name="start_date"]').val(start_date);
+                $('input[name="end_date"]').val(end_date);
+                $('input[name="insurance_number"]').val(insurance_number);
+                $('input[name="card_number"]').val(card_number);
+                $('input[name="percentage"]').val(percentage);
+                $('input[name="max_insurance"]').val(max_insurance);
+                $('#contact_id').val(id);
+                console.log("ins 3");
+
+                // Changer l’action du formulaire vers la route "update"
+                $('#formInsurer').attr('action', '/insurer/' + id);
+                $('#formInsurer').append('<input type="hidden" name="_method" value="PUT">');
+
+                // Ouvrir le modal
+                console.log("ins 4");
+                $('#new-insurer').modal('show');
+            });
+
+            // Quand on ferme le modal → réinitialiser le formulaire
+            $('#new-insurer').on('hidden.bs.modal', function() {
+                $('#formInsurer')[0].reset();
+                $('#insurerModalTitle').text('Nouveau assureur');
+                $('#insurer_id').val('');
+                $('#formInsurer').attr('action', '{{ route('insurer.store') }}');
+                $('#formInsurer input[name="_method"]').remove();
+            });
+
         })
     </script>
 @endsection

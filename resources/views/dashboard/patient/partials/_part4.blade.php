@@ -9,50 +9,50 @@
 <div class="row" id="part4">
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Assureur</label>
-            <input type="text" class="form-control" id="" name="insurer_name" value="{{ old('insurer_name', $patient->insurer[0]->insurer_name ?? '') }}" >
+            <label for="n1">Assureur</label>
+            <input type="text" class="form-control" id="n1" name="insurer_name" value="{{ old('insurer_name', $patient->insurer[0]->insurer_name ?? '') }}" >
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Employer</label>
-            <input type="text" class="form-control" id="" name="insurer_employer" value="{{ old('insurer_employer', $patient->insurer[0]->insurer_employer ?? '') }}" >
+            <label for="n2">Employer</label>
+            <input type="text" class="form-control" id="n2" name="insurer_employer" value="{{ old('insurer_employer', $patient->insurer[0]->insurer_employer ?? '') }}" >
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Date de début de validité</label>
-            <input type="date" class="form-control" id="" name="start_date" value="{{ old('start_date', $patient->insurer[0]->start_date ?? '') }}">
+            <label for="n3">Date de début de validité</label>
+            <input type="date" class="form-control" id="n3" name="start_date" value="{{ old('start_date', $patient->insurer[0]->start_date ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Date de fin de validité</label>
-            <input type="date" class="form-control" id="" name="end_date" value="{{ old('end_date', $patient->insurer[0]->end_date ?? '') }}">
+            <label for="n4">Date de fin de validité</label>
+            <input type="date" class="form-control" id="n4" name="end_date" value="{{ old('end_date', $patient->insurer[0]->end_date ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Numéro d'assuré</label>
-            <input type="text" class="form-control" id="" name="insurance_number" value="{{ old('insurance_number', $patient->insurer[0]->insurance_number ?? '') }}">
+            <label for="n5">Numéro d'assuré</label>
+            <input type="text" class="form-control" id="n5" name="insurance_number" value="{{ old('insurance_number', $patient->insurer[0]->insurance_number ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Numéro de carte</label>
-            <input type="text" class="form-control" id="" name="card_number" value="{{ old('card_number', $patient->insurer[0]->card_number ?? '') }}">
+            <label for="n6">Numéro de carte</label>
+            <input type="text" class="form-control" id="n6" name="card_number" value="{{ old('card_number', $patient->insurer[0]->card_number ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Pourcentage de prise en charge</label>
-            <input type="text" class="form-control" id="" name="percentage" value="{{ old('percentage', $patient->insurer[0]->percentage ?? '') }}">
+            <label for="n7">Pourcentage de prise en charge</label>
+            <input type="text" class="form-control" id="n7" name="percentage" value="{{ old('percentage', $patient->insurer[0]->percentage ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="ad">Plafond</label>
-            <input type="text" class="form-control" id="" name="max_insurance" value="{{ old('max_insurance', $patient->insurer[0]->max_insurance ?? '') }}">
+            <label for="n8">Plafond</label>
+            <input type="text" class="form-control" id="n8" name="max_insurance" value="{{ old('max_insurance', $patient->insurer[0]->max_insurance ?? '') }}">
         </div>
     </div>
 </div>

@@ -89,15 +89,6 @@
 
     </div>
     <div class="col-md-4">
-        {{-- <div class="form-group">
-            <label>Status matrimoniale</label>
-            <select class="form-control select2" name="matrimonial_id" style="width: 100%;">
-                <option selected="selected" disabled>Choisir</option>
-                @foreach ($matrimonials as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                @endforeach
-            </select>
-        </div> --}}
         <div class="form-group">
             <label for="category_id">Statut matrimonial</label>
             <select class="form-control select2" name="matrimonial_id" style="width: 100%;">
@@ -117,15 +108,15 @@
 
     <div class="col-md-4">
         <div class="form-group">
-            <label for="datl">Prénom et nom de la mère</label>
-            <input type="text" class="form-control" id="datl" name="mother_name"
+            <label for="pre">Prénom et nom de la mère</label>
+            <input type="text" class="form-control" id="pre" name="mother_name"
                 value="{{ old('mother_name', $patient->mother_name ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="datl">Nom de jeune fille</label>
-            <input type="text" class="form-control" id="datl" name="maiden_name"
+            <label for="mlle">Nom de jeune fille</label>
+            <input type="text" class="form-control" id="mlle" name="maiden_name"
                 value="{{ old('maiden_name', $patient->maiden_name ?? '') }}">
         </div>
     </div>
@@ -156,20 +147,20 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="datl">Numero mobile</label>
-            <input type="text" class="form-control" id="datl" name="phone" value="{{ old('phone', $patient->phone ?? '') }}" >
+            <label for="mob">Numero mobile</label>
+            <input type="text" class="form-control" id="mob" name="phone" value="{{ old('phone', $patient->phone ?? '') }}" >
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="datl">Autre numéro</label>
-            <input type="text" class="form-control" id="datl" name="other_phone" value="{{ old('other_phone', $patient->other_phone ?? '') }}" >
+            <label for="pho">Autre numéro</label>
+            <input type="text" class="form-control" id="pho" name="other_phone" value="{{ old('other_phone', $patient->other_phone ?? '') }}" >
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="datl">Email</label>
-            <input type="email" class="form-control" id="datl" name="email" value="{{ old('email', $patient->email ?? '') }}" >
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $patient->email ?? '') }}" >
         </div>
     </div>
 
