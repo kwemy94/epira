@@ -158,7 +158,10 @@
         
         $('#interoMedi').click(() =>{
             $('#admin-data-header').attr('hidden', true);
+            $('#interoMedi').addClass('active');
+
             $('#interro-medical-header').attr('hidden', false);
+            $('#home-data').removeClass('active');
 
             $('#custom-tabs-four-tabContent').attr('hidden', true);
             $('#custom-tabs-four-tabContent2').attr('hidden', false);
@@ -166,7 +169,10 @@
 
         $('#home-data').click(() =>{
             $('#admin-data-header').attr('hidden', false);
+            $('#interoMedi').removeClass('active');
+            
             $('#interro-medical-header').attr('hidden', true);
+            $('#home-data').addClass('active');
 
             $('#custom-tabs-four-tabContent').attr('hidden', false);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);

@@ -148,9 +148,15 @@ class PatientController extends Controller
     {
         try {
             $inputs = $request->all();
+            $inputs = array_replace([
+                'smook' => 0,
+                'sport_pratice' => 0,
+                'herbal_medicine' => 0,
+            ], $inputs);
+
             $this->patientRepository->update($patient->id, $inputs);
 
-            
+
         } catch (\Throwable $th) {
             // dd($th);
             Log::info("Erreur update patient: " . $th->getMessage());
