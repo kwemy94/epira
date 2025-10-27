@@ -52,4 +52,8 @@ class Patient extends Model
     {
         return $this->belongsToMany(Contact::class, 'contact_patient', 'patient_id', 'contact_id');
     }
+
+    public function bloodType(){
+        return $this->belongsTo(BloodType::class, 'blood_type_id');
+    }
 }

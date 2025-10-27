@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BloodType;
 use App\Models\Patient;
 use App\Repositories\ContactRepository;
 use App\Repositories\ContactTypeRepository;
@@ -133,8 +134,9 @@ class PatientController extends Controller
         $contactTypes = $this->contactTypeRepository->getAll();
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
+        $bloodTypes = BloodType::all();
 
-        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient'));
+        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes'));
     }
 
     public function edit(Patient $patient)

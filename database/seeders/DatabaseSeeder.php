@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             MatrimonialSeeder::class,
             StudyLevelSeeder::class,
             UserSeeder::class,
+            BloodTypeSeeder::class,
         ]);
     }
 }

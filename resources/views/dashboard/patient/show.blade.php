@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('admin-css')
+    
+@endsection
 
 @section('admin-content')
     <x-page-header title="Détail patient" :breadcrumbs="[
@@ -9,12 +12,40 @@
         ],
         ['label' => 'Détail'],
     ]" />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <nav class="navbar navbar-expand navbar-white navbar-light">
+                    <!-- Left navbar links -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item d-none d-sm-inline-block active" id="home-data">
+                            <a href="#" class="nav-link">Données administratives</a>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block" id="interoMedi">
+                            <a href="#" class="nav-link">Intérogation médicale</a>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <a href="#" class="nav-link">Rendez-vous</a>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <a href="#" class="nav-link">Historique documents</a>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <a href="#" class="nav-link">prestation médicales</a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+    </div>
 
     <section class="content mb-2">
         <div class="container-fluid p-3" style="background-color: white">
             <div class="row">
                 <div class="col-sm-4">
-                    <h5><strong style="color:rgb(69, 156, 236)">{{ $patient->lastname }} {{ $patient->firstname }}</strong> -
+                    <h5><strong style="color:rgb(69, 156, 236)">{{ $patient->lastname }} {{ $patient->firstname }}</strong>
+                        -
                         {{ $patient->age }} an(s)</h5>
                     <h6><strong>Sexe :</strong>{{ $patient->sexe }}</h6>
                     <h6><strong>Référence : </strong>{{ $patient->reference }}</h6>
@@ -47,26 +78,14 @@
             <div class="row">
                 <div class="col-12 col-sm-12">
                     <div class="card card-primary card-outline card-outline-tabs">
-                        <div class="card-header p-0 border-bottom-0">
-                            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill"
-                                        href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home"
-                                        aria-selected="true">Information prinipale</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill"
-                                        href="#custom-tabs-four-messages" role="tab"
-                                        aria-controls="custom-tabs-four-messages"
-                                        aria-selected="false">Contact/Filiation</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="custom-tabs-four-settings-tab" data-toggle="pill"
-                                        href="#custom-tabs-four-settings" role="tab"
-                                        aria-controls="custom-tabs-four-settings" aria-selected="false">Prise en charge</a>
-                                </li>
-                            </ul>
+                        <div class="card-header p-0 border-bottom-0" id="admin-data-header">
+                            @include('dashboard.patient.partials._navigation-title-1')
                         </div>
+
+                        <div class="card-header p-0 border-bottom-0" hidden id="interro-medical-header">
+                            @include('dashboard.patient.partials._navigation-title-2')
+                        </div>
+
                         <div class="card-body">
                             @php
                                 $edit = true;
@@ -91,24 +110,12 @@
                                         </div>
                                     </form>
                                 </div>
-                                {{-- <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel"
-                                    aria-labelledby="custom-tabs-four-profile-tab">
-                                    <form action="{{ route('patient.update', $patient->id) }}" method="POST">
-                                        @csrf
-                                        @include('dashboard.patient.partials._part2', ['edit' => $edit])
-                                        <div class="row" style="justify-content: center">
-                                            <button class="btn btn-primary btn-sm" id="saveBtn2">Enregistrer</button>
-                                        </div>
-                                    </form>
-                                </div> --}}
                                 <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel"
                                     aria-labelledby="custom-tabs-four-messages-tab">
 
                                     @include('dashboard.patient.partials._listing_contact', [
                                         'edit' => $edit,
                                     ])
-
-
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel"
                                     aria-labelledby="custom-tabs-four-settings-tab">
@@ -120,8 +127,10 @@
 
                                 </div>
                             </div>
+
+                            @include('dashboard.patient.partials._interrogation-medical')
+                            
                         </div>
-                        <!-- /.card -->
                     </div>
                 </div>
             </div>
@@ -146,6 +155,22 @@
                 $('#delete-form-insurer-' + id).submit();
             }
         });
+        
+        $('#interoMedi').click(() =>{
+            $('#admin-data-header').attr('hidden', true);
+            $('#interro-medical-header').attr('hidden', false);
+
+            $('#custom-tabs-four-tabContent').attr('hidden', true);
+            $('#custom-tabs-four-tabContent2').attr('hidden', false);
+        });
+
+        $('#home-data').click(() =>{
+            $('#admin-data-header').attr('hidden', false);
+            $('#interro-medical-header').attr('hidden', true);
+
+            $('#custom-tabs-four-tabContent').attr('hidden', false);
+            $('#custom-tabs-four-tabContent2').attr('hidden', true);
+        })
     </script>
     <script>
         $(document).ready(function() {
