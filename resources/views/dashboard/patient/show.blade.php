@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('admin-css')
-    
 @endsection
 
 @section('admin-content')
@@ -130,7 +129,7 @@
 
                             @include('dashboard.patient.partials._interrogation-medical')
                             @include('dashboard.patient.partials._prestations')
-                            
+
                         </div>
                     </div>
                 </div>
@@ -156,8 +155,8 @@
                 $('#delete-form-insurer-' + id).submit();
             }
         });
-        
-        $('#interoMedi').click(() =>{
+
+        $('#interoMedi').click(() => {
             $('#admin-data-header').attr('hidden', true);
             $('#interoMedi').addClass('active');
 
@@ -169,29 +168,47 @@
             $('#custom-tabs-four-tabContent2').attr('hidden', false);
         });
 
-        $('#home-data').click(() =>{
+        $('#home-data').click(() => {
             $('#admin-data-header').attr('hidden', false);
             $('#interoMedi').removeClass('active');
-            
+
             $('#interro-medical-header').attr('hidden', true);
             $('#home-data').addClass('active');
-             $('#prestations').removeClass('active');
+            $('#prestations').removeClass('active');
             $('#custom-tabs-four-tabContent').attr('hidden', false);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);
-             $('#prestations-content').attr('hidden', true);
+            $('#prestations-content').attr('hidden', true);
         })
-        $('#prestations').click(() =>{
+        $('#prestations').click(() => {
             $('#admin-data-header').attr('hidden', true);
             $('#interoMedi').removeClass('active');
-            
+
             $('#interro-medical-header').attr('hidden', true);
             $('#home-data').removeClass('active');
             $('#prestations').addClass('active');
 
             $('#custom-tabs-four-tabContent').attr('hidden', true);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);
-             $('#prestations-content').attr('hidden', false);
-        })
+            $('#prestations-content').attr('hidden', false);
+        });
+
+        $('#savePathologyBtn').click((e) => {
+            e.preventDefault();
+            if (!ControlRequiredFields($('#formPathology .required'))) {
+                return -1;
+            }
+
+            console.log($('#choosePat').val());
+            let selectVal = $('#choosePat').val() ? $('#choosePat').val().trim() : '';
+            let newPat = $('#newPat').val() ? $('#newPat').val().trim() : '';
+
+            if (selectVal === '' && newPat === '') {
+                alert('Créer une pathologie ou choisir parmis les existantes');
+                return -1;
+            }
+
+            $('#formPathology').submit();
+        });
     </script>
     <script>
         $(document).ready(function() {
@@ -454,7 +471,7 @@
 
                 // Modifier le titre du modal
                 $('#prestationModalTitle').text("Modifier la prestation");
-                
+
 
                 // Remplir les champs
                 $('input[name="name"]').val(name);
@@ -468,7 +485,7 @@
 
                 $('#new-prestation').modal('show');
             });
-            
+
             // Quand on ferme le modal → réinitialiser le formulaire
             $('#new-insurer').on('hidden.bs.modal', function() {
                 $('#formInsurer')[0].reset();

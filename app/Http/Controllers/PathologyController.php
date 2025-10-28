@@ -39,6 +39,7 @@ class PathologyController extends Controller
     {
         try {
             $inputs = $request->all();
+            // dd($inputs, !empty($request->pathology_id));
             if (!empty($request->pathology_id)) {
                 $pathologie = $this->pathologyRepository->getById($request->pathology_id);
                 $pathologie->patient()->attach($request->patient_id);
@@ -53,7 +54,7 @@ class PathologyController extends Controller
             return redirect()->back()->with('success', 'Pathologie ajoutée avec succès');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Log::error("Erreur create insurer : " . $th->getMessage());
+            Log::error("Erreur create pathologie : " . $th->getMessage());
             return redirect()->back()->with('error', 'Echec création de la pathologie');
         }
     }

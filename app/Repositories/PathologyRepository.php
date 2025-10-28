@@ -26,5 +26,12 @@ class PathologyRepository extends ResourceRepository {
         ->orderBy('id','DESC')
         ->get();
     }
+    public function getByType($pathologieType){
+        return $this->model
+        ->where('pathology_type', $pathologieType)
+        ->with('patient')
+        ->orderBy('id','DESC')
+        ->get();
+    }
 
 }

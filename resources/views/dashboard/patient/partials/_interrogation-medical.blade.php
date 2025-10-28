@@ -132,7 +132,7 @@
                     </thead>
                     <tbody>
                         {{-- @dd($patient->contacts[0]->pivot()) --}}
-                        @forelse ($patient->pathology as $pathology)
+                        @forelse ($mainPathologies as $pathology)
                             <tr>
                                 <td>{{ $pathology->name }}</td>
                                 <td class="text-right">
@@ -186,7 +186,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($patient->pathology as $pathology)
+                        @forelse ($associatePathologies as $pathology)
                             <tr>
                                 <td>{{ $pathology->name }}</td>
                                 <td class="text-right">
@@ -233,53 +233,68 @@
             </div>
         </div>
         <div class="modal fade" id="new-pathology" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="contactModalTitle">Nouvelle pathologie</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="{{ route('pathology.store') }}" method="POST" id="formPathology">
-                            <div class="modal-body">
-                                <div class="row">
-                                    @csrf
-                                    <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="contactModalTitle">Nouvelle pathologie</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('pathology.store') }}" method="POST" id="formPathology">
+                        <div class="modal-body">
+                            <div class="row">
+                                @csrf
+                                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
 
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="category_id">Pathologie existante <em
-                                                    style="color:red">*</em></label>
-                                            <select class="form-control select2 required" name="pathology_id"
-                                                style="width: 100%;" autocomplete="">
-                                                <option disabled selected> Choisir </option>
-                                                @foreach ($pathologies as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="choosePat">Pathologie existante </label>
+                                        <select class="form-control select2" id="choosePat" name="pathology_id"
+                                            style="width: 100%;" autocomplete="">
+                                            <option disabled selected value=""> Choisir </option>
+                                            @foreach ($mainPathologies as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                            @foreach ($associatePathologies as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="pat">Nouvelle pathologie (si  non existante) </label>
-                                            <input type="text" class="form-control required" id="pat"
-                                                name="name" value="">
-                                        </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="newPat">Nouvelle pathologie (si non existante) </label>
+                                        <input type="text" class="form-control" id="newPat"
+                                            name="name" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="category_id">Type de pathologie <em
+                                                style="color:red">*</em></label>
+                                        <select class="form-control select2 required" name="pathology_type"
+                                            style="width: 100%;" autocomplete="">
+                                            <option disabled selected> Choisir </option>
+                                            <option value="1">Pathologie principale</option>
+                                            <option value="2">Pathologie associée</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                <button type="button" id="savePathologyBtn"
-                                    class="btn btn-primary">Enregistrer</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            <button type="button" id="savePathologyBtn" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="interogation3" role="tabpanel" aria-labelledby="interogation3-tab">
 
