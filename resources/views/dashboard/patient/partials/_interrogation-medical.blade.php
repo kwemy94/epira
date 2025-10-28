@@ -1,6 +1,6 @@
 <div class="tab-content" id="custom-tabs-four-tabContent2" hidden>
     <div class="tab-pane fade show active" id="interogation1" role="tabpanel" aria-labelledby="interogation1-tab">
-        <form action="{{ route('patient.update', $patient->id)}}" method="POST">
+        <form action="{{ route('patient.update', $patient->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
@@ -111,9 +111,175 @@
             </div>
         </form>
     </div>
+
     <div class="tab-pane fade" id="interogation2" role="tabpanel" aria-labelledby="interogation2-tab">
+        <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+                <button type="button" data-toggle="modal" data-target="#new-pathology"
+                    class="btn bg-gradient-primary btn-sm">
+                    <i class="fa fa-plus"></i> Pathologie
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Pathologie</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{-- @dd($patient->contacts[0]->pivot()) --}}
+                        @forelse ($patient->pathology as $pathology)
+                            <tr>
+                                <td>{{ $pathology->name }}</td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-default" type="button"
+                                            id="actionsDrop{{ $pathology->id }}" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                            aria-labelledby="actionsDropdownh{{ $pathology->id }}">
 
 
+                                            <div class="dropdown-divider"></div>
+
+                                            <!-- Delete: bouton qui déclenche le formulaire -->
+                                            <a class="dropdown-item text-danger btn-delete-insurer" href="#"
+                                                title="Supprimer" data-id="{{ $pathology->id }}">
+                                                <i class="fas fa-trash-alt mr-2"></i>
+                                            </a>
+
+                                            <!-- Formulaire DELETE masqué -->
+                                            <form id="delete-form-insurer-{{ $pathology->id }}"
+                                                action="{{ route('pathology.destroy', $pathology->id) }}"
+                                                method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" style="text-align: center">Aucune pathologie principale</td>
+                            </tr>
+                        @endforelse
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Pathologie</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($patient->pathology as $pathology)
+                            <tr>
+                                <td>{{ $pathology->name }}</td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-default" type="button"
+                                            id="actionsDrop{{ $pathology->id }}" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                            aria-labelledby="actionsDropdownh{{ $pathology->id }}">
+
+
+                                            <div class="dropdown-divider"></div>
+
+                                            <!-- Delete: bouton qui déclenche le formulaire -->
+                                            <a class="dropdown-item text-danger btn-delete-insurer" href="#"
+                                                title="Supprimer" data-id="{{ $pathology->id }}">
+                                                <i class="fas fa-trash-alt mr-2"></i>
+                                            </a>
+
+                                            <!-- Formulaire DELETE masqué -->
+                                            <form id="delete-form-insurer-{{ $pathology->id }}"
+                                                action="{{ route('pathology.destroy', $pathology->id) }}"
+                                                method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" style="text-align: center">Aucune pathologie associée</td>
+                            </tr>
+                        @endforelse
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal fade" id="new-pathology" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="contactModalTitle">Nouvelle pathologie</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ route('pathology.store') }}" method="POST" id="formPathology">
+                            <div class="modal-body">
+                                <div class="row">
+                                    @csrf
+                                    <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="category_id">Pathologie existante <em
+                                                    style="color:red">*</em></label>
+                                            <select class="form-control select2 required" name="pathology_id"
+                                                style="width: 100%;" autocomplete="">
+                                                <option disabled selected> Choisir </option>
+                                                @foreach ($pathologies as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="pat">Nouvelle pathologie (si  non existante) </label>
+                                            <input type="text" class="form-control required" id="pat"
+                                                name="name" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                <button type="button" id="savePathologyBtn"
+                                    class="btn btn-primary">Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
     </div>
     <div class="tab-pane fade" id="interogation3" role="tabpanel" aria-labelledby="interogation3-tab">
 

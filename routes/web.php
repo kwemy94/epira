@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InsurerController;
+use App\Http\Controllers\PathologyController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrestationController;
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/insurer', InsurerController::class);
     Route::resource('/contact', ContactController::class);
     Route::resource('/prestation', PrestationController::class);
+    Route::resource('/pathology', PathologyController::class);
+    // Route::resource('/pathology', PathologyController::class);
 });
 
 require __DIR__.'/auth.php';
