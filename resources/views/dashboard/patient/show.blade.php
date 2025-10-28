@@ -30,8 +30,8 @@
                         <li class="nav-item d-none d-sm-inline-block">
                             <a href="#" class="nav-link">Historique documents</a>
                         </li>
-                        <li class="nav-item d-none d-sm-inline-block">
-                            <a href="#" class="nav-link">prestation médicales</a>
+                        <li class="nav-item d-none d-sm-inline-block" id ="prestations">
+                            <a href="#" class="nav-link">Prestations médicales</a>
                         </li>
                     </ul>
 
@@ -129,6 +129,7 @@
                             </div>
 
                             @include('dashboard.patient.partials._interrogation-medical')
+                            @include('dashboard.patient.partials._prestations')
                             
                         </div>
                     </div>
@@ -162,8 +163,9 @@
 
             $('#interro-medical-header').attr('hidden', false);
             $('#home-data').removeClass('active');
-
+            $('#prestations').removeClass('active');
             $('#custom-tabs-four-tabContent').attr('hidden', true);
+            $('#prestations-content').attr('hidden', true);
             $('#custom-tabs-four-tabContent2').attr('hidden', false);
         });
 
@@ -173,9 +175,22 @@
             
             $('#interro-medical-header').attr('hidden', true);
             $('#home-data').addClass('active');
-
+             $('#prestations').removeClass('active');
             $('#custom-tabs-four-tabContent').attr('hidden', false);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);
+             $('#prestations-content').attr('hidden', true);
+        })
+        $('#prestations').click(() =>{
+            $('#admin-data-header').attr('hidden', true);
+            $('#interoMedi').removeClass('active');
+            
+            $('#interro-medical-header').attr('hidden', true);
+            $('#home-data').removeClass('active');
+            $('#prestations').addClass('active');
+
+            $('#custom-tabs-four-tabContent').attr('hidden', true);
+            $('#custom-tabs-four-tabContent2').attr('hidden', true);
+             $('#prestations-content').attr('hidden', false);
         })
     </script>
     <script>
@@ -325,6 +340,40 @@
                     }
                 });
             });
+
+            $('.btn-show-prestation').on('click', function(e) {
+                e.preventDefault();
+                let insurerId = $(this).data('id');
+
+                // Afficher le modal immédiatement avec "Chargement..."
+                $('#prestationDetails').html(
+                    '<tr><td colspan="2" class="text-center text-muted">Chargement...</td></tr>');
+                $('#showPrestationModal').modal('show');
+
+
+                $.ajax({
+                    url: '/prestation/' + insurerId,
+                    success: function(response) {
+                        // Vérifie si tu renvoies du JSON
+                        let insurer = response.insurer ?? response;
+                        console.log(insurer);
+
+                        let html = `
+                    <tr><th>Nom</th><td>${insurer.name ?? ''}</td></tr>
+                    <tr><th>Description</th><td>${insurer.description ?? ''}</td></tr>
+                    <tr><th>patient</th><td>${insurer.patient_id ?? ''}</td></tr>
+                    <tr><th>Assureur</th><td>${insurer.insurer_id ?? ''}</td></tr>
+                       `;
+
+                        $('#prestationDetails').html(html);
+                    },
+                    error: function() {
+                        $('#prestationDetails').html(
+                            '<tr><td colspan="2" class="text-center text-danger">Erreur lors du chargement des données</td></tr>'
+                        );
+                    }
+                });
+            });
         });
     </script>
 
@@ -342,6 +391,14 @@
                 }
 
                 $('#formInsurer').submit();
+            })
+            $('#savePrestationBtn').click((e) => {
+                e.preventDefault();
+                if (!ControlRequiredFields($('#formPrestation .required'))) {
+                    return -1;
+                }
+
+                $('#formPrestation').submit();
             })
 
             // Quand on clique sur "modifier"
@@ -385,6 +442,33 @@
                 $('#new-insurer').modal('show');
             });
 
+            // Quand on clique sur "modifier" de la prestation
+            $('.btn-edit-prestation').on('click', function(e) {
+                e.preventDefault();
+                // Récupérer les données
+                let id = $(this).data('id');
+                let name = $(this).data('name');
+                let description = $(this).data('description');
+                let patient_id = $(this).data('patient_id');
+                let insurer_id = $(this).data('insurer_id');
+
+                // Modifier le titre du modal
+                $('#prestationModalTitle').text("Modifier la prestation");
+                
+
+                // Remplir les champs
+                $('input[name="name"]').val(name);
+                $('input[name="description"]').val(description);
+                $('#patient_id').val(patient_id);
+                $('#insurer_id').val(insurer_id);
+
+                // Changer l’action du formulaire vers la route "update"
+                $('#formPrestation').attr('action', '/prestation/' + id);
+                $('#formPrestation').append('<input type="hidden" name="_method" value="PUT">');
+
+                $('#new-prestation').modal('show');
+            });
+            
             // Quand on ferme le modal → réinitialiser le formulaire
             $('#new-insurer').on('hidden.bs.modal', function() {
                 $('#formInsurer')[0].reset();
@@ -393,6 +477,16 @@
                 $('#formInsurer').attr('action', '{{ route('insurer.store') }}');
                 $('#formInsurer input[name="_method"]').remove();
             });
+
+            // Quand on ferme le modal → réinitialiser le formulaire
+            $('#new-prestation').on('hidden.bs.modal', function() {
+                $('#formPrestation')[0].reset();
+                $('#prestationModalTitle').text('Nouvelle prestation');
+                $('#insurer_id').val('');
+                $('#formPrestation').attr('action', '{{ route('prestation.store') }}');
+                $('#formPrestation input[name="_method"]').remove();
+            });
+
 
         })
     </script>

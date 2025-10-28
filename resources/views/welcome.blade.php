@@ -1,5 +1,5 @@
 
 
 
-    <div>Comming soon...</div>
+    <div>Coming soon...</div>
 

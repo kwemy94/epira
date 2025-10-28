@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if(!Schema::hasTable('prestations')){
         Schema::create('prestations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->foreign('insurer_id')->references('id')->on('insurers');
             $table->timestamps();
         });
+    }
     }
 
     /**

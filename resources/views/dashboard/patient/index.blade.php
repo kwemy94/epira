@@ -19,7 +19,7 @@
                             <div class=" flex justify-content-between align-items-center">
                                 <a href="{{ route('patient.create') }}" type="button" class="btn bg-gradient-primary btn-sm"
                                     title="Nouveau patient">
-                                    <i class="fa fa-plus"></i> Add
+                                    <i class="fa fa-plus"></i> Nouveau
                                 </a>
                             </div>
 
@@ -74,11 +74,15 @@
                                                             title="Détails">
                                                             <i class="fas fa-eye text-primary"></i> Détails
                                                         </a>
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('patient.edit', $patient->id) }}"
+                                                        <a class="dropdown-item"  data-toggle="modal" data-target="#new-prestation"
+                                                           
                                                             title="Ajouter une prestation">
                                                             <i class="fas fa-plus text-success"></i> Prestation
                                                         </a>
+                                                        <!-- <button type="button" data-toggle="modal" data-target="#new-prestation"
+                                                            class="btn bg-gradient-primary btn-sm dropdown-item">
+                                                            <i class="fa fa-plus text-success"></i> Prestation
+                                                        </button> -->
                                                         {{-- <form action="{{ route('patient.destroy', $patient->id) }}" method="POST"
                                                             onsubmit="return confirm('Voulez-vous vraiment supprimer ce patient ?');">
                                                             @csrf
@@ -98,7 +102,7 @@
                                         </tr>
                                     @endforelse
 
-
+                                    @include('dashboard.patient.partials.create-prestation')
                                 </tbody>
                             </table>
                         </div>

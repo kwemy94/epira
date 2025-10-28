@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InsurerController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PrestationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/patient', PatientController::class);
     Route::resource('/insurer', InsurerController::class);
     Route::resource('/contact', ContactController::class);
+    Route::resource('/prestation', PrestationController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if(!Schema::hasTable('blood_types')){
         Schema::create('blood_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
         });
+    }
     }
 
     /**

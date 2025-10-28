@@ -56,4 +56,9 @@ class Patient extends Model
     public function bloodType(){
         return $this->belongsTo(BloodType::class, 'blood_type_id');
     }
+
+    
+    public function prestation(){
+        return $this->hasMany(Prestation::class);
+    }
 }

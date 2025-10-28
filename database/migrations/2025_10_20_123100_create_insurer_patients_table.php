@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('insurer_patient', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('insurer_id');
-            $table->unsignedBigInteger('patient_id');
-            $table->foreign('insurer_id')->references('id')->on('insurers');
-            $table->foreign('patient_id')->references('id')->on('patients');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('insurer_patient')){
+            Schema::create('insurer_patient', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('insurer_id');
+                $table->unsignedBigInteger('patient_id');
+                $table->foreign('insurer_id')->references('id')->on('insurers');
+                $table->foreign('patient_id')->references('id')->on('patients');
+                $table->timestamps();
+            });
+
+        }
     }
 
     /**
