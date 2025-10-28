@@ -42,7 +42,7 @@ class PathologyController extends Controller
             // dd($inputs, !empty($request->pathology_id));
             if (!empty($request->pathology_id)) {
                 $pathologie = $this->pathologyRepository->getById($request->pathology_id);
-                $pathologie->patient()->attach($request->patient_id);
+                $pathologie->patient()->syncWithoutDetaching([$request->patient_id]);
             } else {
 
                 DB::beginTransaction();
