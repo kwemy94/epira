@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Pathology;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\PathologyRepository;
 
 class PathologyController extends Controller
 {
+    private $pathologyRepository;
+
+    public function __construct(PathologyRepository $pathologyRepository)
+    {
+        $this->pathologyRepository = $pathologyRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +37,25 @@ class PathologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $inputs = $request->all();
+            if (!empty($request->pathology_id)) {
+                $pathologie = $this->pathologyRepository->getById($request->pathology_id);
+                $pathologie->patient()->attach($request->patient_id);
+            } else {
+
+                DB::beginTransaction();
+                $pathologie = $this->pathologyRepository->store($inputs);
+                $pathologie->patient()->attach($inputs['patient_id']);
+                DB::commit();
+            }
+
+            return redirect()->back()->with('success', 'Pathologie ajoutée avec succès');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error("Erreur create insurer : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec création de la pathologie');
+        }
     }
 
     /**

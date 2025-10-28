@@ -15,6 +15,7 @@ use App\Repositories\CountryRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\MatrimonialRepository;
+use App\Repositories\PathologyRepository;
 use Illuminate\Support\Facades\Log;
 
 class PatientController extends Controller
@@ -29,6 +30,7 @@ class PatientController extends Controller
     private $levelRepository;
     private $documentRepository;
     private $contactTypeRepository;
+    private $pathologyRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -39,6 +41,7 @@ class PatientController extends Controller
         DocumentRepository $documentRepository,
         LevelRepository $levelRepository,
         ContactTypeRepository $contactTypeRepository,
+        PathologyRepository $pathologyRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
@@ -49,6 +52,7 @@ class PatientController extends Controller
         $this->levelRepository = $levelRepository;
         $this->documentRepository = $documentRepository;
         $this->contactTypeRepository = $contactTypeRepository;
+        $this->pathologyRepository = $pathologyRepository;
     }
 
     public function index()
@@ -135,8 +139,9 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $bloodTypes = BloodType::all();
+        $pathologies = $this->pathologyRepository->getAll();
 
-        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes'));
+        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'pathologies'));
     }
 
     public function edit(Patient $patient)
