@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\PathologyRepository;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class PathologyController extends Controller
 {
@@ -38,6 +40,16 @@ class PathologyController extends Controller
     public function store(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'string|unique:pathologies,name',
+            ], [
+                'name.unique' => 'Ce nom de pathologie existe déjà.',
+            ]);
+
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+
             $inputs = $request->all();
             // dd($inputs, !empty($request->pathology_id));
             if (!empty($request->pathology_id)) {
