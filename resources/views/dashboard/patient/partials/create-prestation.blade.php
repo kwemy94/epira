@@ -12,7 +12,7 @@
                                 @csrf
                                 <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="ad">Nom <em style="color:red">*</em></label>
                                             <input type="text" class="form-control required" id=""
@@ -25,21 +25,34 @@
                                             <input type="text" class="form-control" id=""
                                                 name="description" value="">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="ad">Patient <em
-                                                    style="color:red">*</em></label>
-                                            <input type="texte" readonly class="form-control required" id=""
+                                            <label for="ad">Patient </label>
+                                            <input type="texte" readonly class="form-control " id=""
                                                 name="patient_id" value="{{ $patient->firstname }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="ad">Assureur <em
-                                                    style="color:red">*</em></label>
-                                           <select name="insurer_id" id="" class="form-control required">
-                                            <option value="">ass</option>
+                                            <label for="ad">Assureur </label>
+                                           <select name="insurer_id" id="" class="form-control ">
+                                            <option value="" disabled>Sélectionner</option>
+                                            @foreach($patient->insurer as $insurer)
+                                                
+                                                <option value="{{$insurer->id}}">{{$insurer->insurer_name}}</option>
+                                            @endforeach
+                                           </select>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="ad">Prestation </label>
+                                           <select name="name" id="" class="form-control ">
+                                            <option value="" disabled>Selectionner</option>
+                                            <option value="chirurgie">chirurgie</option>
+                                            <option value="analyse">analyse</option>
+                                            <option value="autre">Autre</option>
                                            </select>
                                         </div>
                                     </div>

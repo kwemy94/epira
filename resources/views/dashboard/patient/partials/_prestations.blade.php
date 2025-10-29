@@ -13,6 +13,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
@@ -27,16 +28,17 @@
                             <th>Action</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
-                        {{-- @dd($patient->contacts[0]->pivot()) --}}
-                        @forelse ($patient->insurer as $prestation)
+                        
+                        @forelse ($prestations as $prestation)
                             <tr>
-                                <td>{{ $prestation->insurer_name }}</td>
-                                <td>{{ $prestation->insurer_employer }}</td>
-                                <td>{{ $prestation->start_date }}- {{ $prestation->end_date }}</td>
-                                <td>{{ $prestation->insurance_number }}</td>
-                                <td>{{ $prestation->card_number }}</td>
-                                <td>{{ $prestation->max_insurance }}</td>
+                                <td>{{ $prestation->patient->firstname }}</td>
+                                <td>{{ $prestation->name }}</td>
+                                 <td>chirugie</td>
+                                <td>{{ $prestation->created_at }}</td>
+                                <td>mama</td>
+                                <td><button  class="btn btn-sm btn-default" >En cours</button></td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-default" type="button"
@@ -50,34 +52,12 @@
                                             <!-- Show -->
                                             <a href="#" class="dropdown-item text-success btn-show-prestation"
                                                 data-id="{{ $prestation->id }}" title="Détails">
-                                                <i class="fas fa-eye mr-2"></i>
+                                                <i class="fas fa-eye mr-2"></i>Visualiser
                                             </a>
 
-                                            <!-- Edit -->
-                                            <a href="#" class="dropdown-item text-primary btn-edit-prestation"
-                                                data-id="{{ $prestation->id }}"
-                                                data-name="{{ $prestation->name }}"
-                                                data-description="{{ $prestation->description }}"
-                                                data-patient_id="{{ $prestation->patient_id }}"
-                                                data-insurer_id="{{ $prestation->insurer_id }}"
-                                                title="Editer">
-                                                <i class="fas fa-edit mr-2"></i>
-                                            </a>
-
+                                            
                                             <div class="dropdown-divider"></div>
 
-                                            <!-- Delete: bouton qui déclenche le formulaire -->
-                                            <a class="dropdown-item text-danger btn-delete-prestation" href="#"
-                                                title="Supprimer" data-id="{{ $prestation->id }}">
-                                                <i class="fas fa-trash-alt mr-2"></i>
-                                            </a>
-
-                                            <!-- Formulaire DELETE masqué -->
-                                            <form id="delete-form-prestation-{{ $prestation->id }}"
-                                                action="{{ route('prestation.destroy', $prestation->id) }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
                                             </form>
                                         </div>
                                     </div>

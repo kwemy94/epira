@@ -27,4 +27,8 @@ class PatientRepository extends ResourceRepository {
         ->get();
     }
 
+    public function getByName($name){
+        return $this->model->where('firstname', 'LIKE','%'.$name.'%')->first();
+    }
+
 }
