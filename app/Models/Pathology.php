@@ -12,6 +12,6 @@ class Pathology extends Model
     protected $guarded =['id'];
 
     public function patient(){
-        return $this->belongsToMany(Patient::class);
+        return $this->belongsToMany(Patient::class, "pathology_patient", "pathology_id", "patient_id");
     }
 }

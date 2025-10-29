@@ -145,8 +145,10 @@ class PatientController extends Controller
         $levels = $this->levelRepository->getAll();
         $bloodTypes = BloodType::all();
          $prestations = $this->prestationRepository->getAll();
-        $pathologies = $this->pathologyRepository->getAll();
-        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'pathologies','prestations'));
+        $mainPathologies = $this->pathologyRepository->getByType(1);
+        $associatePathologies = $this->pathologyRepository->getByType(2);
+
+        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'mainPathologies', 'associatePathologies','prestations'));
     }
 
     public function edit(Patient $patient)

@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\CategoryRepository;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
+    private $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository){
+        $this->categoryRepository = $categoryRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $categories =  $this->categoryRepository->getAll();
+        return view('dashboard.category.index', compact('categories'));
     }
 
     /**
@@ -28,7 +37,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // $validator = Validator::make($request->all(), [
+            //     'name' => 'string|unique:pathologies,name',
+            // ], [
+            //     'name.unique' => 'Ce nom de pathologie existe déjà.',
+            // ]);
+
+            // if ($validator->fails()) {
+            //     throw new ValidationException($validator);
+            // }
+            $inputs = $request->all();
+            $category = $this->categoryRepository->store($inputs);
+
+        } catch (\Throwable $th) {
+            Log::error("Erreur create category : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec création de la catégorie');
+        }
+        return redirect()->back()->with('success', 'Catégorie crée avec succès');
     }
 
     /**

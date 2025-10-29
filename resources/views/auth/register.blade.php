@@ -59,7 +59,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EPIRA</title>
+    <title>CHRE</title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -72,9 +72,12 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="card card-outline card-primary">
+        <div class="card card-outline card-success">
             <div class="card-header text-center">
-                <a href="#" class="h1"><b>EPIRA</b></a>
+                <a href="#" class="d-inline-block">
+                    <img src="{{ asset('logo_chre2.png') }}" alt="CHRE Logo" class="img-fluid"
+                        style="max-height: 80px;;">
+                </a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Nouveau utilisateur</p>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\PathologyRepository;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class PathologyController extends Controller
 {
@@ -38,10 +40,21 @@ class PathologyController extends Controller
     public function store(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'string|unique:pathologies,name',
+            ], [
+                'name.unique' => 'Ce nom de pathologie existe déjà.',
+            ]);
+
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+
             $inputs = $request->all();
+            // dd($inputs, !empty($request->pathology_id));
             if (!empty($request->pathology_id)) {
                 $pathologie = $this->pathologyRepository->getById($request->pathology_id);
-                $pathologie->patient()->attach($request->patient_id);
+                $pathologie->patient()->syncWithoutDetaching([$request->patient_id]);
             } else {
 
                 DB::beginTransaction();
@@ -53,7 +66,7 @@ class PathologyController extends Controller
             return redirect()->back()->with('success', 'Pathologie ajoutée avec succès');
         } catch (\Throwable $th) {
             DB::rollBack();
-            Log::error("Erreur create insurer : " . $th->getMessage());
+            Log::error("Erreur create pathologie : " . $th->getMessage());
             return redirect()->back()->with('error', 'Echec création de la pathologie');
         }
     }
