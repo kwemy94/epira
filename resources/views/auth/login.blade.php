@@ -72,7 +72,7 @@
             <div class="card-header text-center">
                 <a href="#" class="d-inline-block">
                     <img src="{{ asset('logo_chre2.png') }}" alt="CHRE Logo" class="img-fluid"
-                        style="max-height: 80px;;">
+                        style="max-height: 100px;;">
                 </a>
             </div>
             <div class="card-body">

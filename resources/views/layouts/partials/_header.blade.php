@@ -3,7 +3,7 @@
     <ul class="navbar-nav">
         <li class="nav-item  d-flex align-items-center">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            <h5 class="ml-2">Centre Hospitalier Générale d'Ebolowa</h5>
+            <h5 class="ml-2">Centre Hospitalier Régional d’Ebolowa</h5>
         </li>
     </ul>
 
@@ -21,12 +21,12 @@
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User image -->
                 <li class="user-header bg-primary">
-                    <img src="{{ asset('logo chre.png') }}" class="img-circle elevation-2"
+                    <img src="{{ asset('logo_chre2.png') }}" class="img-circle elevation-2"
                         alt="User Image">
                     <p>
                         {{ Auth::user()->name ?? 'Utilisateur' }}
-                        <small>Membre depuis ...
-                            {{-- {{ Auth::user()->created_at->format('M Y') ?? '...' }} --}}
+                        <small>
+                            {{ Auth::user()->email ?? '...' }}
                         </small>
                     </p>
                 </li>

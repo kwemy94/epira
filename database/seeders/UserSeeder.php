@@ -19,6 +19,11 @@ class UserSeeder extends Seeder
                 'email' => 'admin@admin.com',
                 'password' => '$2y$12$BIv9P3.R4VARgaYU5N1/2uwei8LqM2zPXBbixEFt4LyaM76gY46pu'
             ],
+            [
+                'name' => 'CHRE',
+                'email' => 'chre@admin.com',
+                'password' => '$2y$12$BIv9P3.R4VARgaYU5N1/2uwei8LqM2zPXBbixEFt4LyaM76gY46pu'
+            ],
         ];
 
         foreach ($users as $cat) {
