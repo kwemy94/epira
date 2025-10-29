@@ -300,21 +300,212 @@
             </div>
         </div>
     </div>
+
     <div class="tab-pane fade" id="interogation3" role="tabpanel" aria-labelledby="interogation3-tab">
+        <div class="row">
+            @foreach (['ANTECEDENTS FAMILIAUX', 'ANTECEDENT MEDICAUX', ' GYNECOLOGIQUE ET OBSTETRICAUX', 'CHIRUGICAUX', 'DIVERS'] as $item)
+                <div class="col-md-6">
+                    <div class="card card-outline card-primary collapsed-card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ $item }}</h3>
 
-
-
-
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            Aucune données à afficher
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
+
     <div class="tab-pane fade" id="interogation4" role="tabpanel" aria-labelledby="interogation4-tab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-primary collapsed-card">
+                    <div class="card-header">
+                        <h3 class="card-title">CONDITION DE TRAVAIL</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('patient.update', $patient->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="job">Profession ou fonction</label>
+                                        <input type="text" class="form-control" id="job" name="job"
+                                            value="{{ old('job', $patient->job ?? '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="daily_working_hours">Temps de travail journalier</label>
+                                        <input type="number" min="0" class="form-control" id="daily_working_hours" name="daily_working_hours"
+                                            value="{{ old('daily_working_hours', $patient->job ?? '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="weekly_working_hours">Temps de travail hebdomadaire</label>
+                                        <input type="number" min="0" class="form-control" id="weekly_working_hours" name="weekly_working_hours"
+                                            value="{{ old('weekly_working_hours', $patient->job ?? '') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <p>Profil psychologique au travail</p>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                {{ old('fulfilment', $patient->fulfilment ?? false) ? 'checked' : '' }}
+                                                name="fulfilment">
+                                            <label class="form-check-label">Epanuissement</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                {{ old('motivation', $patient->motivation ?? false) ? 'checked' : '' }}
+                                                name="motivation">
+                                            <label class="form-check-label">Motivation</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                {{ old('boredom', $patient->boredom ?? false) ? 'checked' : '' }}
+                                                name="boredom">
+                                            <label class="form-check-label">Ennui</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1"
+                                                {{ old('stress', $patient->stress ?? false) ? 'checked' : '' }}
+                                                name="stress">
+                                            <label class="form-check-label">Stress</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group d-flex align-items-center">
+                                        <label class="mb-0 mr-3">Surcharge Physique :</label>
 
+                                        <div class="custom-control custom-radio mr-3">
+                                            <input class="custom-control-input" type="radio"
+                                                id="physical_overload1" name="physical_overload">
+                                            <label for="physical_overload1" class="custom-control-label">Oui</label>
+                                        </div>
 
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio"
+                                                id="physical_overload2" name="physical_overload" checked>
+                                            <label for="physical_overload2" class="custom-control-label">Non</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group d-flex align-items-center">
+                                        <label class="mb-0 mr-3">Epuisement</label>
 
+                                        <div class="custom-control custom-radio mr-3">
+                                            <input class="custom-control-input" type="radio" id="exhaustion1"
+                                                name="exhaustion">
+                                            <label for="exhaustion1" class="custom-control-label">Oui</label>
+                                        </div>
 
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" id="exhaustion2"
+                                                name="exhaustion" checked>
+                                            <label for="exhaustion2" class="custom-control-label">Non</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group d-flex align-items-center">
+                                        <label class="mb-0 mr-3">Surcharge mentale </label>
+
+                                        <div class="custom-control custom-radio mr-3">
+                                            <input class="custom-control-input" type="radio" id="mental_overload"
+                                                name="mental_overload">
+                                            <label for="mental_overload" class="custom-control-label">Oui</label>
+                                        </div>
+
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" id="mental_overload2"
+                                                name="mental_overload" checked>
+                                            <label for="mental_overload2" class="custom-control-label">Non</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group d-flex align-items-center">
+                                        <label class="mb-0 mr-3">Harcèlement</label>
+
+                                        <div class="custom-control custom-radio mr-3">
+                                            <input class="custom-control-input" type="radio" id="harassment"
+                                                name="harassment">
+                                            <label for="harassment" class="custom-control-label">Oui</label>
+                                        </div>
+
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" id="harassment1"
+                                                name="harassment" checked>
+                                            <label for="harassment1" class="custom-control-label">Non</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="justify-content: center">
+                                <button class="btn btn-success btn-sm" id="saveConditionBtn">Sauvegarder les modifications</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card card-outline card-primary collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">HYGIENE DE VIE</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    Aucune données à afficher
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="tab-pane fade" id="interogation5" role="tabpanel" aria-labelledby="interogation5-tab">
+</div>
+
+<div class="tab-pane fade" id="interogation5" role="tabpanel" aria-labelledby="interogation5-tab">
 
 
 
-    </div>
+</div>
 </div>

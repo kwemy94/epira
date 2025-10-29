@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InsurerController;
 use App\Http\Controllers\PathologyController;
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/contact', ContactController::class);
     Route::resource('/prestation', PrestationController::class);
     Route::resource('/pathology', PathologyController::class);
+    Route::resource('/category', CategoryController::class);
     // Route::resource('/pathology', PathologyController::class);
 });
 
