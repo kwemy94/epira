@@ -10,7 +10,8 @@ use App\Http\Controllers\PrestationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('auth.login');
 })->name('home');
 
 Route::get('/dashboard', function () {
