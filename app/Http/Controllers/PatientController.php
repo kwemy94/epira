@@ -16,6 +16,7 @@ use App\Repositories\PatientRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\MatrimonialRepository;
 use App\Repositories\PathologyRepository;
+use App\Repositories\PrestationRepository;
 use Illuminate\Support\Facades\Log;
 
 class PatientController extends Controller
@@ -31,6 +32,7 @@ class PatientController extends Controller
     private $documentRepository;
     private $contactTypeRepository;
     private $pathologyRepository;
+    private $prestationRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -42,6 +44,7 @@ class PatientController extends Controller
         LevelRepository $levelRepository,
         ContactTypeRepository $contactTypeRepository,
         PathologyRepository $pathologyRepository,
+        PrestationRepository $prestationRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
@@ -53,6 +56,7 @@ class PatientController extends Controller
         $this->documentRepository = $documentRepository;
         $this->contactTypeRepository = $contactTypeRepository;
         $this->pathologyRepository = $pathologyRepository;
+        $this->prestationRepository = $prestationRepository;
     }
 
     public function index()
@@ -71,7 +75,8 @@ class PatientController extends Controller
         $contactTypes = $this->contactTypeRepository->getAll();
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
-        return view('dashboard.patient.create', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes'));
+        $prestations = $this->prestationRepository->getAll();
+        return view('dashboard.patient.create', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes','prestations'));
     }
 
     public function store(Request $request)
@@ -139,9 +144,9 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $bloodTypes = BloodType::all();
+         $prestations = $this->prestationRepository->getAll();
         $pathologies = $this->pathologyRepository->getAll();
-
-        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'pathologies'));
+        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'pathologies','prestations'));
     }
 
     public function edit(Patient $patient)
