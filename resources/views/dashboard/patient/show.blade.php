@@ -155,6 +155,13 @@
                 $('#delete-form-insurer-' + id).submit();
             }
         });
+        $(document).on('click', '.btn-delete-allergy', function(e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+            if (confirm('Voulez-vous vraiment supprimer cette allergie du patient ?')) {
+                $('#delete-form-allergy-' + id).submit();
+            }
+        });
 
         $('#interoMedi').click(() => {
             $('#admin-data-header').attr('hidden', true);
@@ -281,6 +288,48 @@
                 }
 
                 $('#formAllergy').submit();
+            });
+
+
+            // Quand on clique sur "modifier allergy"
+            $('.btn-edit-allergy').on('click', function(e) {
+                e.preventDefault();
+                console.log("all 1");
+                // Récupérer les données
+                let id = $(this).data('id');
+                let name = $(this).data('name');
+                let comment = $(this).data('comment');
+                let detection_date = $(this).data('detection_date');
+                let detection_end_date = $(this).data('detection_end_date');
+
+                // Modifier le titre du modal
+                $('#allergyModalTitle').text('Modifier l\'allergie');
+                console.log("all 2");
+
+                // Remplir les champs
+                $('input[name="name"]').val(name);
+                // $('select[name="contact_type_id"]').val(type).trigger('change');
+                $('input[name="comment"]').val(comment);
+                $('input[name="detection_date"]').val(detection_date);
+                $('input[name="detection_end_date"]').val(detection_end_date);
+                console.log("all 3");
+
+                // Changer l’action du formulaire vers la route "update"
+                $('#formAllergy').attr('action', '/allergy-pat/' + id);
+                $('#formAllergy').append('<input type="hidden" name="_method" value="PUT">');
+
+                // Ouvrir le modal
+                console.log("all 4");
+                $('#new-allergy').modal('show');
+            });
+
+            // Quand on ferme le modal → réinitialiser le formulaire
+            $('#new-allergy').on('hidden.bs.modal', function() {
+                $('#formAllergy')[0].reset();
+                $('#allergyModalTitle').text('Nouvelle allergie');
+                $('#allergy_id').val('');
+                $('#formAllergy').attr('action', '{{ route('allergy-pat.store') }}');
+                $('#formAllergy input[name="_method"]').remove();
             });
 
         })

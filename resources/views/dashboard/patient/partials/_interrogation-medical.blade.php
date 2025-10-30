@@ -686,20 +686,27 @@
                                             aria-labelledby="actionsDropdownh{{ $allergy->id }}">
                                             <div class="dropdown-divider"></div>
 
-                                            <a class="dropdown-item text-primary btn-delete-allergy" href="#"
-                                                title="Editer" data-id="{{ $allergy->id }}">
-                                                <i class="fas fa-eye mr-2"></i>
+                                            <a class="dropdown-item text-primary btn-edit-allergy" href="#"
+                                                title="Editer"
+                                                data-id="{{ $allergy->id }}"
+                                                data-name ="{{ $allergy->name }}"
+                                                data-detection_date ="{{ $allergy->pivot->detection_date }}"
+                                                data-detection_end_date ="{{ $allergy->pivot->detection_end_date }}"
+                                                data-comment ="{{ $allergy->pivot->comment }}"
+                                                >
+                                                <i class="fas fa-pen mr-2"></i>
                                             </a>
-                                            <a class="dropdown-item text-danger btn-delete-insurer" href="#"
+                                            <a class="dropdown-item text-danger btn-delete-allergy" href="#"
                                                 title="Supprimer" data-id="{{ $allergy->id }}">
                                                 <i class="fas fa-trash-alt mr-2"></i>
                                             </a>
 
-                                            <<form id="delete-form-insurer-{{ $allergy->id }}"
+                                            <form id="delete-form-allergy-{{ $allergy->id }}"
                                                 action="{{ route('allergy-pat.destroy', $allergy->id) }}"
                                                 method="POST" style="display: none;">
                                                 @csrf
                                                 @method('DELETE')
+                                                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                                 </form>
                                         </div>
                                     </div>
@@ -735,7 +742,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="choosePat">Allergy existante </label>
-                                                <select class="form-control select2" id="allergy_id" name="allergy_id"
+                                                <select class="form-control select2" name="allergy_id"
                                                     style="width: 100%;" autocomplete="">
                                                     <option disabled selected value=""> Choisir </option>
                                                     @foreach ($allergies as $item)

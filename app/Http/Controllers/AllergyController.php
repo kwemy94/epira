@@ -48,6 +48,7 @@ class AllergyController extends Controller
                     $inputs['patient_id'] => [
                         'detection_end_date' => $inputs['detection_end_date'],
                         'detection_date' => $inputs['detection_date'],
+                        'comment' => $inputs['comment'],
                     ],
                 ]);
             } else {
@@ -55,6 +56,7 @@ class AllergyController extends Controller
                 $allergy->patients()->attach($request->patient_id, [
                     'detection_end_date' => $inputs['detection_end_date'],
                     'detection_date' => $inputs['detection_date'],
+                    'comment' => $inputs['comment'],
                 ]);
             }
             DB::commit();
@@ -85,16 +87,50 @@ class AllergyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Allergy $allergy)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $inputs = $request->all();
+            DB::beginTransaction();
+            $allergy = $this->allergyRepository->getById($id);
+            // dd($inputs, $allergy);
+            $this->allergyRepository->update($allergy->id, $inputs);
+            $allergy->patients()->syncWithoutDetaching([
+                $inputs['patient_id'] => [
+                    'detection_end_date' => $inputs['detection_end_date'],
+                    'detection_date' => $inputs['detection_date'],
+                    'comment' => $inputs['comment'],
+                ],
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error("Erreur update Allergy : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec de mise à jour de l\'allergie');
+        }
+        return redirect()->back()->with('success', 'Allergie mis à jour avec succès');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Allergy $allergy)
+    public function destroy(Request $request, $id)
     {
-        //
+
+        # supprimer l'allergie sur le patient (table pivot) et non  supprimer l'allergie en elle meme
+        try {
+            $allergy = $this->allergyRepository->getById($id);
+            if (!$allergy) {
+                return redirect()->back()->with('error', 'Allergie introuvable.');
+            }
+
+            $allergy->patients()->detach($request->patient_id);
+
+            return redirect()->back()->with('success', 'Allergie patient supprimée');
+        } catch (\Throwable $th) {
+            Log::error("Erreur Delete Allergy : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec de suppression de l\'allergie');
+        }
     }
 }
