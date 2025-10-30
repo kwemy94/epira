@@ -9,6 +9,7 @@
                         Groupe sanguin et habitudes de vie
                     </p>
                     <div class="row">
+                        <input type="hidden" name="groupe_sang" value="1">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="category_id">Groupe sanguin</label>
@@ -341,6 +342,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
+                                <input type="hidden" name="hygiene_vie" value="1">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="job">Profession ou fonction</label>
@@ -352,14 +354,14 @@
                                     <div class="form-group">
                                         <label for="daily_working_hours">Temps de travail journalier</label>
                                         <input type="number" min="0" class="form-control" id="daily_working_hours" name="daily_working_hours"
-                                            value="{{ old('daily_working_hours', $patient->job ?? '') }}">
+                                            value="{{ old('daily_working_hours', $patient->daily_working_hours ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="weekly_working_hours">Temps de travail hebdomadaire</label>
                                         <input type="number" min="0" class="form-control" id="weekly_working_hours" name="weekly_working_hours"
-                                            value="{{ old('weekly_working_hours', $patient->job ?? '') }}">
+                                            value="{{ old('weekly_working_hours', $patient->weekly_working_hours ?? '') }}">
                                     </div>
                                 </div>
                             </div>
@@ -413,13 +415,15 @@
 
                                         <div class="custom-control custom-radio mr-3">
                                             <input class="custom-control-input" type="radio"
-                                                id="physical_overload1" name="physical_overload">
+                                                id="physical_overload1" name="physical_overload" value="1"
+                                                {{ old('physical_overload', $patient->physical_overload ?? '') == 1 ? 'checked' : '' }}>
                                             <label for="physical_overload1" class="custom-control-label">Oui</label>
                                         </div>
 
                                         <div class="custom-control custom-radio">
                                             <input class="custom-control-input" type="radio"
-                                                id="physical_overload2" name="physical_overload" checked>
+                                                id="physical_overload2" name="physical_overload" value="0"
+                                                {{ old('physical_overload', $patient->physical_overload ?? '') == 0 ? 'checked' : '' }}>
                                             <label for="physical_overload2" class="custom-control-label">Non</label>
                                         </div>
                                     </div>
@@ -430,13 +434,15 @@
 
                                         <div class="custom-control custom-radio mr-3">
                                             <input class="custom-control-input" type="radio" id="exhaustion1"
-                                                name="exhaustion">
+                                                name="exhaustion" value="1"
+                                                {{ old('exhaustion', $patient->exhaustion ?? '') == 1 ? 'checked' : '' }}>
                                             <label for="exhaustion1" class="custom-control-label">Oui</label>
                                         </div>
 
                                         <div class="custom-control custom-radio">
                                             <input class="custom-control-input" type="radio" id="exhaustion2"
-                                                name="exhaustion" checked>
+                                                name="exhaustion" value="0"
+                                                {{ old('exhaustion', $patient->exhaustion ?? '') == 0 ? 'checked' : '' }}>
                                             <label for="exhaustion2" class="custom-control-label">Non</label>
                                         </div>
                                     </div>
@@ -447,13 +453,15 @@
 
                                         <div class="custom-control custom-radio mr-3">
                                             <input class="custom-control-input" type="radio" id="mental_overload"
-                                                name="mental_overload">
+                                                name="mental_overload" value="1"
+                                                {{ old('mental_overload', $patient->mental_overload ?? '') == 1 ? 'checked' : '' }}>
                                             <label for="mental_overload" class="custom-control-label">Oui</label>
                                         </div>
 
                                         <div class="custom-control custom-radio">
                                             <input class="custom-control-input" type="radio" id="mental_overload2"
-                                                name="mental_overload" checked>
+                                                name="mental_overload" value="0" 
+                                                {{ old('mental_overload', $patient->mental_overload ?? '') == 0 ? 'checked' : '' }}>
                                             <label for="mental_overload2" class="custom-control-label">Non</label>
                                         </div>
                                     </div>
@@ -464,13 +472,15 @@
 
                                         <div class="custom-control custom-radio mr-3">
                                             <input class="custom-control-input" type="radio" id="harassment"
-                                                name="harassment">
+                                                name="harassment" value="1"
+                                                {{ old('harassment', $patient->harassment ?? '') == 1 ? 'checked' : '' }}>
                                             <label for="harassment" class="custom-control-label">Oui</label>
                                         </div>
 
                                         <div class="custom-control custom-radio">
                                             <input class="custom-control-input" type="radio" id="harassment1"
-                                                name="harassment" checked>
+                                                name="harassment" value="0"
+                                                {{ old('harassment', $patient->harassment ?? '') == 0 ? 'checked' : '' }}>
                                             <label for="harassment1" class="custom-control-label">Non</label>
                                         </div>
                                     </div>

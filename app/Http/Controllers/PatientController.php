@@ -160,11 +160,25 @@ class PatientController extends Controller
     {
         try {
             $inputs = $request->all();
-            $inputs = array_replace([
-                'smook' => 0,
-                'sport_pratice' => 0,
-                'herbal_medicine' => 0,
-            ], $inputs);
+            // dd($inputs);
+            if (isset($request->groupe_sang)) {
+                $inputs = array_replace([
+                    'smook' => 0,
+                    'sport_pratice' => 0,
+                    'herbal_medicine' => 0,
+                ], $inputs);
+            }
+
+            if(isset($request->hygiene_vie)){
+                $inputs = array_replace([
+                    'fulfilment' => 0,
+                    'motivation' => 0,
+                    'boredom' => 0,
+                    'stress' => 0,
+                ], $inputs);
+
+
+            }
 
             $this->patientRepository->update($patient->id, $inputs);
 
