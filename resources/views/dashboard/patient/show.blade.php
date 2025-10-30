@@ -271,6 +271,18 @@
                 $('#formContact input[name="_method"]').remove();
             });
 
+
+
+            // Mode création allergie
+            $('#saveAllergyBtn').click((e) => {
+                e.preventDefault();
+                if (!ControlRequiredFields($('#formAllergy .required'))) {
+                    return -1;
+                }
+
+                $('#formAllergy').submit();
+            });
+
         })
     </script>
 

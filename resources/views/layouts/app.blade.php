@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Epira | Dashboard</title>
+    <title>HEALTHTECH AFRIQUE | Dashboard</title>
 
 
     <link rel="stylesheet"
@@ -126,6 +126,14 @@
     <script src="{{ asset('template_old/dist/js/demo.js') }}"></script>
     {{-- <!-- AdminLTE dashboard demo (This is only for demo purposes) --> --}}
     <script src="{{ asset('template_old/dist/js/pages/dashboard.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        // Disparition automatique après 3 secondes
+        setTimeout(function() {
+            $(".alert").alert('close');
+        }, 3000);
+    });
+</script>
 </body>
 
 </html>

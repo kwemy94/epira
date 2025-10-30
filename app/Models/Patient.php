@@ -53,12 +53,19 @@ class Patient extends Model
         return $this->belongsToMany(Contact::class, 'contact_patient', 'patient_id', 'contact_id');
     }
 
-    public function bloodType(){
+    public function bloodType()
+    {
         return $this->belongsTo(BloodType::class, 'blood_type_id');
     }
 
-    
-    public function prestation(){
+
+    public function prestation()
+    {
         return $this->hasMany(Prestation::class);
+    }
+    public function allergies()
+    {
+        return $this->belongsToMany(Allergy::class)
+            ->withPivot('detection_date', 'detection_end_date', 'comment');
     }
 }

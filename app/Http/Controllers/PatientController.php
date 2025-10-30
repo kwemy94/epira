@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BloodType;
 use App\Models\Patient;
+use App\Repositories\AllergyRepository;
 use App\Repositories\ContactRepository;
 use App\Repositories\ContactTypeRepository;
 use App\Repositories\DocumentRepository;
@@ -33,6 +34,7 @@ class PatientController extends Controller
     private $contactTypeRepository;
     private $pathologyRepository;
     private $prestationRepository;
+    private $allergyRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -45,6 +47,7 @@ class PatientController extends Controller
         ContactTypeRepository $contactTypeRepository,
         PathologyRepository $pathologyRepository,
         PrestationRepository $prestationRepository,
+        AllergyRepository $allergyRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
@@ -57,6 +60,7 @@ class PatientController extends Controller
         $this->contactTypeRepository = $contactTypeRepository;
         $this->pathologyRepository = $pathologyRepository;
         $this->prestationRepository = $prestationRepository;
+        $this->allergyRepository = $allergyRepository;
     }
 
     public function index()
@@ -147,8 +151,9 @@ class PatientController extends Controller
          $prestations = $this->prestationRepository->getAll();
         $mainPathologies = $this->pathologyRepository->getByType(1);
         $associatePathologies = $this->pathologyRepository->getByType(2);
-
-        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'mainPathologies', 'associatePathologies','prestations'));
+        $allergies = $this->allergyRepository->getAll();
+// dd($allergies, $patient);
+        return view('dashboard.patient.show', compact('allergies', 'categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'mainPathologies', 'associatePathologies','prestations'));
     }
 
     public function edit(Patient $patient)
@@ -176,8 +181,6 @@ class PatientController extends Controller
                     'boredom' => 0,
                     'stress' => 0,
                 ], $inputs);
-
-
             }
 
             $this->patientRepository->update($patient->id, $inputs);

@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Allergy;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\AllergyRepository;
+
+class AllergyController extends Controller
+{
+    private $allergyRepository;
+
+    public function __construct(
+        AllergyRepository $allergyRepository
+    ) {
+        $this->allergyRepository = $allergyRepository;
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        try {
+            $inputs = $request->all();
+            DB::beginTransaction();
+            // dd($inputs);
+            if (isset($inputs['allergy_id'])) {
+                $allergy = $this->allergyRepository->getById($inputs['allergy_id']);
+                $allergy->patients()->syncWithoutDetaching([
+                    $inputs['patient_id'] => [
+                        'detection_end_date' => $inputs['detection_end_date'],
+                        'detection_date' => $inputs['detection_date'],
+                    ],
+                ]);
+            } else {
+                $allergy = $this->allergyRepository->store($inputs);
+                $allergy->patients()->attach($request->patient_id, [
+                    'detection_end_date' => $inputs['detection_end_date'],
+                    'detection_date' => $inputs['detection_date'],
+                ]);
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error("Erreur create Allergy : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec création d\'allergie');
+        }
+        return redirect()->back()->with('success', 'Allergie crée avec succès');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Allergy $allergy)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Allergy $allergy)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Allergy $allergy)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Allergy $allergy)
+    {
+        //
+    }
+}
