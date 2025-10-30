@@ -27,10 +27,23 @@ Route::middleware('auth')->group(function () {
     Route::resource('/patient', PatientController::class);
     Route::resource('/insurer', InsurerController::class);
     Route::resource('/contact', ContactController::class);
-    Route::resource('/prestation', PrestationController::class);
+   
     Route::resource('/pathology', PathologyController::class);
     Route::resource('/category', CategoryController::class);
     // Route::resource('/pathology', PathologyController::class);
+
+    //Prestations
+    Route::resource('/prestation', PrestationController::class);
+    Route::resource('/consultation', ConsultationController::class); 
+    Route::resource('/visite', VisiteController::class);
+
+    Route::resource('/hospitalisation', HospitalisationController::class);
+    Route::resource('/devis', DevisController::class); 
+    Route::resource('/analyse', AnalyseController::class);
+    Route::resource('/ambulance', AmbulanceController::class);
+    Route::resource('/radiologie', RadiologieController::class); 
+    Route::resource('/pharmacie', PharmacieController::class);
+    Route::resource('/medecine', MedecineController::class);
 });
 
 require __DIR__.'/auth.php';

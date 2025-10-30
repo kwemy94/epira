@@ -12,28 +12,15 @@
                                 @csrf
                                 <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                 <div class="row">
-                                    <!-- <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="ad">Nom <em style="color:red">*</em></label>
-                                            <input type="text" class="form-control required" id=""
-                                                name="name" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="ad">Description</label>
-                                            <input type="text" class="form-control" id=""
-                                                name="description" value="">
-                                        </div>
-                                    </div> -->
-                                    <div class="col-md-4">
+                                  
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="ad">Patient </label>
                                             <input type="texte" readonly class="form-control " id=""
                                                 name="patient_id" value="{{ $patient->firstname }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="ad">Assureur </label>
                                            <select name="insurer_id" id="" class="form-control ">
@@ -45,14 +32,19 @@
                                            </select>
                                         </div>
                                     </div>
-                                     <div class="col-md-4">
+                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="ad">Prestation </label>
-                                           <select name="name" id="" class="form-control ">
-                                            <option value="" disabled>Selectionner</option>
-                                            <option value="chirurgie">chirurgie</option>
-                                            <option value="analyse">analyse</option>
-                                            <option value="autre">Autre</option>
+                                           <select name="name" id="" class="form-control required">
+                                            <option value="" disabled>Veuillez sélectionner une prestation</option>
+                                            <option value="chirurgie">Nouvelle consultation</option>
+                                            <option value="analyse">Nouvelle hospitalisation</option>
+                                            <option value="autre">Nouvelle visite</option>
+                                             <option value="chirurgie">Nouvelle analyse </option>
+                                            <option value="analyse">Nouvelle Imagerie</option>
+                                            <option value="autre">Nouvel ambulatoire</option>
+                                             <option value="chirurgie">Nouvelle Pharmacie</option>
+                                            <option value="analyse">Devis</option>
                                            </select>
                                         </div>
                                     </div>
