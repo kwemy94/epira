@@ -15,14 +15,14 @@ class PrestationTypeSeeder extends Seeder
     public function run(): void
     { 
         $prestationTypes = [
-            ['name'=>'Nouvelle hospitalisation','code'=>'newh'],
-            ['name'=>'Nouvelle consultation','code'=>'newc'],
-            ['name'=>'Nouvelle visite','code'=>'newv'],
-            ['name'=>'Nouvelle analyse','code'=>'newa'],
-            ['name'=>'Nouvelle imagerie','code'=>'newi'],
-            ['name'=>'Nouvelle ambulatoire','code'=>'newam'],
-            ['name'=>'Nouvelle pharmacie','code'=>'newp'],
-            ['name'=>'Devis','code'=>'devis']
+            ['name'=>'Nouvelle hospitalisation','code'=>'hospitalisation'],
+            ['name'=>'Nouvelle consultation','code'=>'consultation'],
+            ['name'=>'Nouvelle visite','code'=>'visite'],
+            ['name'=>'Nouvelle analyse','code'=>'analyse'],
+            ['name'=>'Nouvelle imagerie','code'=>'imagerie'],
+            ['name'=>'Nouvelle ambulatoire','code'=>'ambulatoire'],
+            ['name'=>'Nouvelle pharmacie','code'=>'pharmacie'],
+            ['name'=>'Devis','code'=>'Devis']
         ];
         foreach ($prestationTypes as $type) {
             $pres = PrestationType::where('name', $type['name'])->first();

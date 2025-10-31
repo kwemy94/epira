@@ -25,4 +25,12 @@ class PrestationRepository extends ResourceRepository {
         ->get();
     }
 
+    public function getByPatientId($patient_id){
+        return $this->model
+        ->where('patient_id', $patient_id)
+        ->with('patient','insurer','type','hospitalisation','consultation','analyse','pharmacie','radiologie','visite','devis')
+        ->orderBy('id','DESC')
+        ->get();
+    }
+
 }

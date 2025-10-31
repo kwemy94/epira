@@ -144,6 +144,7 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
     {
+        // dd($patient);
         $categories = $this->categoryRepository->getAll();
         $matrimonials = $this->matrimonialRepository->getAll();
         $countries = $this->countryRepository->getAll();
@@ -152,7 +153,10 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $bloodTypes = BloodType::all();
-        $prestations = $this->prestationRepository->getAll();
+       
+        // $prestations = $this->prestationRepository->getAll();
+        $prestations = $this->prestationRepository->getByPatientId($patient->id);
+        //  dd($prestations);
         $mainPathologies = $this->pathologyRepository->getByType(1);
         $associatePathologies = $this->pathologyRepository->getByType(2);
         $allergies = $this->allergyRepository->getAll();

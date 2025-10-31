@@ -49,7 +49,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="dat">ance <em style="color:red">*</em></label>
+            <label for="dat">Date de naissance <em style="color:red">*</em></label>
             <input type="date" class="form-control required" id="dat" name="birth_date"
                 value="{{ old('birth_date', $patient->birth_date ?? '') }}" placeholder="">
         </div>

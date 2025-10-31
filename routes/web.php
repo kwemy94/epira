@@ -1,15 +1,22 @@
 <?php
 
 use App\Http\Controllers\AllergyController;
+use App\Http\Controllers\AnalyseController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DevisController;
 use App\Http\Controllers\InsurerController;
 use App\Http\Controllers\PathologyController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrestationController;
 use App\Http\Controllers\HospitalisationController;
+use App\Http\Controllers\MedecineController;
+use App\Http\Controllers\PharmacieController;
+use App\Http\Controllers\RadiologieController;
+use App\Http\Controllers\VisiteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -47,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/hospitalisation', HospitalisationController::class);
     Route::resource('/devis', DevisController::class); 
     Route::resource('/analyse', AnalyseController::class);
-    Route::resource('/ambulance', AmbulanceController::class);
+    Route::resource('/ambulance', AnalyseController::class);
     Route::resource('/radiologie', RadiologieController::class); 
     Route::resource('/pharmacie', PharmacieController::class);
     Route::resource('/medecine', MedecineController::class);

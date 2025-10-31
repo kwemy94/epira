@@ -67,7 +67,7 @@ class PrestationController extends Controller
             // dd($type);
             switch ($type) {
                 case '1':
-                    return view('dashboard.hospitalisation.create')->compact('prestation','patient');
+                     return redirect()->route('hospitalisation.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     // redirect()->route('hospitalisation.create', ['prestation_id' => $prestation->id, 'patient'=>$patient]);
                     break;
                 case '2':
@@ -95,8 +95,6 @@ class PrestationController extends Controller
                 default:
                 
                     return redirect()->route('hospitalisation.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
-
-                    //  return view('dashboard.hospitalisation.create')->compact('prestation','patient');
                     break;
             }
             
