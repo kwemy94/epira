@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BloodType;
 use App\Models\Patient;
+use App\Repositories\AllergyRepository;
 use App\Repositories\ContactRepository;
 use App\Repositories\ContactTypeRepository;
 use App\Repositories\DocumentRepository;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\CountryRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\DoctorRepository;
 use App\Repositories\MatrimonialRepository;
 use App\Repositories\PathologyRepository;
 use App\Repositories\PrestationRepository;
@@ -33,6 +35,8 @@ class PatientController extends Controller
     private $contactTypeRepository;
     private $pathologyRepository;
     private $prestationRepository;
+    private $allergyRepository;
+    private $doctorRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -45,6 +49,8 @@ class PatientController extends Controller
         ContactTypeRepository $contactTypeRepository,
         PathologyRepository $pathologyRepository,
         PrestationRepository $prestationRepository,
+        AllergyRepository $allergyRepository,
+        DoctorRepository $doctorRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
@@ -57,6 +63,8 @@ class PatientController extends Controller
         $this->contactTypeRepository = $contactTypeRepository;
         $this->pathologyRepository = $pathologyRepository;
         $this->prestationRepository = $prestationRepository;
+        $this->allergyRepository = $allergyRepository;
+        $this->doctorRepository = $doctorRepository;
     }
 
     public function index()
@@ -76,7 +84,7 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $prestations = $this->prestationRepository->getAll();
-        return view('dashboard.patient.create', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes','prestations'));
+        return view('dashboard.patient.create', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'prestations'));
     }
 
     public function store(Request $request)
@@ -144,11 +152,28 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $bloodTypes = BloodType::all();
-         $prestations = $this->prestationRepository->getAll();
+        $prestations = $this->prestationRepository->getAll();
         $mainPathologies = $this->pathologyRepository->getByType(1);
         $associatePathologies = $this->pathologyRepository->getByType(2);
+        $allergies = $this->allergyRepository->getAll();
+        $doctors = $this->doctorRepository->getAll();
 
-        return view('dashboard.patient.show', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'mainPathologies', 'associatePathologies','prestations'));
+        return view('dashboard.patient.show', compact(
+            'allergies',
+            'categories',
+            'matrimonials',
+            'countries',
+            'contacts',
+            'documents',
+            'levels',
+            'contactTypes',
+            'patient',
+            'bloodTypes',
+            'mainPathologies',
+            'associatePathologies',
+            'prestations',
+            'doctors',
+        ));
     }
 
     public function edit(Patient $patient)
@@ -169,15 +194,13 @@ class PatientController extends Controller
                 ], $inputs);
             }
 
-            if(isset($request->hygiene_vie)){
+            if (isset($request->hygiene_vie)) {
                 $inputs = array_replace([
                     'fulfilment' => 0,
                     'motivation' => 0,
                     'boredom' => 0,
                     'stress' => 0,
                 ], $inputs);
-
-
             }
 
             $this->patientRepository->update($patient->id, $inputs);

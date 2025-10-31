@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AllergyController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InsurerController;
@@ -24,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     # Patient
+    Route::resource('/appointments', AppointmentController::class);
+    Route::resource('/allergy-pat', AllergyController::class);
     Route::resource('/patient', PatientController::class);
     Route::resource('/insurer', InsurerController::class);
     Route::resource('/contact', ContactController::class);

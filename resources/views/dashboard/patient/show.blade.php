@@ -23,7 +23,7 @@
                         <li class="nav-item d-none d-sm-inline-block" id="interoMedi">
                             <a href="#" class="nav-link">Intérogation médicale</a>
                         </li>
-                        <li class="nav-item d-none d-sm-inline-block">
+                        <li class="nav-item d-none d-sm-inline-block" id="appointment">
                             <a href="#" class="nav-link">Rendez-vous</a>
                         </li>
                         <li class="nav-item d-none d-sm-inline-block">
@@ -129,6 +129,7 @@
 
                             @include('dashboard.patient.partials._interrogation-medical')
                             @include('dashboard.patient.partials._prestations')
+                            @include('dashboard.patient.partials._appointment')
 
                         </div>
                     </div>
@@ -155,6 +156,13 @@
                 $('#delete-form-insurer-' + id).submit();
             }
         });
+        $(document).on('click', '.btn-delete-allergy', function(e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+            if (confirm('Voulez-vous vraiment supprimer cette allergie du patient ?')) {
+                $('#delete-form-allergy-' + id).submit();
+            }
+        });
 
         $('#interoMedi').click(() => {
             $('#admin-data-header').attr('hidden', true);
@@ -162,10 +170,26 @@
 
             $('#interro-medical-header').attr('hidden', false);
             $('#home-data').removeClass('active');
+            $('#appointment').removeClass('active');
             $('#prestations').removeClass('active');
             $('#custom-tabs-four-tabContent').attr('hidden', true);
             $('#prestations-content').attr('hidden', true);
             $('#custom-tabs-four-tabContent2').attr('hidden', false);
+            $('#appointment-content').attr('hidden', true);
+        });
+
+        $('#appointment').click(() => {
+            $('#admin-data-header').attr('hidden', true);
+            $('#appointment').addClass('active');
+
+            $('#appointment-content').attr('hidden', false);
+            $('#interro-medical-header').attr('hidden', true);
+            $('#home-data').removeClass('active');
+            $('#prestations').removeClass('active');
+            $('#interoMedi').removeClass('active');
+            $('#custom-tabs-four-tabContent').attr('hidden', true);
+            $('#prestations-content').attr('hidden', true);
+            $('#custom-tabs-four-tabContent2').attr('hidden', true);
         });
 
         $('#home-data').click(() => {
@@ -175,13 +199,16 @@
             $('#interro-medical-header').attr('hidden', true);
             $('#home-data').addClass('active');
             $('#prestations').removeClass('active');
+            $('#appointment').removeClass('active');
             $('#custom-tabs-four-tabContent').attr('hidden', false);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);
             $('#prestations-content').attr('hidden', true);
+            $('#appointment-content').attr('hidden', true);
         })
         $('#prestations').click(() => {
             $('#admin-data-header').attr('hidden', true);
             $('#interoMedi').removeClass('active');
+            $('#appointment').removeClass('active');
 
             $('#interro-medical-header').attr('hidden', true);
             $('#home-data').removeClass('active');
@@ -190,6 +217,7 @@
             $('#custom-tabs-four-tabContent').attr('hidden', true);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);
             $('#prestations-content').attr('hidden', false);
+            $('#appointment-content').attr('hidden', true);
         });
 
         $('#savePathologyBtn').click((e) => {
@@ -269,6 +297,60 @@
                 $('#contact_id').val('');
                 $('#formContact').attr('action', '{{ route('contact.store') }}');
                 $('#formContact input[name="_method"]').remove();
+            });
+
+
+
+            // Mode création allergie
+            $('#saveAllergyBtn').click((e) => {
+                e.preventDefault();
+                if (!ControlRequiredFields($('#formAllergy .required'))) {
+                    return -1;
+                }
+
+                $('#formAllergy').submit();
+            });
+
+
+            // Quand on clique sur "modifier allergy"
+            $('.btn-edit-allergy').on('click', function(e) {
+                e.preventDefault();
+                console.log("all 1");
+                // Récupérer les données
+                let id = $(this).data('id');
+                let name = $(this).data('name');
+                let comment = $(this).data('comment');
+                let detection_date = $(this).data('detection_date');
+                let detection_end_date = $(this).data('detection_end_date');
+
+                // Modifier le titre du modal
+                $('#allergyModalTitle').text('Modifier l\'allergie');
+                console.log("all 2");
+
+                // Remplir les champs
+                $('input[name="name"]').val(name);
+                // $('select[name="contact_type_id"]').val(type).trigger('change');
+                $('input[name="comment"]').val(comment);
+                $('input[name="detection_date"]').val(detection_date);
+                $('input[name="detection_end_date"]').val(detection_end_date);
+                console.log("all 3");
+
+                // Changer l’action du formulaire vers la route "update"
+                $('#formAllergy').attr('action', '/allergy-pat/' + id);
+                $('#formAllergy').append('<input type="hidden" name="_method" value="PUT">');
+
+                // Ouvrir le modal
+                console.log("all 4");
+                $('#new-allergy').modal('show');
+            });
+
+            // Quand on ferme le modal → réinitialiser le formulaire
+            $('#new-allergy').on('hidden.bs.modal', function() {
+                $('#formAllergy')[0].reset();
+                $('#allergyModalTitle').text('Nouvelle allergie');
+                $('#allergy_id').val('');
+                $('#formAllergy').attr('action', '{{ route('allergy-pat.store') }}');
+                $('#formAllergy input[name="_method"]').remove();
             });
 
         })
@@ -506,5 +588,22 @@
 
 
         })
+    </script>
+
+    <script>
+        $(function() {
+            // Highlight selected doctor
+            $('.doctor-item').on('click', function(e) {
+                e.preventDefault();
+                $('.doctor-item').removeClass('active');
+                $(this).addClass('active');
+                $('#doctor_id').val($(this).data('id'));
+            });
+
+            // Auto-hide alert after 3s
+            setTimeout(() => {
+                $('.alert').fadeOut('slow');
+            }, 3000);
+        });
     </script>
 @endsection
