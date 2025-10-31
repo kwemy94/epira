@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Hospitalisation;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\Prestation;
+use Illuminate\Support\Facades\DB;
 
 class HospitalisationController extends Controller
 {
@@ -24,7 +26,9 @@ class HospitalisationController extends Controller
     {
         $doctors = Doctor::all();
         $prestation_id = $request->prestation_id;
-        return view('dashboard.hospitalisation.create',compact('doctors','prestation_id'));
+        $patient_id = $request->patient_id;
+        $patient = Patient::find($patient_id);
+        return view('dashboard.hospitalisation.create',compact('doctors','prestation_id','patient'));
     }
 
     /**
@@ -39,6 +43,7 @@ class HospitalisationController extends Controller
         try {
               $hospitalisation = Hospitalisation::create([
             'prestation_id' => $inputs['prestation_id'],
+            'reference' => $this->generateReference('HOSP'),
             'service' => $inputs['service'],
             'doctor' => $inputs['doctor_id'],
             'enter_date' => $inputs['enter_date'],
@@ -47,9 +52,9 @@ class HospitalisationController extends Controller
             'motif' => $inputs['motif'] ?? null,
             'comment' => $inputs['comment'] ?? null,
         ]);
-        $patients = Patient::all();
+        $prestations = Prestation::all();
 
-        return View('dashboard.patient.index', compact('patients'));
+        return View('dashboard.prestation.index', compact('prestations'));
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -85,5 +90,22 @@ class HospitalisationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function generateReference($prefix){
+
+        $year = date('Y');
+
+        $lastReference = DB::table("hospitalisations")
+            ->where("reference", 'like', $prefix . $year . '%')
+            ->orderBy("reference", 'desc')
+            ->value("reference");
+
+        if($lastReference){
+            $number = intval(substr($lastReference, strlen($prefix . $year))) + 1;
+        } else {    
+            $number = 1;
+        }   
+        return $prefix . $year . str_pad($number, 5, '0', STR_PAD_LEFT);
     }
 }

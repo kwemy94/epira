@@ -11,7 +11,7 @@
                             </div>
                             <div class="modal-body">
                                 @csrf
-                                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+                                <input type="hidden" name="patient_id" value="{{isset( $patient->id)?$patient->id:'' }}">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">

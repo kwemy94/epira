@@ -21,11 +21,16 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('category.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
+                        <i class="nav-icon fas fa-layer-group"></i>
                         <p>Catégorie</p>
                     </a>
                 </li>
-                
+                <li class="nav-item">
+                    <a href="{{ route('prestation.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-stethoscope"></i>
+                        <p>Prestation</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

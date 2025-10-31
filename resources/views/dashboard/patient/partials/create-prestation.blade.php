@@ -54,7 +54,7 @@
                                 @endif
                             </div>
                             <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                                 <button type="button" id="savePrestationBtn"
                                     class="btn btn-primary">Enregistrer</button>
                             </div>

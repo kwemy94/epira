@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+    body
+    {
+        font-family: 'Nunito', sans-serif;
+        margin: revert!important;
+    }
+</style>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

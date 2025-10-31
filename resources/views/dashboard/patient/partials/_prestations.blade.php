@@ -34,11 +34,11 @@
                         
                         @forelse ($prestations as $prestation)
                             <tr>
-                                <td>{{ $prestation->patient->firstname }}</td>
-                                <td>{{ $prestation->name }}</td>
-                                 <td>chirugie</td>
+                                <td>{{ $prestation->hospitalisation->reference }}</td>
+                                <td>{{ $prestation->type->name }}</td>
+                                 <td>{{ $prestation->type->code }}</td>
                                 <td>{{ $prestation->created_at }}</td>
-                                <td>mama</td>
+                                <td>{{ $prestation->hospitalisation->doctor }}</td>
                                 <td><button  class="btn btn-sm btn-default" >En cours</button></td>
                                 <td class="text-right">
                                     <div class="dropdown">
