@@ -223,6 +223,28 @@ class PatientController extends Controller
         dd("to be delete");
     }
 
+    public function fixAppointment(Request $request)
+    {
+        try {
+            $inputs = $request->all();
+            $patient = $this->patientRepository->getById($request->patient_id);
+            $patient->doctor()->syncWithoutDetaching([
+                $inputs['patient_id'] => [
+                    'appointment_date' => $inputs['appointment_date'],
+                    'appointment_start_time' => $inputs['appointment_start_time'],
+                    'appointment_end_time' => $inputs['appointment_end_time'],
+                    'comment' => $inputs['comment'],
+                ],
+            ]);
+
+
+            return redirect()->back()->with("success", "Rendez-vous crée avec succès");
+        } catch (\Throwable $th) {
+            Log::info("Erreur creation RDV: " . $th->getMessage());
+            return redirect()->back()->with("error", "Erreur de création de rendez-vous du patient");
+        }
+    }
+
     public function generate(string $table, string $column = 'reference', string $prefix = 'P'): string
     {
         $year = date('Y');
