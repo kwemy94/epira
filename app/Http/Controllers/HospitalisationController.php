@@ -54,7 +54,7 @@ class HospitalisationController extends Controller
         ]);
         $prestations = Prestation::all();
 
-        return View('dashboard.prestations.index', compact('prestations'));
+        return View('dashboard.prestation.index', compact('prestations'));
         } catch (\Throwable $th) {
             dd($th);
         }

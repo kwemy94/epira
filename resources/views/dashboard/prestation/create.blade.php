@@ -19,7 +19,7 @@
 
 
 
-    <section class="content">
+    <section class="content" style="max-width: 600px;">
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
@@ -70,10 +70,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="ad">Prestation </label>
-                                        <select name="prestation_type_id" id=""  class="form-control required">>
+                                        <select name="prestation_type_id" id="" onchange="document.getElementById('formPrestation').submit()"  class="form-control required">>
                                         <option value="">Veuillez sélectionner une prestation</option>
                                         @foreach($prestation_types as $type)
                                             <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -85,11 +85,11 @@
                                                                     
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-between">
+                        <!-- <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                             <button type="button" id="savePrestationBtn"
-                                class="btn btn-primary">Enregistrer</button>
-                        </div>
+                                class="btn btn-primary">Soumettre</button>
+                        </div> -->
                     </form>
 
                 </div>
