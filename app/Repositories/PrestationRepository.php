@@ -20,7 +20,7 @@ class PrestationRepository extends ResourceRepository {
         ->first();
     }
     public function getAll(){
-        return $this->model->with('patient','insurer')
+        return $this->model->with('patient','insurer','type','hospitalisation','consultation','analyse','pharmacie','radiologie','visite','devis')
         ->orderBy('id','DESC')
         ->get();
     }
