@@ -29,7 +29,10 @@ class PrestationController extends Controller
      */
     public function index()
     {
-        //
+        $prestations=$this->prestationRepository->getAll();
+        $patients=$this->patientRepository->getAll();
+
+        return view('dashboard.prestation.index',compact('prestations','patients'));
     }
 
     /**
@@ -41,11 +44,12 @@ class PrestationController extends Controller
         $patient_id = $request->route('patient_id');
         $prestation_types = $this->prestationTypesRepository->getAll();
         $prestations = $this->prestationRepository->getAll();
+        $patients=$this->patientRepository->getAll();
         if($patient_id){
             $patient = $this->patientRepository->getById($patient_id);
              return view('dashboard.prestation.create', compact( 'prestations','prestation_types','patient'));
         }
-        return view('dashboard.prestation.create', compact( 'prestations','prestation_types'));
+        return view('dashboard.prestation.create', compact( 'prestations','prestation_types','patients'));
     }
 
     /**
@@ -57,11 +61,9 @@ class PrestationController extends Controller
         try {
             $inputs = $request->all();
            
-            
-            $patient = $this->patientRepository->getByName($inputs['patient_id']);
-            $patient_id = $patient->id;
+            $patient_id = $this->patientRepository->getByName($inputs['patient_id'])==null ?$inputs['patient_id']:$this->patientRepository->getByName($inputs['patient_id'])->id;
+
             $inputs['patient_id']=$patient_id;
-            //  dd($inputs);
             $prestation = $this->prestationRepository->store($inputs);
             $type = $inputs['prestation_type_id'];
             // dd($type);

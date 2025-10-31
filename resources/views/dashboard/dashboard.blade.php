@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Tableau de bord</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                        <li class="breadcrumb-item active">Tableau de bord</li>
                     </ol>
                 </div>
             </div>
@@ -31,22 +31,22 @@
                             <h3>Assuré</h3>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="nav-icon fas fa-user-shield"></i>
                         </div>
-                        <a href="#" class="small-box-footer" style="color: black">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer" style="color: black">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="small-box" style="background: white">
                         <div class="inner">
-                            <h3>_</h3>
+                            <h3>{{$patientsCount}}</h3>
 
                             <h3>Les patients</h3>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{ route('patient.index') }}" class="small-box-footer" style="color: black">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('patient.index') }}" class="small-box-footer" style="color: black">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 
@@ -58,23 +58,23 @@
                             <h3>Rendez-vous</h3>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="nav-icon fas fa-calendar-check"></i>
                         </div>
-                        <a href="#" class="small-box-footer" style="color: black">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer" style="color: black">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 
                 <div class="col-lg-3 col-6">
                     <div class="small-box " style="background: white">
                         <div class="inner">
-                            <h3>53</h3>
+                            <h3>{{$prestationsCount}}</h3>
 
                             <h3>Prestations</h3>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="nav-icon fas fa-stethoscope"></i>
                         </div>
-                        <a href="#" class="small-box-footer" style="color: black">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('prestation.index') }}" class="small-box-footer" style="color: black">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Hospitalisation;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\Prestation;
 use Illuminate\Support\Facades\DB;
 
 class HospitalisationController extends Controller
@@ -51,9 +52,9 @@ class HospitalisationController extends Controller
             'motif' => $inputs['motif'] ?? null,
             'comment' => $inputs['comment'] ?? null,
         ]);
-        $patients = Patient::all();
+        $prestations = Prestation::all();
 
-        return View('dashboard.patient.index', compact('patients'));
+        return View('dashboard.prestations.index', compact('prestations'));
         } catch (\Throwable $th) {
             dd($th);
         }

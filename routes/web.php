@@ -6,6 +6,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\InsurerController;
 use App\Http\Controllers\PathologyController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\PharmacieController;
 use App\Http\Controllers\RadiologieController;
 use App\Http\Controllers\VisiteController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     // return view('welcome');
@@ -25,7 +27,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard.dashboard');
+    return app(DashboardController::class)->index();
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
