@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hospitalisation;
+use App\Models\Doctor;
+use App\Models\Patient;
 
 class HospitalisationController extends Controller
 {
@@ -17,9 +20,11 @@ class HospitalisationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $doctors = Doctor::all();
+        $prestation_id = $request->prestation_id;
+        return view('dashboard.hospitalisation.create',compact('doctors','prestation_id'));
     }
 
     /**
@@ -27,7 +32,27 @@ class HospitalisationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->all();
+        // $inputs['prestation_id']=$request->route('prestation_id');
+        // dd($inputs);
+      
+        try {
+              $hospitalisation = Hospitalisation::create([
+            'prestation_id' => $inputs['prestation_id'],
+            'service' => $inputs['service'],
+            'doctor' => $inputs['doctor_id'],
+            'enter_date' => $inputs['enter_date'],
+            'exit_date' => $inputs['exit_date'],
+            'chambre' => $inputs['chambre'],
+            'motif' => $inputs['motif'] ?? null,
+            'comment' => $inputs['comment'] ?? null,
+        ]);
+        $patients = Patient::all();
+
+        return View('dashboard.patient.index', compact('patients'));
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     /**

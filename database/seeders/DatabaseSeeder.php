@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             StudyLevelSeeder::class,
             UserSeeder::class,
             BloodTypeSeeder::class,
+            PrestationTypeSeeder::class,
         ]);
     }
 }

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->date('enter_date');
             $table->date('exit_date');
             $table->string('doctor');
-            $table->string('motif');
+            $table->string('reference');
+            $table->string('motif')->nullable();
             $table->string('service');
-            $table->string('chambre');
+            $table->string('chambre')->nullable();
             $table->text('comment')->nullable();
             $table->timestamps();
         });

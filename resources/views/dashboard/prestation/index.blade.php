@@ -2,10 +2,10 @@
 
 
 @section('admin-content')
-    <x-page-header title="Modification patient" :breadcrumbs="[
+    <x-page-header title="Modification prestation" :breadcrumbs="[
         [
             'label' => 'Patient',
-            'url' => route('patient.index'),
+            'url' => route('prestation.index'),
         ],
         ['label' => 'Edit'],
     ]" />

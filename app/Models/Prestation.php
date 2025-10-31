@@ -10,7 +10,7 @@ class Prestation extends Model
     use HasFactory;
 
     protected $guarded =['id'];
-    protected $fillable =['prestation_type_id',"name",'amount'];
+    protected $fillable =['prestation_type_id',"patient_id",'insurer_id'];
 
     public function patient(){
          return $this->belongsTo(Patient::class);

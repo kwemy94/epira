@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId("prestation_id")->constraint('prestations')->onDelete('cascade');
             $table->string('doctor');
-             $table->string('external_doctor');
-            $table->date('analysis_date');
-            $table->date('result_date');
+            $table->string('referene');
+             $table->string('external_doctor')->nullable();
+            $table->date('analysis_date')->nullable();
+            $table->date('result_date')->nullable();
             $table->string('service');
             $table->text('comment')->nullable();
             $table->timestamps();

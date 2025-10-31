@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
             $table->foreignId("prestation_id")->constraint('prestations')->onDelete('cascade');
+            $table->string('reference');
             $table->string('pharmacien');
             $table->date('date_p');
             $table->integer('service');

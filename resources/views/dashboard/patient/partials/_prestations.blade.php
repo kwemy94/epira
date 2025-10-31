@@ -6,10 +6,11 @@
 
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
-                        <button type="button" data-toggle="modal" data-target="#new-prestation"
+                        <!-- <button type="button" data-toggle="modal" data-target="#new-prestation" href="{{ route('prestation.create') }}" -->
+                        <a type="button"  href="{{ route('prestation.create2',$patient->id) }}"
                             class="btn bg-gradient-primary btn-sm">
                             <i class="fa fa-plus"></i> Prestations
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

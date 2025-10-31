@@ -8,17 +8,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\PrestationRepository;
 use App\Repositories\PatientRepository;
+use App\Repositories\PrestationTypesRepository;
 
 class PrestationController extends Controller
 {
     private $prestationRepository;
     private $patientRepository;
+    private $prestationTypesRepository;
 
     public function __construct(
         PrestationRepository $prestationRepository ,PatientRepository $patientRepository,
+        PrestationTypesRepository $prestationTypesRepository
     ) {
         $this->prestationRepository = $prestationRepository;
-         $this->patientRepository = $patientRepository;
+        $this->patientRepository = $patientRepository;
+        $this->prestationTypesRepository = $prestationTypesRepository;
     }
     /**
      * Display a listing of the resource.
@@ -31,9 +35,17 @@ class PrestationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        //get patient_id from route parameter
+        $patient_id = $request->route('patient_id');
+        $prestation_types = $this->prestationTypesRepository->getAll();
+        $prestations = $this->prestationRepository->getAll();
+        if($patient_id){
+            $patient = $this->patientRepository->getById($patient_id);
+             return view('dashboard.prestation.create', compact( 'prestations','prestation_types','patient'));
+        }
+        return view('dashboard.prestation.create', compact( 'prestations','prestation_types'));
     }
 
     /**
@@ -44,16 +56,54 @@ class PrestationController extends Controller
         //
         try {
             $inputs = $request->all();
-            // dd($inputs);
-            DB::beginTransaction();
-            $patient_id = $this->patientRepository->getByName($inputs['patient_id'])->id;
+           
+            
+            $patient = $this->patientRepository->getByName($inputs['patient_id']);
+            $patient_id = $patient->id;
             $inputs['patient_id']=$patient_id;
+            //  dd($inputs);
             $prestation = $this->prestationRepository->store($inputs);
-            DB::commit();
+            $type = $inputs['prestation_type_id'];
+            // dd($type);
+            switch ($type) {
+                case '1':
+                    return view('dashboard.hospitalisation.create')->compact('prestation','patient');
+                    // redirect()->route('hospitalisation.create', ['prestation_id' => $prestation->id, 'patient'=>$patient]);
+                    break;
+                case '2':
+                    # code...
+                    break;      
+                case '3':
+                    # code...
+                    break; 
+                case '4':
+                    # code...
+                    break;
+                case '5':
+                    # code...
+                    break;
+                case '6':
+                    # code...
+                    break;  
+                case '7':
+                    # code...
+                    break;
+                case '8':
+                    redirect()->route('devis.create', ['prestation_id' => $prestation->id]);
+                    break;  
+                    
+                default:
+                
+                    return redirect()->route('hospitalisation.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
+
+                    //  return view('dashboard.hospitalisation.create')->compact('prestation','patient');
+                    break;
+            }
+            
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error("Erreur create prestation : " . $th->getMessage());
-            return redirect()->back()->with('error', 'Echec création de la prestation');
+            return redirect()->back()->with('error', $th->getMessage());
         }
         return redirect()->back()->with('success', 'Prestation créée avec succès');
     }

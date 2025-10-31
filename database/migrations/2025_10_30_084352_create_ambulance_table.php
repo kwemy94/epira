@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('ambulances', function (Blueprint $table) {
             $table->id();
               $table->foreignId("prestation_id")->constraint('prestations')->onDelete('cascade');
+            $table->string('referene');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('doctor');
             $table->string('service');
             $table->string('type_ambulance');
-            $table->string('motif');
+            $table->string('motif')->nullable();
             $table->text('comment')->nullable();
             $table->timestamps();
         });

@@ -10,6 +10,7 @@
                             </div>
                             <div class="modal-body">
                                 @csrf
+                                @if(isset($patient))
                                 <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                 <div class="row">
                                   
@@ -50,6 +51,7 @@
                                     </div>
                                                                         
                                 </div>
+                                @endif
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
@@ -60,3 +62,5 @@
                     </div>
                 </div>
             </div>
+
+  

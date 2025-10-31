@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
             $table->foreignId("prestation_id")->constraint('prestations')->onDelete('cascade');
+            $table->string('reference');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('doctor');
             $table->integer('unit_price');
             $table->integer('tarif');
             $table->boolean('paye');
-            $table->date('payment_date');
-            $table->string('payment_mode');
+            $table->date('payment_date')->nullable();
+            $table->string('payment_mode')->nullable();
             $table->text('comment')->nullable();
             $table->timestamps();
         });

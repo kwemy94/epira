@@ -9,6 +9,7 @@ use App\Http\Controllers\PathologyController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrestationController;
+use App\Http\Controllers\HospitalisationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,6 +39,8 @@ Route::middleware('auth')->group(function () {
 
     //Prestations
     Route::resource('/prestation', PrestationController::class);
+    Route::get('/prestation/create2/{patient_id}', [PrestationController::class, 'create'])->name('prestation.create2');
+    Route::get('/hopitalisation/create2/{patient_id}/{prestation_id}', [HospitalisationController::class, 'create'])->name('hospitalisation.create2');
     Route::resource('/consultation', ConsultationController::class); 
     Route::resource('/visite', VisiteController::class);
 

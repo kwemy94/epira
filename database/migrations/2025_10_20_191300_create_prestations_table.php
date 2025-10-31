@@ -14,7 +14,7 @@ return new class extends Migration
         if(!Schema::hasTable('prestations')){
         Schema::create('prestations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('insurer_id');

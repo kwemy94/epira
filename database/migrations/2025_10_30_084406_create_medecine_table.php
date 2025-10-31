@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("prestation_id")->constraint('prestations')->onDelete('cascade');
             $table->foreignId("product_id")->constraint('products')->onDelete('cascade');
+            $table->string('referene');
             $table->integer('unit_price');
             $table->integer('quantity');
             $table->integer('total_amount');

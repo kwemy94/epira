@@ -43,6 +43,7 @@ class InsurerController extends Controller
             // dd($inputs);
             DB::beginTransaction();
             $insurer = $this->insurerRepository->store($inputs);
+            
             $insurer->patient()->attach($inputs['patient_id']);
             DB::commit();
         } catch (\Throwable $th) {
@@ -50,7 +51,7 @@ class InsurerController extends Controller
             Log::error("Erreur create insurer : " . $th->getMessage());
             return redirect()->back()->with('error', 'Echec création assureur');
         }
-        return redirect()->back()->with('success', 'Assureur crée avec succès');
+        return redirect()->back()->with(['success', 'Assureur crée avec succès','insurer'=>$insurer]);
     }
 
     /**

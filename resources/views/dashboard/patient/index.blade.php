@@ -74,7 +74,8 @@
                                                             title="Détails">
                                                             <i class="fas fa-eye text-primary"></i> Détails
                                                         </a>
-                                                        <a class="dropdown-item"  data-toggle="modal" data-target="#new-prestation"
+                                                        <!-- <a class="dropdown-item" href="{{ route('prestation.create') }}"  data-toggle="modal" data-target="#new-prestation" -->
+                                                        <a  class="dropdown-item" href="{{ route('prestation.create2',$patient->id) }}"  
                                                            
                                                             title="Ajouter une prestation">
                                                             <i class="fas fa-plus text-success"></i> Prestation
