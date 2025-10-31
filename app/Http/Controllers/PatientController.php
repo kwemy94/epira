@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\CountryRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\DoctorRepository;
 use App\Repositories\MatrimonialRepository;
 use App\Repositories\PathologyRepository;
 use App\Repositories\PrestationRepository;
@@ -35,6 +36,7 @@ class PatientController extends Controller
     private $pathologyRepository;
     private $prestationRepository;
     private $allergyRepository;
+    private $doctorRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -48,6 +50,7 @@ class PatientController extends Controller
         PathologyRepository $pathologyRepository,
         PrestationRepository $prestationRepository,
         AllergyRepository $allergyRepository,
+        DoctorRepository $doctorRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
@@ -61,6 +64,7 @@ class PatientController extends Controller
         $this->pathologyRepository = $pathologyRepository;
         $this->prestationRepository = $prestationRepository;
         $this->allergyRepository = $allergyRepository;
+        $this->doctorRepository = $doctorRepository;
     }
 
     public function index()
@@ -80,7 +84,7 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $prestations = $this->prestationRepository->getAll();
-        return view('dashboard.patient.create', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes','prestations'));
+        return view('dashboard.patient.create', compact('categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'prestations'));
     }
 
     public function store(Request $request)
@@ -148,12 +152,28 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $bloodTypes = BloodType::all();
-         $prestations = $this->prestationRepository->getAll();
+        $prestations = $this->prestationRepository->getAll();
         $mainPathologies = $this->pathologyRepository->getByType(1);
         $associatePathologies = $this->pathologyRepository->getByType(2);
         $allergies = $this->allergyRepository->getAll();
-// dd($allergies, $patient);
-        return view('dashboard.patient.show', compact('allergies', 'categories', 'matrimonials', 'countries', 'contacts', 'documents', 'levels', 'contactTypes', 'patient', 'bloodTypes', 'mainPathologies', 'associatePathologies','prestations'));
+        $doctors = $this->doctorRepository->getAll();
+
+        return view('dashboard.patient.show', compact(
+            'allergies',
+            'categories',
+            'matrimonials',
+            'countries',
+            'contacts',
+            'documents',
+            'levels',
+            'contactTypes',
+            'patient',
+            'bloodTypes',
+            'mainPathologies',
+            'associatePathologies',
+            'prestations',
+            'doctors',
+        ));
     }
 
     public function edit(Patient $patient)
@@ -174,7 +194,7 @@ class PatientController extends Controller
                 ], $inputs);
             }
 
-            if(isset($request->hygiene_vie)){
+            if (isset($request->hygiene_vie)) {
                 $inputs = array_replace([
                     'fulfilment' => 0,
                     'motivation' => 0,

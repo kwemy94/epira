@@ -23,7 +23,7 @@
                         <li class="nav-item d-none d-sm-inline-block" id="interoMedi">
                             <a href="#" class="nav-link">Intérogation médicale</a>
                         </li>
-                        <li class="nav-item d-none d-sm-inline-block">
+                        <li class="nav-item d-none d-sm-inline-block" id="appointment">
                             <a href="#" class="nav-link">Rendez-vous</a>
                         </li>
                         <li class="nav-item d-none d-sm-inline-block">
@@ -129,6 +129,7 @@
 
                             @include('dashboard.patient.partials._interrogation-medical')
                             @include('dashboard.patient.partials._prestations')
+                            @include('dashboard.patient.partials._appointment')
 
                         </div>
                     </div>
@@ -169,10 +170,26 @@
 
             $('#interro-medical-header').attr('hidden', false);
             $('#home-data').removeClass('active');
+            $('#appointment').removeClass('active');
             $('#prestations').removeClass('active');
             $('#custom-tabs-four-tabContent').attr('hidden', true);
             $('#prestations-content').attr('hidden', true);
             $('#custom-tabs-four-tabContent2').attr('hidden', false);
+            $('#appointment-content').attr('hidden', true);
+        });
+
+        $('#appointment').click(() => {
+            $('#admin-data-header').attr('hidden', true);
+            $('#appointment').addClass('active');
+
+            $('#appointment-content').attr('hidden', false);
+            $('#interro-medical-header').attr('hidden', true);
+            $('#home-data').removeClass('active');
+            $('#prestations').removeClass('active');
+            $('#interoMedi').removeClass('active');
+            $('#custom-tabs-four-tabContent').attr('hidden', true);
+            $('#prestations-content').attr('hidden', true);
+            $('#custom-tabs-four-tabContent2').attr('hidden', true);
         });
 
         $('#home-data').click(() => {
@@ -182,13 +199,16 @@
             $('#interro-medical-header').attr('hidden', true);
             $('#home-data').addClass('active');
             $('#prestations').removeClass('active');
+            $('#appointment').removeClass('active');
             $('#custom-tabs-four-tabContent').attr('hidden', false);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);
             $('#prestations-content').attr('hidden', true);
+            $('#appointment-content').attr('hidden', true);
         })
         $('#prestations').click(() => {
             $('#admin-data-header').attr('hidden', true);
             $('#interoMedi').removeClass('active');
+            $('#appointment').removeClass('active');
 
             $('#interro-medical-header').attr('hidden', true);
             $('#home-data').removeClass('active');
@@ -197,6 +217,7 @@
             $('#custom-tabs-four-tabContent').attr('hidden', true);
             $('#custom-tabs-four-tabContent2').attr('hidden', true);
             $('#prestations-content').attr('hidden', false);
+            $('#appointment-content').attr('hidden', true);
         });
 
         $('#savePathologyBtn').click((e) => {
@@ -567,5 +588,22 @@
 
 
         })
+    </script>
+
+    <script>
+        $(function() {
+            // Highlight selected doctor
+            $('.doctor-item').on('click', function(e) {
+                e.preventDefault();
+                $('.doctor-item').removeClass('active');
+                $(this).addClass('active');
+                $('#doctor_id').val($(this).data('id'));
+            });
+
+            // Auto-hide alert after 3s
+            setTimeout(() => {
+                $('.alert').fadeOut('slow');
+            }, 3000);
+        });
     </script>
 @endsection
