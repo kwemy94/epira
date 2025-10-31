@@ -20,6 +20,7 @@
                     <thead>
                         <tr>
                             <th>Médecin</th>
+                            <th>Date</th>
                             <th>Début</th>
                             <th>Fin</th>
                             <th>Statut</th>
@@ -29,27 +30,28 @@
 
                     <tbody>
 
-                        @forelse ($prestations as $prestation)
+                        @forelse ($patient->doctor as $doctor)
                             <tr>
-                                <td>{{ $prestation->patient->firstname }}</td>
-                                <td>{{ $prestation->name }}</td>
-                                <td>chirugie</td>
+                                <td>{{ $doctor->name }}</td>
+                                <td>{{ $doctor->pivot->appointment_date }}</td>
+                                <td>{{ $doctor->pivot->appointment_start_time }}</td>
+                                <td>{{ $doctor->pivot->appointment_end_time }}</td>
                                 <td><button class="btn btn-sm btn-default">En cours</button></td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-default" type="button"
-                                            id="actionsDrop-{{ $prestation->id }}" data-toggle="dropdown"
+                                            id="actionsDrop-{{ $doctor->id }}" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
 
                                         <div class="dropdown-menu dropdown-menu-right"
-                                            aria-labelledby="actionsDropdown{{ $prestation->id }}">
+                                            aria-labelledby="actionsDropdown{{ $doctor->id }}">
                                             <!-- Show -->
-                                            <a href="#" class="dropdown-item text-success btn-show-prestation"
-                                                data-id="{{ $prestation->id }}" title="Détails">
+                                            {{-- <a href="#" class="dropdown-item text-success btn-show-prestation"
+                                                data-id="{{ $doctor->id }}" title="Détails">
                                                 <i class="fas fa-eye mr-2"></i>Visualiser
-                                            </a>
+                                            </a> --}}
 
 
                                             <div class="dropdown-divider"></div>

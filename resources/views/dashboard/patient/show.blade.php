@@ -237,6 +237,16 @@
 
             $('#formPathology').submit();
         });
+
+        // appointment
+        $('#saveAppointmentBtn').click((e) => {
+            e.preventDefault();
+            if (!ControlRequiredFields($('#formAppointment .required'))) {
+                return -1;
+            }
+
+            $('#formAppointment').submit();
+        })
     </script>
     <script>
         $(document).ready(function() {
