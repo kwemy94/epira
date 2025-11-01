@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     
-                    <tbody>@dd($prestations)
+                    <tbody>
                         
                         @forelse ($prestations as $prestation)
                             <tr>

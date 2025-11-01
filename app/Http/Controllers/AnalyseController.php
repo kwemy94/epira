@@ -63,9 +63,8 @@ class AnalyseController extends Controller
             'comment' => $inputs['comment'] ?? null,
         ]);
         $prestations = $this->prestationRepository->getAll();
+        return redirect()->route('prestation.index')->with(["success"=>"Analyse créee avec succès",'prestations'=>$prestations]);
 
-        return View('dashboard.prestation.index', compact('prestations'))->with('success', 'Visite créée avec succès');
-    
         } catch (\Throwable $th) {
             dd($th);
         }

@@ -61,8 +61,7 @@ class VisiteController extends Controller
             'comment' => $inputs['comment'] ?? null,
         ]);
         $prestations = Prestation::all();
-
-        return View('dashboard.prestation.index', compact('prestations'))->with('success', 'Visite créée avec succès');
+        return redirect()->route('prestation.index')->with(["success"=>"Visite créee avec succès",'prestations'=>$prestations]);
     
         } catch (\Throwable $th) {
             dd($th);
