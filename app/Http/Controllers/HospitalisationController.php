@@ -65,7 +65,8 @@ class HospitalisationController extends Controller
         ]);
         $prestations = Prestation::all();
 
-        return View('dashboard.prestation.index', compact('prestations'));
+        return redirect()->route('prestation.index')->with(["success"=>"Hospitalisation créee avec succès",'prestations'=>$prestations]);
+
         } catch (\Throwable $th) {
             dd($th);
         }

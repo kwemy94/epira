@@ -61,9 +61,9 @@ class ConsultationController extends Controller
             'comment' => $inputs['comment'] ?? null,
         ]);
         $prestations = Prestation::all();
+        return redirect()->route('prestation.index')->with(["success"=>"Consultation créee avec succès",'prestations'=>$prestations]);
 
-        return View('dashboard.prestation.index', compact('prestations'));
-        } catch (\Throwable $th) {
+       } catch (\Throwable $th) {
             dd($th);
         }
     }
