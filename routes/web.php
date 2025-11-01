@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     # Patient
     Route::resource('/appointments', AppointmentController::class);
     Route::post('/appointments-fix', [PatientController::class, 'fixAppointment'])->name('fix.appointment');
+    Route::get('/dossier-patient/{id}', [PatientController::class, 'dossierPatient'])->name('dossier.patient');
     Route::resource('/allergy-pat', AllergyController::class);
     Route::resource('/patient', PatientController::class);
     Route::resource('/insurer', InsurerController::class);

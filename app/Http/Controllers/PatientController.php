@@ -153,42 +153,42 @@ class PatientController extends Controller
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
         $bloodTypes = BloodType::all();
-       
+
         // $prestations = $this->prestationRepository->getAll();
         $prestations = $this->prestationRepository->getByPatientId($patient->id);
         $prestations = $prestations->map(function ($prestation) {
-            if($prestation->hospitalisation){
-               $ref = $prestation->hospitalisation->reference;
-               $doc = $prestation->hospitalisation->doctor;
-               $motif = $prestation->hospitalisation->motif;
-            }elseif($prestation->consultation){
-               $ref = $prestation->consultation->reference;
-               $doc = $prestation->consultation->doctor;
-               $motif = $prestation->consultation->motif;
-            }elseif($prestation->visite){
-               $ref = $prestation->visite->reference;
-               $doc = $prestation->visite->doctor;
-               $motif = $prestation->visite->motif;
-            }elseif($prestation->analyse){
-               $ref = $prestation->analyse->reference;
-               $doc = $prestation->analyse->doctor;
-               $motif = $prestation->analyse->motif;
-            }elseif($prestation->radiologie){
-               $ref = $prestation->radiologie->reference;
-               $doc = $prestation->radiologie->doctor;
-               $motif = $prestation->radiologie->motif;
-            }elseif($prestation->ambulance){
-               $ref = $prestation->ambulance->reference;
-               $doc = $prestation->ambulance->doctor;
-               $motif = $prestation->ambulance->motif;
-            }elseif($prestation->pharmacie){
-               $ref = $prestation->pharmacie->reference;
-               $doc = $prestation->pharmacie->doctor;
-               $motif = $prestation->pharmacie->motif;
-            }elseif($prestation->devis){
-               $ref = $prestation->devis->reference;
-               $doc = $prestation->devis->doctor;
-               $motif = $prestation->devis->motif;
+            if ($prestation->hospitalisation) {
+                $ref = $prestation->hospitalisation->reference;
+                $doc = $prestation->hospitalisation->doctor;
+                $motif = $prestation->hospitalisation->motif;
+            } elseif ($prestation->consultation) {
+                $ref = $prestation->consultation->reference;
+                $doc = $prestation->consultation->doctor;
+                $motif = $prestation->consultation->motif;
+            } elseif ($prestation->visite) {
+                $ref = $prestation->visite->reference;
+                $doc = $prestation->visite->doctor;
+                $motif = $prestation->visite->motif;
+            } elseif ($prestation->analyse) {
+                $ref = $prestation->analyse->reference;
+                $doc = $prestation->analyse->doctor;
+                $motif = $prestation->analyse->motif;
+            } elseif ($prestation->radiologie) {
+                $ref = $prestation->radiologie->reference;
+                $doc = $prestation->radiologie->doctor;
+                $motif = $prestation->radiologie->motif;
+            } elseif ($prestation->ambulance) {
+                $ref = $prestation->ambulance->reference;
+                $doc = $prestation->ambulance->doctor;
+                $motif = $prestation->ambulance->motif;
+            } elseif ($prestation->pharmacie) {
+                $ref = $prestation->pharmacie->reference;
+                $doc = $prestation->pharmacie->doctor;
+                $motif = $prestation->pharmacie->motif;
+            } elseif ($prestation->devis) {
+                $ref = $prestation->devis->reference;
+                $doc = $prestation->devis->doctor;
+                $motif = $prestation->devis->motif;
             }
 
             //je veux ajouter ces infos a la prestation
@@ -267,14 +267,13 @@ class PatientController extends Controller
     {
         try {
             $inputs = $request->all();
+            // dd($inputs);
             $patient = $this->patientRepository->getById($request->patient_id);
-            $patient->doctor()->syncWithoutDetaching([
-                $inputs['patient_id'] => [
-                    'appointment_date' => $inputs['appointment_date'],
-                    'appointment_start_time' => $inputs['appointment_start_time'],
-                    'appointment_end_time' => $inputs['appointment_end_time'],
-                    'comment' => $inputs['comment'],
-                ],
+            $patient->doctor()->attach($inputs['doctor_id'], [
+                'appointment_date' => $inputs['appointment_date'],
+                'appointment_start_time' => $inputs['appointment_start_time'],
+                'appointment_end_time' => $inputs['appointment_end_time'],
+                'comment' => $inputs['comment'],
             ]);
 
 
@@ -303,5 +302,85 @@ class PatientController extends Controller
         $newNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
 
         return "{$prefix}{$year}{$newNumber}";
+    }
+
+
+    public function dossierPatient($id)
+    {
+        $patient = $this->patientRepository->getById($id);
+        // dd($patient);
+        $categories = $this->categoryRepository->getAll();
+        $matrimonials = $this->matrimonialRepository->getAll();
+        $countries = $this->countryRepository->getAll();
+        $contacts = $this->contactRepository->getAll();
+        $contactTypes = $this->contactTypeRepository->getAll();
+        $documents = $this->documentRepository->getAll();
+        $levels = $this->levelRepository->getAll();
+        $bloodTypes = BloodType::all();
+
+        // $prestations = $this->prestationRepository->getAll();
+        $prestations = $this->prestationRepository->getByPatientId($patient->id);
+        $prestations = $prestations->map(function ($prestation) {
+            if ($prestation->hospitalisation) {
+                $ref = $prestation->hospitalisation->reference;
+                $doc = $prestation->hospitalisation->doctor;
+                $motif = $prestation->hospitalisation->motif;
+            } elseif ($prestation->consultation) {
+                $ref = $prestation->consultation->reference;
+                $doc = $prestation->consultation->doctor;
+                $motif = $prestation->consultation->motif;
+            } elseif ($prestation->visite) {
+                $ref = $prestation->visite->reference;
+                $doc = $prestation->visite->doctor;
+                $motif = $prestation->visite->motif;
+            } elseif ($prestation->analyse) {
+                $ref = $prestation->analyse->reference;
+                $doc = $prestation->analyse->doctor;
+                $motif = $prestation->analyse->motif;
+            } elseif ($prestation->radiologie) {
+                $ref = $prestation->radiologie->reference;
+                $doc = $prestation->radiologie->doctor;
+                $motif = $prestation->radiologie->motif;
+            } elseif ($prestation->ambulance) {
+                $ref = $prestation->ambulance->reference;
+                $doc = $prestation->ambulance->doctor;
+                $motif = $prestation->ambulance->motif;
+            } elseif ($prestation->pharmacie) {
+                $ref = $prestation->pharmacie->reference;
+                $doc = $prestation->pharmacie->doctor;
+                $motif = $prestation->pharmacie->motif;
+            } elseif ($prestation->devis) {
+                $ref = $prestation->devis->reference;
+                $doc = $prestation->devis->doctor;
+                $motif = $prestation->devis->motif;
+            }
+
+            //je veux ajouter ces infos a la prestation
+            $prestation->reference = $ref ?? null;
+            $prestation->doctor = $doc ?? null;
+            $prestation->motif = $motif ?? null;
+            return $prestation;
+        });
+        $mainPathologies = $this->pathologyRepository->getByType(1);
+        $associatePathologies = $this->pathologyRepository->getByType(2);
+        $allergies = $this->allergyRepository->getAll();
+        $doctors = $this->doctorRepository->getAll();
+
+        return view('dashboard.patient.dossier_patient', compact(
+            'allergies',
+            'categories',
+            'matrimonials',
+            'countries',
+            'contacts',
+            'documents',
+            'levels',
+            'contactTypes',
+            'patient',
+            'bloodTypes',
+            'mainPathologies',
+            'associatePathologies',
+            'prestations',
+            'doctors',
+        ));
     }
 }
