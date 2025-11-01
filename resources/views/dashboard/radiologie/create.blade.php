@@ -2,12 +2,12 @@
 
 
 @section('admin-content')
-    <x-page-header title="Nouvelle hospitalisation" :breadcrumbs="[
+    <x-page-header title="Nouvelle radiologie" :breadcrumbs="[
         [
             'label' => 'Prestation',
             'url' => route('prestation.index'),
         ],
-        ['label' => 'Nouvelle hospitalisation'],
+        ['label' => 'Nouvelle radiologie'],
     ]" />
     <section class="content">
         <div class="container-fluid">
@@ -15,7 +15,7 @@
                 @include('dashboard.prestation.partials.details')
 
                 <div class="card-body ">
-                    <form action="{{ route('hospitalisation.store')}}" method="post">
+                    <form action="{{ route('radiologie.store')}}" method="post">
                         @csrf
                             <div class="row">
                             <div class="col-md-4">

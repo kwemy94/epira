@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HEALTHTECH AFRIQUE | Dashboard</title>
+    <title>HEALTHTECH AFRIQUE | Tableau de bord</title>
 
 
     <link rel="stylesheet"

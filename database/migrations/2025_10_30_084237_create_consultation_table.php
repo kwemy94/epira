@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('doctor');
             $table->integer('unit_price');
             $table->integer('tarif');
-            $table->boolean('paye');
+            $table->boolean('paye',0);
             $table->date('payment_date')->nullable();
             $table->string('payment_mode')->nullable();
             $table->text('comment')->nullable();

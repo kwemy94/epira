@@ -2,12 +2,12 @@
 
 
 @section('admin-content')
-    <x-page-header title="Nouvelle hospitalisation" :breadcrumbs="[
+    <x-page-header title="Nouvelle analyse" :breadcrumbs="[
         [
             'label' => 'Prestation',
             'url' => route('prestation.index'),
         ],
-        ['label' => 'Nouvelle hospitalisation'],
+        ['label' => 'Nouvelle analyse'],
     ]" />
     <section class="content">
         <div class="container-fluid">
@@ -15,12 +15,12 @@
                 @include('dashboard.prestation.partials.details')
 
                 <div class="card-body ">
-                    <form action="{{ route('hospitalisation.store')}}" method="post">
+                    <form action="{{ route('analyse.store')}}" method="post">
                         @csrf
                             <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="enter_date">Date d'entrée</label>
+                                    <label for="enter_date">Date d'analyse</label>
                                     <input type="date" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
                                     @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
@@ -29,16 +29,9 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="exit_date">Date de sortie</label>
+                                    <label for="exit_date">Date de résultat</label>
                                     <input type="date" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
                                     @error('exit_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="motif">Motif</label>
-                                    <input type="text" name="motif" id="motif" class="form-control @error('motif') is-invalid @enderror" value="{{ old('motif') }}">
-                                    @error('motif')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
 
@@ -59,19 +52,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="medecin_id">Chambre</label>
-                                    <select name="chambre" id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
+                                    <label for="external_doctor">Médecin externe</label>
+                                    <select name="external_doctor" id="external_doctor" class="form-control @error('external_doctor') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
-                                        <option value="1">VIP</option>
-                                        <option value="1">Moderne</option>
-                                        <option value="1">Classique</option>
+                                        <option value="Dr Nyam">Dr Nyam</option>
                                         <!-- @foreach($medecins ?? [] as $medecin)
                                             <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
                                                 {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
                                             </option>
                                         @endforeach -->
                                     </select>
-                                    @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
+                                    @error('external_doctor')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
 
@@ -90,7 +81,7 @@
                                     @error('service')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-
+                            
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="comment">Commentaire</label>

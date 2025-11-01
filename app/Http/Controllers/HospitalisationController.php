@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Hospitalisation;
 use App\Models\Doctor;
-use App\Models\Patient;
 use App\Models\Prestation;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\PrestationRepository;
+use App\Repositories\PatientRepository;
 
 class HospitalisationController extends Controller
 {
+    private $prestationRepository;
+    private $patientRepository;
+
+     public function __construct(
+        PrestationRepository $prestationRepository ,PatientRepository $patientRepository
+    ) {
+        $this->prestationRepository = $prestationRepository;
+        $this->patientRepository = $patientRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,9 +36,12 @@ class HospitalisationController extends Controller
     {
         $doctors = Doctor::all();
         $prestation_id = $request->prestation_id;
-        $patient_id = $request->patient_id;
-        $patient = Patient::find($patient_id);
-        return view('dashboard.hospitalisation.create',compact('doctors','prestation_id','patient'));
+        $patient_id = $request->patient;
+        // $prestation=$this->prestationRepository->getAll();
+        $prestation = $this->prestationRepository->getById($prestation_id);
+        $patient = $this->patientRepository->getById($patient_id);
+        // dd($patient,$prestation);
+        return view('dashboard.hospitalisation.create',compact('doctors','prestation_id','patient','prestation'));
     }
 
     /**
@@ -37,13 +50,11 @@ class HospitalisationController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-        // $inputs['prestation_id']=$request->route('prestation_id');
-        // dd($inputs);
       
         try {
               $hospitalisation = Hospitalisation::create([
             'prestation_id' => $inputs['prestation_id'],
-            'reference' => $this->generateReference('HOSP'),
+            'reference' => $this->prestationRepository->generateReference('HOSP'),
             'service' => $inputs['service'],
             'doctor' => $inputs['doctor_id'],
             'enter_date' => $inputs['enter_date'],

@@ -2,17 +2,17 @@
 
 
 @section('admin-content')
-    <x-page-header title="Nouvelle hospitalisation" :breadcrumbs="[
+    <x-page-header title="Nouvelle devis" :breadcrumbs="[
         [
             'label' => 'Prestation',
             'url' => route('prestation.index'),
         ],
-        ['label' => 'Nouvelle hospitalisation'],
+        ['label' => 'Nouvelle devis'],
     ]" />
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
-                @include('dashboard.prestation.partials.details')
+                @include('dashboard.devis.partials.details')
 
                 <div class="card-body ">
                     <form action="{{ route('hospitalisation.store')}}" method="post">

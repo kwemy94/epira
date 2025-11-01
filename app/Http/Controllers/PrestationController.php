@@ -30,6 +30,49 @@ class PrestationController extends Controller
     public function index()
     {
         $prestations=$this->prestationRepository->getAll();
+       
+        //formater les prestations pour recuperer les references des relations et le nom du medecin
+        $prestations = $prestations->map(function ($prestation) {
+            if($prestation->hospitalisation){
+               $ref = $prestation->hospitalisation->reference;
+               $doc = $prestation->hospitalisation->doctor;
+               $motif = $prestation->hospitalisation->motif;
+            }elseif($prestation->consultation){
+               $ref = $prestation->consultation->reference;
+               $doc = $prestation->consultation->doctor;
+               $motif = $prestation->consultation->motif;
+            }elseif($prestation->visite){
+               $ref = $prestation->visite->reference;
+               $doc = $prestation->visite->doctor;
+               $motif = $prestation->visite->motif;
+            }elseif($prestation->analyse){
+               $ref = $prestation->analyse->reference;
+               $doc = $prestation->analyse->doctor;
+               $motif = $prestation->analyse->motif;
+            }elseif($prestation->radiologie){
+               $ref = $prestation->radiologie->reference;
+               $doc = $prestation->radiologie->doctor;
+               $motif = $prestation->radiologie->motif;
+            }elseif($prestation->ambulance){
+               $ref = $prestation->ambulance->reference;
+               $doc = $prestation->ambulance->doctor;
+               $motif = $prestation->ambulance->motif;
+            }elseif($prestation->pharmacie){
+               $ref = $prestation->pharmacie->reference;
+               $doc = $prestation->pharmacie->doctor;
+               $motif = $prestation->pharmacie->motif;
+            }elseif($prestation->devis){
+               $ref = $prestation->devis->reference;
+               $doc = $prestation->devis->doctor;
+               $motif = $prestation->devis->motif;
+            }
+
+            //je veux ajouter ces infos a la prestation
+            $prestation->reference = $ref ?? null;
+            $prestation->doctor = $doc ?? null;
+            $prestation->motif = $motif ?? null;
+            return $prestation;
+        });
         $patients=$this->patientRepository->getAll();
 
         return view('dashboard.prestation.index',compact('prestations','patients'));
@@ -66,36 +109,34 @@ class PrestationController extends Controller
             $inputs['patient_id']=$patient_id;
             $prestation = $this->prestationRepository->store($inputs);
             $type = $inputs['prestation_type_id'];
-            // dd($type);
+       
             switch ($type) {
                 case '1':
                      return redirect()->route('hospitalisation.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
-                    // redirect()->route('hospitalisation.create', ['prestation_id' => $prestation->id, 'patient'=>$patient]);
                     break;
                 case '2':
-                    # code...
+                     return redirect()->route('consultation.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;      
                 case '3':
-                    # code...
+                     return redirect()->route('visite.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break; 
                 case '4':
-                    # code...
+                     return redirect()->route('analyse.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;
                 case '5':
-                    # code...
+                     return redirect()->route('radiologie.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;
                 case '6':
-                    # code...
+                     return redirect()->route('ambulance.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;  
                 case '7':
-                    # code...
+                     return redirect()->route('pharmacie.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;
                 case '8':
-                    redirect()->route('devis.create', ['prestation_id' => $prestation->id]);
+                    redirect()->route('devis.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;  
                     
-                default:
-                
+                default:                
                     return redirect()->route('hospitalisation.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;
             }
