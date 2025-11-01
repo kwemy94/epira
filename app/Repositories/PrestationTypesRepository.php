@@ -21,7 +21,7 @@ class PrestationTypesRepository extends ResourceRepository {
     }
     public function getAll(){
         return $this->model
-        ->orderBy('id','DESC')
+        ->orderBy('id','ASC')
         ->get();
     }
 

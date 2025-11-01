@@ -2,12 +2,12 @@
 
 
 @section('admin-content')
-    <x-page-header title="Nouvelle hospitalisation" :breadcrumbs="[
+    <x-page-header title="Nouvelle visite" :breadcrumbs="[
         [
             'label' => 'Prestation',
             'url' => route('prestation.index'),
         ],
-        ['label' => 'Nouvelle hospitalisation'],
+        ['label' => 'Nouvelle visite'],
     ]" />
     <section class="content">
         <div class="container-fluid">
@@ -15,7 +15,7 @@
                 @include('dashboard.prestation.partials.details')
 
                 <div class="card-body ">
-                    <form action="{{ route('hospitalisation.store')}}" method="post">
+                    <form action="{{ route('visite.store')}}" method="post">
                         @csrf
                             <div class="row">
                             <div class="col-md-4">
@@ -36,35 +36,10 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="motif">Motif</label>
-                                    <input type="text" name="motif" id="motif" class="form-control @error('motif') is-invalid @enderror" value="{{ old('motif') }}">
-                                    @error('motif')<span class="invalid-feedback">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
                                     <label for="medecin_id">Médecin</label>
                                     <select name="doctor_id" id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
                                         <option value="Dr Nyam">Dr Nyam</option>
-                                        <!-- @foreach($medecins ?? [] as $medecin)
-                                            <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
-                                                {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
-                                            </option>
-                                        @endforeach -->
-                                    </select>
-                                    @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="medecin_id">Chambre</label>
-                                    <select name="chambre" id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
-                                        <option value="">-- Sélectionner --</option>
-                                        <option value="1">VIP</option>
-                                        <option value="1">Moderne</option>
-                                        <option value="1">Classique</option>
                                         <!-- @foreach($medecins ?? [] as $medecin)
                                             <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
                                                 {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
