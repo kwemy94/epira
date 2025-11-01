@@ -30,15 +30,15 @@
                         </tr>
                     </thead>
                     
-                    <tbody>
+                    <tbody>@dd($prestations)
                         
                         @forelse ($prestations as $prestation)
                             <tr>
-                                <td>{{ $prestation->hospitalisation->reference }}</td>
+                                <td>{{ $prestation->reference }}</td>
                                 <td>{{ $prestation->type->name }}</td>
                                  <td>{{ $prestation->type->code }}</td>
                                 <td>{{ $prestation->created_at }}</td>
-                                <td>{{ $prestation->hospitalisation->doctor }}</td>
+                                <td>{{ $prestation->doctor }}</td>
                                 <td><button  class="btn btn-sm btn-default" >En cours</button></td>
                                 <td class="text-right">
                                     <div class="dropdown">

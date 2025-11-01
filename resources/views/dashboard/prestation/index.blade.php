@@ -46,12 +46,12 @@
                         
                         @forelse ($prestations as $prestation)
                             <tr>
-                                <td>{{ $prestation?->hospitalisation?->reference }}</td>
+                                <td>{{ $prestation?->reference }}</td>
                                 <td>{{ $prestation->type?->name }}</td>
                                  <td>{{ $prestation->patient?->lastname.' '.$prestation->patient?->firstname }}</td>
                                 
-                                <td>{{ $prestation->hospitalisation?->doctor }}</td>
-                                <td>{{ $prestation->hospitalisation?->motif }}</td>
+                                <td>{{ $prestation?->doctor }}</td>
+                                <td>{{ $prestation?->motif }}</td>
                                 <td>{{ $prestation->insurer?->insurer_name }}</td>
                                 <td>{{ $prestation->created_at }}</td>
                                 <td class="text-right">

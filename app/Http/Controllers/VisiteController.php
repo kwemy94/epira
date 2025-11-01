@@ -48,7 +48,7 @@ class VisiteController extends Controller
      */
     public function store(Request $request)
     {
-         $inputs = $request->all();
+        $inputs = $request->all();
       
         try {
               $hospitalisation = Visite::create([

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Analyse extends Model
 {
     use HasFactory;
-    protected $fillable = ['prestation_id','doctor','referene','unit_price','start_date','end_date','tarif'];
+    protected $fillable = ['prestation_id','doctor','reference','external_doctor','analyse_date','result_date','service','comment'];
 
     public function prestation(){
         return $this->belongsTo(Prestation::class);

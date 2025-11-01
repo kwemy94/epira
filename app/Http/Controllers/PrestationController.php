@@ -30,6 +30,49 @@ class PrestationController extends Controller
     public function index()
     {
         $prestations=$this->prestationRepository->getAll();
+       
+        //formater les prestations pour recuperer les references des relations et le nom du medecin
+        $prestations = $prestations->map(function ($prestation) {
+            if($prestation->hospitalisation){
+               $ref = $prestation->hospitalisation->reference;
+               $doc = $prestation->hospitalisation->doctor;
+               $motif = $prestation->hospitalisation->motif;
+            }elseif($prestation->consultation){
+               $ref = $prestation->consultation->reference;
+               $doc = $prestation->consultation->doctor;
+               $motif = $prestation->consultation->motif;
+            }elseif($prestation->visite){
+               $ref = $prestation->visite->reference;
+               $doc = $prestation->visite->doctor;
+               $motif = $prestation->visite->motif;
+            }elseif($prestation->analyse){
+               $ref = $prestation->analyse->reference;
+               $doc = $prestation->analyse->doctor;
+               $motif = $prestation->analyse->motif;
+            }elseif($prestation->radiologie){
+               $ref = $prestation->radiologie->reference;
+               $doc = $prestation->radiologie->doctor;
+               $motif = $prestation->radiologie->motif;
+            }elseif($prestation->ambulance){
+               $ref = $prestation->ambulance->reference;
+               $doc = $prestation->ambulance->doctor;
+               $motif = $prestation->ambulance->motif;
+            }elseif($prestation->pharmacie){
+               $ref = $prestation->pharmacie->reference;
+               $doc = $prestation->pharmacie->doctor;
+               $motif = $prestation->pharmacie->motif;
+            }elseif($prestation->devis){
+               $ref = $prestation->devis->reference;
+               $doc = $prestation->devis->doctor;
+               $motif = $prestation->devis->motif;
+            }
+
+            //je veux ajouter ces infos a la prestation
+            $prestation->reference = $ref ?? null;
+            $prestation->doctor = $doc ?? null;
+            $prestation->motif = $motif ?? null;
+            return $prestation;
+        });
         $patients=$this->patientRepository->getAll();
 
         return view('dashboard.prestation.index',compact('prestations','patients'));
