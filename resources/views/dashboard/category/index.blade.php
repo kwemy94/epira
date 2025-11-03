@@ -2,7 +2,7 @@
 
 
 @section('admin-content')
-    <x-page-header title="Patient" :breadcrumbs="[
+    <x-page-header title="Catégorie" :breadcrumbs="[
         [
             'label' => 'Catégorie',
             // 'url' => route('patient.index'),
@@ -66,7 +66,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="contactModalTitle">Nouvelle pathologie</h4>
+                                        <h4 class="modal-title" id="contactModalTitle">Nouvelle catégorie</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
