@@ -25,7 +25,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="enter_date">Date de début</label>
-                                    <input type="date" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
+                                    <input type="datetime" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
                                     @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exit_date">Date de fin</label>
-                                    <input type="date" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
+                                    <input type="datetime-local" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
                                     @error('exit_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>

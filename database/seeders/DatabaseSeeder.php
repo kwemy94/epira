@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BloodTypeSeeder::class,
             PrestationTypeSeeder::class,
+            TypesActesSeeder::class,
+            PrestationSeeder::class
         ]);
     }
 }

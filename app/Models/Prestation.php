@@ -10,7 +10,7 @@ class Prestation extends Model
     use HasFactory;
 
     protected $guarded =['id'];
-    protected $fillable =['prestation_type_id',"patient_id",'insurer_id'];
+    protected $fillable =['prestation_type_id',"patient_id",'insurer_id','amount'];
 
     public function patient(){
          return $this->belongsTo(Patient::class);
@@ -47,5 +47,11 @@ class Prestation extends Model
     }
     public function analyse(){
          return $this->hasOne(Analyse::class);
+    }
+
+    public function actes(){
+     return $this->belongsToMany(Acte::class, 'acte_prestation')
+                    ->withPivot(['doctor_id', 'tarif_applique'])
+                    ->withTimestamps();
     }
 }
