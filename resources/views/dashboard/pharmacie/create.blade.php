@@ -36,16 +36,16 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="motif">Motif</label>
-                                    <input type="text" name="motif" id="motif" class="form-control @error('motif') is-invalid @enderror" value="{{ old('motif') }}">
+                                    <label for="motif">Motif<em style="color:red">*</em></label>
+                                    <input type="text"  required  name="motif" id="motif" class="form-control @error('motif') is-invalid @enderror" value="{{ old('motif') }}">
                                     @error('motif')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="medecin_id">Médecin</label>
-                                    <select name="doctor_id" id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
+                                    <label for="medecin_id">Médecin<em style="color:red">*</em></label>
+                                    <select name="doctor_id" required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
                                         <option value="Dr Nyam">Dr Nyam</option>
                                         <!-- @foreach($medecins ?? [] as $medecin)
@@ -59,8 +59,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="medecin_id">Chambre</label>
-                                    <select name="chambre" id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
+                                    <label for="medecin_id">Chambre<em style="color:red">*</em></label>
+                                    <select name="chambre" required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
                                         <option value="1">VIP</option>
                                         <option value="1">Moderne</option>
@@ -77,8 +77,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="service">Service</label>
-                                    <select name="service" id="service" class="form-control @error('service') is-invalid @enderror">
+                                    <label for="service">Service<em style="color:red">*</em></label>
+                                    <select name="service" required  id="service" class="form-control @error('service') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
                                         <option value="Centre Hospitalier Régional d’Ebolowa">Centre Hospitalier Régional d’Ebolowa</option>
                                         @foreach($services ?? [] as $service)
