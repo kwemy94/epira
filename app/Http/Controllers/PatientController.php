@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BloodType;
 use App\Models\Patient;
-use App\Repositories\AllergyRepository;
-use App\Repositories\ContactRepository;
-use App\Repositories\ContactTypeRepository;
-use App\Repositories\DocumentRepository;
-use App\Repositories\InsurerRepository;
-use App\Repositories\LevelRepository;
+use App\Models\BloodType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\LevelRepository;
+use App\Repositories\StaffRepository;
+use App\Repositories\DoctorRepository;
+use App\Repositories\AllergyRepository;
+use App\Repositories\ContactRepository;
 use App\Repositories\CountryRepository;
+use App\Repositories\InsurerRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\CategoryRepository;
-use App\Repositories\DoctorRepository;
-use App\Repositories\MatrimonialRepository;
+use App\Repositories\DocumentRepository;
 use App\Repositories\PathologyRepository;
 use App\Repositories\PrestationRepository;
-use Illuminate\Support\Facades\Log;
+use App\Repositories\ContactTypeRepository;
+use App\Repositories\MatrimonialRepository;
 
 class PatientController extends Controller
 {
@@ -37,6 +38,7 @@ class PatientController extends Controller
     private $prestationRepository;
     private $allergyRepository;
     private $doctorRepository;
+    private $staffRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -51,6 +53,7 @@ class PatientController extends Controller
         PrestationRepository $prestationRepository,
         AllergyRepository $allergyRepository,
         DoctorRepository $doctorRepository,
+        StaffRepository $staffRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
@@ -65,6 +68,7 @@ class PatientController extends Controller
         $this->prestationRepository = $prestationRepository;
         $this->allergyRepository = $allergyRepository;
         $this->doctorRepository = $doctorRepository;
+        $this->staffRepository = $staffRepository;
     }
 
     public function index()
@@ -200,7 +204,7 @@ class PatientController extends Controller
         $mainPathologies = $this->pathologyRepository->getByType(1);
         $associatePathologies = $this->pathologyRepository->getByType(2);
         $allergies = $this->allergyRepository->getAll();
-        $doctors = $this->doctorRepository->getAll();
+        $doctors = $this->staffRepository->getAll();
 
         return view('dashboard.patient.show', compact(
             'allergies',
@@ -269,7 +273,8 @@ class PatientController extends Controller
             $inputs = $request->all();
             // dd($inputs);
             $patient = $this->patientRepository->getById($request->patient_id);
-            $patient->doctor()->attach($inputs['doctor_id'], [
+            $inputs['staff_id'] = $inputs['doctor_id'];
+            $patient->doctor()->attach($inputs['staff_id'], [
                 'appointment_date' => $inputs['appointment_date'],
                 'appointment_start_time' => $inputs['appointment_start_time'],
                 'appointment_end_time' => $inputs['appointment_end_time'],
@@ -364,7 +369,7 @@ class PatientController extends Controller
         $mainPathologies = $this->pathologyRepository->getByType(1);
         $associatePathologies = $this->pathologyRepository->getByType(2);
         $allergies = $this->allergyRepository->getAll();
-        $doctors = $this->doctorRepository->getAll();
+        $doctors = $this->staffRepository->getAll();
 
         return view('dashboard.patient.dossier_patient', compact(
             'allergies',
