@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('doctor');
             $table->string('referene');
              $table->string('external_doctor')->nullable();
-            $table->date('analysis_date')->nullable();
-            $table->date('result_date')->nullable();
+            $table->datetime('analysis_date')->nullable();
+            $table->datetime('result_date')->nullable();
             $table->string('service');
             $table->text('comment')->nullable();
             $table->timestamps();

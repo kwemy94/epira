@@ -9,11 +9,15 @@
         ],
         ['label' => 'Nouvelle consultation'],
     ]" />
+    
+    
+    
+    @include('dashboard.prestation.partials.details')
+    
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
-                @include('dashboard.prestation.partials.details')
-
+                <div class="bg-primary text- p-2">Création des données de la consultation</div>
                 <div class="card-body ">
                     <form action="{{ route('consultation.store')}}" method="post">
                         @csrf
@@ -21,7 +25,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="enter_date">Date de début</label>
-                                    <input type="date" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
+                                    <input type="datetime" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
                                     @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -30,15 +34,15 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exit_date">Date de fin</label>
-                                    <input type="date" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
+                                    <input type="datetime-local" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
                                     @error('exit_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="medecin_id">Médecin</label>
-                                    <select name="doctor_id" id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
+                                    <label for="medecin_id">Médecin<em style="color:red">*</em></label>
+                                    <select name="doctor_id"  required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
                                         <option value="Dr Nyam">Dr Nyam</option>
                                         <!-- @foreach($medecins ?? [] as $medecin)

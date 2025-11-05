@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,8 +15,9 @@ class DashboardController extends Controller
     {
         $patientsCount = \App\Models\Patient::count();
         $prestationsCount = \App\Models\Prestation::count();
+        $appointments = Appointment::count();
 
-        return view('dashboard.dashboard', compact('patientsCount', 'prestationsCount'));
+        return view('dashboard.dashboard', compact('patientsCount', 'prestationsCount','appointments'));
     }
 
 

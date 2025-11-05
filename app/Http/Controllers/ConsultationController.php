@@ -47,7 +47,8 @@ class ConsultationController extends Controller
      */
     public function store(Request $request)
     {
-          $inputs = $request->all();      
+          $inputs = $request->all();   
+          dd($inputs) ;  
         try {
               $hospitalisation = Consultation::create([
             'prestation_id' => $inputs['prestation_id'],
