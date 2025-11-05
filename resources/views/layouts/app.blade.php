@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="{{ asset('template_old/plugins/daterangepicker/daterangepicker.css') }}">
 
     <link rel="stylesheet" href="{{ asset('template_old/plugins/summernote/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template_old/plugins/bs-stepper/css/bs-stepper.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template_old/plugins/dropzone/min/dropzone.min.css') }}">
     <style>
         .error-field {
             border-color: red;
@@ -123,6 +125,8 @@
     <script src="{{ asset('template_old/plugins/summernote/summernote-bs4.min.js') }}"></script>
     {{-- <!-- overlayScrollbars --> --}}
     <script src="{{ asset('template_old/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <script src="{{ asset('template_old/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
+    <script src="{{ asset('template_old/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
     {{-- <!-- AdminLTE App --> --}}
     <script src="{{ asset('template_old/dist/js/adminlte.js') }}"></script>

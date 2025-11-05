@@ -16,7 +16,11 @@ use App\Http\Controllers\PrestationController;
 use App\Http\Controllers\HospitalisationController;
 use App\Http\Controllers\MedecineController;
 use App\Http\Controllers\PharmacieController;
+use App\Http\Controllers\ProfesionnalTitleController;
 use App\Http\Controllers\RadiologieController;
+use App\Http\Controllers\SpecializationController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StaffTypeController;
 use App\Http\Controllers\VisiteController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -34,6 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    #staff
+    Route::resource('staff-host', StaffController::class);
+    Route::resource('specialization-host', SpecializationController::class);
+    Route::resource('staff-type-host', StaffTypeController::class);
+    Route::resource('pro-title-host', ProfesionnalTitleController::class);
 
     # Patient
     Route::resource('/appointments', AppointmentController::class);
