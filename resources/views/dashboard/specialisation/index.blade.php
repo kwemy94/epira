@@ -42,19 +42,49 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>intitulé</th>
-                                        <th>desciption</th>
+                                        <th>Intitulé</th>
+                                        <th>Desciption</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($specializations as $spe)
+                                    @forelse ($specializations as $spec)
                                         <tr>
-                                            <td>{{ $spe->name }}</td>
-                                            <td>{{ $spe->description }}</td>
+                                            <td>{{ $spec->name }}</td>
+                                            <td>{{ $spec->description }}</td>
+                                            <td>
+                                                <div class="btn-group" >
+                                                    <button type="button" class="btn btn-default btn-sm"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+
+                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                        <a href="#" data-toggle="modal" data-target="#new-cat"
+                                                            class="dropdown-item text-primary btn-edit-specialisation"
+                                                            data-id="{{ $spec->id }}"
+                                                            data-name="{{ $spec->name }}"
+                                                            data-description="{{ $spec->description }}">
+                                                            <i class="fas fa-edit mr-2"></i> Modifier
+                                                        </a>
+
+                                                        <form action="{{ route('specialization-host.destroy', $spec->id) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Voulez-vous vraiment supprimer cette spécialisation ?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item ">
+                                                                <i class="fas fa-trash-alt text-danger"></i> Supprimer
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="2" style="text-align: center">Aucun spécialisation enregistré</td>
+                                            <td colspan="2" style="text-align: center">Aucun spécialisation enregistré
+                                            </td>
                                         </tr>
                                     @endforelse
 
@@ -75,9 +105,11 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 @csrf
+                                                <input type="hidden" name="specialization_id" id="specialization_id">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="cat_name">Nom de la spécialisation <em class="text-danger">*</em></label>
+                                                        <label for="cat_name">Nom de la spécialisation <em
+                                                                class="text-danger">*</em></label>
                                                         <input type="text" class="form-control required" id="cat_name"
                                                             name="name" value="">
                                                     </div>
@@ -118,6 +150,41 @@
             }
 
             $('#formCat').submit();
-        })
+        });
+
+        $('.btn-edit-specialisation').on('click', function(e) {
+            e.preventDefault();
+            console.log("ins 1");
+            // Récupérer les données
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            let description = $(this).data('description');
+
+            // Modifier le titre du modal
+            $('#contactModalTitle').text("Modification de la spécialisation");
+            console.log("ins 2");
+
+            // Remplir les champs
+            $('input[name="name"]').val(name);
+            $('input[name="description"]').val(description);
+            $('#specialization_id').val(id);
+            console.log("ins 3");
+
+            // Changer l’action du formulaire vers la route "update"
+            $('#formCat').attr('action', '/specialization-host/' + id);
+            $('#formCat').append('<input type="hidden" name="_method" value="PUT">');
+
+            // Ouvrir le modal
+            console.log("ins 4");
+            $('#new-cat').modal('show');
+        });
+
+        $('#new-cat').on('hidden.bs.modal', function() {
+            $('#formCat')[0].reset();
+            $('#contactModalTitle').text('Nouvelle spécialisation');
+            $('#specialization_id').val('');
+            $('#formCat').attr('action', '{{ route('specialization-host.store') }}');
+            $('#formCat input[name="_method"]').remove();
+        });
     </script>
 @endsection
