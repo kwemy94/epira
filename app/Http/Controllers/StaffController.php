@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
-use App\Repositories\ProfesionnalTitleRepository;
-use App\Repositories\SpecializationRepository;
+use Exception;
+use Pest\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Repositories\StaffRepository;
 use App\Repositories\StaffTypeRepository;
-use Illuminate\Http\Request;
+use App\Repositories\SpecializationRepository;
+use App\Repositories\ProfesionnalTitleRepository;
 
 class StaffController extends Controller
 {
@@ -68,43 +71,86 @@ class StaffController extends Controller
             $inputs = $request->all();
 
             if ($request->hasFile('photo')) {
-                $file = $request->file('photo');
-                $path = $file->store('staff_photos', 'public'); // -> storage/app/public/staff_photos
+                $path = $request->file('photo')->store('staff_photos', 'public');
                 $inputs['avatar'] = $path;
+                // dd($inputs);
             }
+
+            $inputs['password'] = Hash::make($inputs['password']);
 
             $this->staffRepository->store($inputs);
 
-            return redirect()->route('staff.index')
-                ->with('success', 'Personnel enregistré avec succès.');
+            return redirect()->route('staff-host.index')
+                ->with('success', 'Professionnel enregistré avec succès.');
         } catch (\Exception $e) {
             // En cas d'erreur, on redirige avec le message
-            return back()->with('error', 'Erreur lors de l’enregistrement : ' . $e->getMessage());
+            return back()->with('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Staff $staff)
+    public function show($id)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Staff $staff)
+    public function edit($id)
     {
-        //
+        $staff = $this->staffRepository->getById($id);
+        $staffTypes = $this->staffTypeRepository->getAll();
+        $profesionnalTitles = $this->profesionnalTitleRepository->getAll();
+        $specializations = $this->specializationRepository->getAll();
+
+        return view('dashboard.staff.create', compact('staff', 'staffTypes', 'profesionnalTitles', 'specializations'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Staff $staff)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $staff = $this->staffRepository->getById($id);
+            if (!$staff) {
+                throw new Exception('Professionnel non existant');
+            }
+            $inputs = $request->all();
+
+            if ($request->hasFile('photo')) {
+                $path = $request->file('photo')->store('staff_photos', 'public');
+                $inputs['avatar'] = $path;
+                // dd($inputs);
+            }
+
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $path = $file->store('staff_photos', 'public'); // -> storage/app/public/staff_photos
+                $inputs['avatar'] = $path;
+            }
+
+            if (!empty($inputs['password'])) {
+                $inputs['password'] = Hash::make($inputs['password']);
+            }
+
+            $inputs = array_replace([
+                'intern' => 0,
+                'generic_account' => 0,
+                'honorary_appointment' => 0,
+                'authorize_appointment' => 0,
+            ], $inputs);
+
+            $this->staffRepository->update($id, $inputs);
+
+            return redirect()->route('staff-host.index')
+                ->with('success', 'Professionnel mis à jour avec succès.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur lors de la mise à jour : ' . $e->getMessage());
+        }
     }
 
     /**

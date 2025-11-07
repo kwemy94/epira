@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    body
-    {
+    body {
         font-family: 'Nunito', sans-serif;
-        margin: revert!important;
+        margin: revert !important;
     }
 </style>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,21 @@
     <link rel="stylesheet" href="{{ asset('template_old/plugins/dropzone/min/dropzone.min.css') }}">
     <style>
         .error-field {
-            border-color: red;
+            border: 1px solid #dc3545 !important;
+            background-color: #fff5f5;
+        }
+
+        /* * Tab contenant une erreur  */
+        .tab-error {
+            border: 2px solid #dc3545 !important;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        /* Onglet avec erreur (dans la barre de navigation) */
+        .tab-link-error {
+            color: #dc3545 !important;
+            font-weight: bold;
         }
     </style>
     @yield('admin-css')
@@ -137,13 +151,13 @@
     {{-- <!-- AdminLTE dashboard demo (This is only for demo purposes) --> --}}
     <script src="{{ asset('template_old/dist/js/pages/dashboard.js') }}"></script>
     <script>
-    $(document).ready(function() {
-        // Disparition automatique après 3 secondes
-        setTimeout(function() {
-            $(".alert").alert('close');
-        }, 3000);
-    });
-</script>
+        $(document).ready(function() {
+            // Disparition automatique après 3 secondes
+            setTimeout(function() {
+                $(".alert").alert('close');
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>

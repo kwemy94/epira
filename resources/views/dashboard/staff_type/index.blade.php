@@ -2,9 +2,9 @@
 
 
 @section('admin-content')
-    <x-page-header title="Type de personnel" :breadcrumbs="[
+    <x-page-header title="Types de professionnels" :breadcrumbs="[
         [
-            'label' => 'Type-Personnel',
+            'label' => 'Type-Professionnels',
             // 'url' => route('patient.index'),
         ],
     ]" />

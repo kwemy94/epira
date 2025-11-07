@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('admin-content')
-    <x-page-header title="Listing du personel de santé" :breadcrumbs="[
+    <x-page-header title="Liste des professionnels de la santé" :breadcrumbs="[
         [
             'label' => 'Patient',
             'url' => route('patient.index'),
@@ -41,22 +41,64 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>intitulé</th>
-                                        <th>desciption</th>
+                                        <th>Identité</th>
+                                        <th>Spécialisation</th>
+                                        {{-- <th>Type professionnel</th> --}}
+                                        <th>Profile</th>
+                                        <th>Téléphone</th>
+                                        <th>email</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @forelse ($specializations as $spe)
+                                    @forelse ($staffs as $staff)
                                         <tr>
-                                            <td>{{ $spe->name }}</td>
-                                            <td>{{ $spe->description }}</td>
+                                            <td>{{ $staff->lastname }} {{ $staff->firstname }}</td>
+                                            <td>{{ $staff->specialization?->name }}</td>
+                                            {{-- <td>{{ $staff->staffType->name }}</td> --}}
+                                            <td>{{ $staff->profesionnalTitle?->name }}</td>
+                                            <td>{{ $staff->phone }}</td>
+                                            <td>{{ $staff->email }}</td>
+                                            <td>
+                                                <div class="btn-group" style="z-index: 9999;">
+                                                    <button type="button" class="btn btn-default btn-sm"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                        {{-- <a class="dropdown-item"
+                                                            href="{{ route('staff-host.show', $staff->id) }}"
+                                                            title="Détails">
+                                                            <i class="fas fa-eye text-primary"></i> Visualiser
+                                                        </a> --}}
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('staff-host.edit', $staff->id) }}"
+                                                            title="">
+                                                            <i class="fas fa-eye text-primary"></i> Visualiser
+                                                        </a>
+                                                        
+                                                        <a  class="dropdown-item" href="#">
+                                                            <i class="fas fa-envelope text-info"></i> Contacter
+                                                        </a>
+                                                        
+                                                        <form action="{{ route('staff-host.destroy', $staff->id) }}" method="POST"
+                                                            onsubmit="return confirm('Voulez-vous vraiment supprimer ce personnel ?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item ">
+                                                                <i class="fas fa-trash-alt text-danger"></i> Supprimer
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="2" style="text-align: center">Aucun spécialisation enregistré
+                                            <td colspan="5" style="text-align: center">Aucun spécialisation enregistré
                                             </td>
                                         </tr>
-                                    @endforelse --}}
+                                    @endforelse
 
                                 </tbody>
                             </table>

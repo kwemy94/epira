@@ -43,20 +43,20 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('specialization-host.index') }}" class="nav-link">
-                                <i class="fas fa-user-plus nav-icon"></i>
-                                <p>Spécialisation</p>
+                                <i class="fas fa-award"></i>
+                                <p>Spécialisations</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('staff-type-host.index') }}" class="nav-link">
-                                <i class="fas fa-user-plus nav-icon"></i>
-                                <p>Type de personnel</p>
+                                <i class="fas fa-user-nurse"></i>
+                                <p>Types de professionnels</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('pro-title-host.index') }}" class="nav-link">
-                                <i class="fas fa-user-plus nav-icon"></i>
-                                <p>Titre professionnel</p>
+                                <i class="fas fa-briefcase-medical"></i>
+                                <p>Titres professionnels</p>
                             </a>
                         </li>
 
