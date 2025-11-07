@@ -74,16 +74,46 @@ class StaffTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, StaffType $staffType)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $spec = $this->staffTypeRepository->getById($id);
+
+            if (!$spec) {
+                throw new \Exception('Type de personnel non trouvée');
+            }
+
+            $inputs = $request->all();
+            $this->staffTypeRepository->update($id, $inputs);
+
+            return redirect()->back()->with('success', 'Type de personnel mis à jour avec succès');
+        } catch (\Throwable $th) {
+            Log::error("Erreur UPDATE TYPE DE PERSONNEL : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec mise à jour du type de personnel : ' . $th->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StaffType $staffType)
+    public function destroy($id)
     {
-        //
+        try {
+            $spec = $this->staffTypeRepository->getById($id);
+
+            if (!$spec) {
+                throw new \Exception('Type de personnel non trouvé');
+            }
+            if ($spec->staffs()->exists()) {
+                throw new \Exception('Type de personnel utilisé');
+            }
+
+            $this->staffTypeRepository->destroy($id);
+
+            return redirect()->back()->with('success', 'Type de personnel supprimé avec succès');
+        } catch (\Throwable $th) {
+            Log::error("Erreur DELETE PERSONNEL : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec suppression du type de personnel : ' . $th->getMessage());
+        }
     }
 }

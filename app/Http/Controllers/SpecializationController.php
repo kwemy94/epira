@@ -82,6 +82,9 @@ class SpecializationController extends Controller
             if (!$spec) {
                 throw new \Exception('Spécialisation non trouvée');
             }
+            if ($spec->staffs()->exists()) {
+                throw new \Exception('Spécialisation utilisés');
+            }
 
             $inputs = $request->all();
             $this->specializationRepository->update($id, $inputs);

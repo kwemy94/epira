@@ -42,19 +42,47 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>intitulé</th>
-                                        <th>desciption</th>
+                                        <th>Intitulé</th>
+                                        <th>Desciption</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($staffTypes as $spe)
+                                    @forelse ($staffTypes as $spec)
                                         <tr>
-                                            <td>{{ $spe->name }}</td>
-                                            <td>{{ $spe->description }}</td>
+                                            <td>{{ $spec->name }}</td>
+                                            <td>{{ $spec->description }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default btn-sm"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+
+                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                        <a href="#" data-toggle="modal" data-target="#new-cat"
+                                                            class="dropdown-item text-primary btn-edit-specialisation"
+                                                            data-id="{{ $spec->id }}" data-name="{{ $spec->name }}"
+                                                            data-description="{{ $spec->description }}">
+                                                            <i class="fas fa-edit mr-2"></i> Modifier
+                                                        </a>
+
+                                                        <form action="{{ route('staff-type-host.destroy', $spec->id) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Voulez-vous vraiment supprimer ce type de personnel ?');">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item ">
+                                                                <i class="fas fa-trash-alt text-danger"></i> Supprimer
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="2" style="text-align: center">Aucun titre enregistré
+                                            <td colspan="3" style="text-align: center">Aucun titre enregistré
                                             </td>
                                         </tr>
                                     @endforelse
@@ -67,7 +95,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="contactModalTitle">Nouveau personnel</h4>
+                                        <h4 class="modal-title" id="contactModalTitle">Nouveau type de personnel</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -119,6 +147,41 @@
             }
 
             $('#formCat').submit();
-        })
+        });
+
+        $('.btn-edit-specialisation').on('click', function(e) {
+            e.preventDefault();
+            console.log("ins 1");
+            // Récupérer les données
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            let description = $(this).data('description');
+
+            // Modifier le titre du modal
+            $('#contactModalTitle').text("Modification du type de personnel");
+            console.log("ins 2");
+
+            // Remplir les champs
+            $('input[name="name"]').val(name);
+            $('input[name="description"]').val(description);
+            $('#specialization_id').val(id);
+            console.log("ins 3");
+
+            // Changer l’action du formulaire vers la route "update"
+            $('#formCat').attr('action', '/staff-type-host/' + id);
+            $('#formCat').append('<input type="hidden" name="_method" value="PUT">');
+
+            // Ouvrir le modal
+            console.log("ins 4");
+            $('#new-cat').modal('show');
+        });
+
+        $('#new-cat').on('hidden.bs.modal', function() {
+            $('#formCat')[0].reset();
+            $('#contactModalTitle').text('Nouveau type de personnel');
+            $('#specialization_id').val('');
+            $('#formCat').attr('action', '{{ route('staff-type-host.store') }}');
+            $('#formCat input[name="_method"]').remove();
+        });
     </script>
 @endsection
