@@ -55,11 +55,14 @@
                                         
                                         <div>
                                             <select name="insurer_id" id="" class="form-control ">
-                                        <option value="" disabled>Sélectionner</option>
-                                        @foreach($patient->insurer as $insurer)
-                                            
-                                            <option value="{{$insurer->id}}">{{$insurer->insurer_name}}</option>
-                                        @endforeach
+                                        
+                                        @if(isset($patient))
+                                            <option value="" disabled>Sélectionner</option>
+
+                                            @foreach($patient->insurer as $insurer)                                            
+                                                <option value="{{$insurer->id}}">{{$insurer->insurer_name}}</option>
+                                            @endforeach
+                                        @endif
                                         </select>
                                         <button type="button" data-toggle="modal" data-target="#new-insurer"
                                             class="btn bg-gradient-primary btn-sm">+ Nouveau</button>
@@ -130,78 +133,6 @@
 
 @endsection
 
-@push('scripts')
-<script>
-    let actesList = @json($actes);
-    let medecinsList = @json($medecins);
-    let actesSelectionnes = [];
 
-    function ajouterActe() {
-        const tbody = document.getElementById('actes-body');
-        const index = actesSelectionnes.length;
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>
-                <select name="actes[${index}][id]" class="form-select" onchange="updateTarifs(this, ${index})">
-                    <option value="">-- Choisir un acte --</option>
-                    ${actesList.map(a => `<option value="${a.id}">${a.libelle}</option>`).join('')}
-                </select>
-            </td>
-            <td>
-                <select name="actes[${index}][tarif]" class="form-select" onchange="calculerTotal()">
-                    <option value="">-- Sélectionner le tarif --</option>
-                </select>
-            </td>
-            <td>
-                <select name="actes[${index}][medecin_id]" class="form-select">
-                    <option value="">-- Sélectionner un médecin --</option>
-                    ${medecinsList.map(m => `<option value="${m.id}">${m.nom}</option>`).join('')}
-                </select>
-            </td>
-            <td>
-                <button type="button" class="btn btn-outline-danger btn-sm" onclick="supprimerActe(this)">×</button>
-            </td>
-        `;
-        tbody.appendChild(row);
-        actesSelectionnes.push({ id: null, tarif: null, medecin_id: null });
-    }
-
-    function supprimerActe(btn) {
-        const row = btn.closest('tr');
-        row.remove();
-        calculerTotal();
-    }
-
-    function updateTarifs(select, index) {
-        const acteId = select.value;
-        const tarifsSelect = select.closest('tr').querySelector(`[name="actes[${index}][tarif]"]`);
-
-        const acte = actesList.find(a => a.id == acteId);
-        tarifsSelect.innerHTML = `<option value="">-- Sélectionner le tarif --</option>`;
-        if (acte && acte.tarifs) {
-            acte.tarifs.forEach(t => {
-                tarifsSelect.innerHTML += `<option value="${t.montant}">${t.libelle} : ${t.montant} FCFA</option>`;
-            });
-        }
-    }
-
-    function setDefaultMedecin(select) {
-        const medecinId = select.value;
-        document.querySelectorAll('[name$="[medecin_id]"]').forEach(sel => {
-            if (!sel.value) sel.value = medecinId;
-        });
-    }
-
-    function calculerTotal() {
-        let total = 0;
-        document.querySelectorAll('[name$="[tarif]"]').forEach(sel => {
-            const val = parseFloat(sel.value) || 0;
-            total += val;
-        });
-        document.getElementById('total-montant').innerText = total;
-    }
-</script>
-@endpush
 
 

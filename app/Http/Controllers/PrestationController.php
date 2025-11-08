@@ -103,11 +103,13 @@ class PrestationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
         try {
             $inputs = $request->all();
            
-            $patient_id = $this->patientRepository->getByName($inputs['patient_id'])==null ?$inputs['patient_id']:$this->patientRepository->getByName($inputs['patient_id'])->id;
+            $patient_id = $this->patientRepository->getByName($inputs['patient_id'])==null ?
+                        $inputs['patient_id']:
+                        $this->patientRepository->getByName($inputs['patient_id'])->id;
 
             $inputs['patient_id']=$patient_id;
             $prestation = $this->prestationRepository->store($inputs);
