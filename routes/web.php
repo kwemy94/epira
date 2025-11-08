@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     #staff
     Route::resource('staff-host', StaffController::class);
+    Route::post('staff-host/contact', [StaffController::class, 'sendMail'])->name('contact.staff');
     Route::resource('specialization-host', SpecializationController::class);
     Route::resource('staff-type-host', StaffTypeController::class);
     Route::resource('pro-title-host', ProfesionnalTitleController::class);

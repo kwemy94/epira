@@ -146,6 +146,7 @@
                 return -1;
             }
 
+            $('#saveCatBtn').prop('disabled', true);
             $('#formCat').submit();
         });
 

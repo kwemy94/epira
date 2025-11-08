@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Staff;
 use Exception;
+use App\Models\Staff;
 use Pest\Support\Str;
+use App\Mail\GenericMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Repositories\StaffRepository;
 use App\Repositories\StaffTypeRepository;
 use App\Repositories\SpecializationRepository;
@@ -156,8 +159,45 @@ class StaffController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Staff $staff)
+    public function destroy($id)
     {
-        //
+        try {
+            $spec = $this->staffRepository->getById($id);
+
+            if (!$spec) {
+                throw new \Exception('Professionnel non trouvée');
+            }
+            if ($spec->patient()->exists()) {
+                throw new \Exception('Professionnel utilisé');
+            }
+
+            $this->staffRepository->destroy($id);
+
+            return redirect()->back()->with('success', 'Professionnel supprimée avec succès');
+        } catch (\Throwable $th) {
+            Log::error("Erreur DELETE PROFESIONNEL : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec suppression du professionnel ');
+        }
+    }
+
+
+    public function sendMail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        try {
+            Mail::to($request->email)->send(
+                new GenericMail($request->subject, $request->message)
+            );
+
+            return redirect()->back()->with('success', 'Email envoyé avec succès !');
+        } catch (Exception $e) {
+            Log::error("SEND MAIL ERROR : " . $e->getMessage());
+            return redirect()->back()->with('error', 'Echec d\'envoie de message ');
+        }
     }
 }
