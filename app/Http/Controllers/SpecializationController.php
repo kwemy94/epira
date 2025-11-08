@@ -50,7 +50,7 @@ class SpecializationController extends Controller
 
         } catch (\Throwable $th) {
             Log::error("Erreur create SPECIALIZATION : " . $th->getMessage());
-            return redirect()->back()->with('error', 'Echec création de la spécialisation : '.$th->getMessage());
+            return redirect()->back()->with('error', 'Echec création de la spécialisation : ' . $th->getMessage());
         }
         return redirect()->back()->with('success', 'Spécialisation crée avec succès');
     }
@@ -74,16 +74,46 @@ class SpecializationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Specialization $specialization)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $spec = $this->specializationRepository->getById($id);
+
+            if (!$spec) {
+                throw new \Exception('Spécialisation non trouvée');
+            }
+            if ($spec->staffs()->exists()) {
+                throw new \Exception('Spécialisation utilisés');
+            }
+
+            $inputs = $request->all();
+            $this->specializationRepository->update($id, $inputs);
+
+            return redirect()->back()->with('success', 'Spécialisation mis à jour avec succès');
+        } catch (\Throwable $th) {
+            Log::error("Erreur UPDATE SPECIALIZATION : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec mise à jour de la spécialisation : ' . $th->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Specialization $specialization)
+    public function destroy($id)
     {
-        //
+        try {
+            $spec = $this->specializationRepository->getById($id);
+
+            if (!$spec) {
+                throw new \Exception('Spécialisation non trouvée');
+            }
+
+            $this->specializationRepository->destroy($id);
+
+            return redirect()->back()->with('success', 'Spécialisation supprimée avec succès');
+        } catch (\Throwable $th) {
+            Log::error("Erreur DELETE SPECIALIZATION : " . $th->getMessage());
+            return redirect()->back()->with('error', 'Echec suppression de la spécialisation : ' . $th->getMessage());
+        }
     }
 }

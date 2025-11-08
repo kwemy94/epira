@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ asset('template_old/plugins/summernote/summernote-bs4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template_old/plugins/bs-stepper/css/bs-stepper.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template_old/plugins/dropzone/min/dropzone.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('template_old/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <style>
         .error-field {
             border: 1px solid #dc3545 !important;
@@ -51,6 +53,12 @@
         .tab-link-error {
             color: #dc3545 !important;
             font-weight: bold;
+        }
+
+        .swal2-popup {
+            font-size: 1rem !important;
+            border-radius: 0.5rem !important;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
     </style>
     @yield('admin-css')
@@ -77,20 +85,46 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-sm-6 col-md-6 mt-2">
                     @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                        {{-- <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                             {{ session('success') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
+                        </div> --}}
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: '{{ session('success') }}',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                });
+                            });
+                        </script>
                     @endif
                     @if (session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                        {{-- <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
                             {{ session('error') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
+                        </div> --}}
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: '{{ session('error') }}',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                });
+                            });
+                        </script>
                     @endif
                 </div>
             </div>
@@ -120,6 +154,7 @@
     </script>
     {{-- <!-- Bootstrap 4 --> --}}
     <script src="{{ asset('template_old/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('template_old/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     {{-- <!-- ChartJS --> --}}
     <script src="{{ asset('template_old/plugins/chart.js/Chart.min.js') }}"></script>
     {{-- <!-- Sparkline --> --}}

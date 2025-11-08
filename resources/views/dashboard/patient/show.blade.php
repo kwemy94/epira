@@ -251,6 +251,7 @@
                 return -1;
             }
 
+            $('#savePathologyBtn').prop('disabled', true);
             $('#formPathology').submit();
         });
 
@@ -261,6 +262,7 @@
                 return -1;
             }
 
+            $('#saveAppointmentBtn').prop('disabled', true);
             $('#formAppointment').submit();
         })
     </script>
@@ -275,6 +277,7 @@
                     return -1;
                 }
 
+                $('#saveContactBtn').prop('disabled', true);
                 $('#formContact').submit();
             });
 
@@ -515,6 +518,7 @@
                     return -1;
                 }
 
+                $('#saveInsurerBtn').prop('disabled', true);
                 $('#formInsurer').submit();
             })
             $('#savePrestationBtn').click((e) => {
@@ -523,6 +527,7 @@
                     return -1;
                 }
 
+                $('#savePrestationBtn').prop('disabled', true);
                 $('#formPrestation').submit();
             })
 

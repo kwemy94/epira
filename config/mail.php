@@ -113,4 +113,6 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'default_signature' => 'Cordialement,<br><strong>Administration CHRE</strong>',
+
 ];

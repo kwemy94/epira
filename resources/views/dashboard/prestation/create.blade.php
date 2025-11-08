@@ -113,6 +113,7 @@
                 }
                 console.log("submit");
 
+                $('#saveInsurerBtn').prop('disabled', true);
                 $('#formInsurer').submit();
             })
             $('#savePrestationBtn').click((e) => {
@@ -121,6 +122,7 @@
                     return -1;
                 }
 
+                $('#savePrestationBtn').prop('disabled', true);
                 $('#formPrestation').submit();
             })
         });

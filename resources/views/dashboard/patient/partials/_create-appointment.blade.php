@@ -13,7 +13,7 @@
                           <select id="modal_doctor_id" name="doctor_id" class="form-control required">
                               <option value="">-- Choisir --</option>
                               @foreach ($doctors as $doc)
-                                  <option value="{{ $doc->id }}">{{ $doc->name }}</option>
+                                  <option value="{{ $doc->id }}">{{ $doc->firstname }} {{ $doc->lastname }}</option>
                               @endforeach
                           </select>
                       </div>
