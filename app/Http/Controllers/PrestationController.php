@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acte;
 use App\Models\Prestation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -88,6 +89,8 @@ class PrestationController extends Controller
         $prestation_types = $this->prestationTypesRepository->getAll();
         $prestations = $this->prestationRepository->getAll();
         $patients=$this->patientRepository->getAll();
+        $actes = Acte::all();
+        
         if($patient_id){
             $patient = $this->patientRepository->getById($patient_id);
              return view('dashboard.prestation.create', compact( 'prestations','prestation_types','patient'));
