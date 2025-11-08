@@ -48,11 +48,7 @@
                                     <select name="doctor_id"  required   id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
                                         <option value="Dr Nyam">Dr Nyam</option>
-                                        <!-- @foreach($medecins ?? [] as $medecin)
-                                            <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
-                                                {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
-                                            </option>
-                                        @endforeach -->
+                                      
                                     </select>
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
@@ -65,11 +61,7 @@
                                         <option value="1">VIP</option>
                                         <option value="1">Moderne</option>
                                         <option value="1">Classique</option>
-                                        <!-- @foreach($medecins ?? [] as $medecin)
-                                            <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
-                                                {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
-                                            </option>
-                                        @endforeach -->
+                                       
                                     </select>
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>

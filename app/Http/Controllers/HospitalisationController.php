@@ -56,16 +56,7 @@ class HospitalisationController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->all();
-        // dd($inputs);
-        // $validated = $request->validate([
-        //     'patient_id' => 'required|exists:patients,id',
-        //     'actes' => 'required|array|min:1',
-        //     // 'actes.*.id' => 'required|exists:actes,id',
-        //     'actes.*.tarif' => 'required|numeric|min:0',
-        //     // 'actes.*.doctor_id' => 'nullable|exists:users,id',
-        //  ]);
-        
+        $inputs = $request->all(); 
          
         try {
             $hospitalisation = Hospitalisation::create([

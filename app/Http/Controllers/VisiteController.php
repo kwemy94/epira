@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acte;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Prestation;
@@ -39,8 +40,14 @@ class VisiteController extends Controller
         $patient_id = $request->patient;
         $prestation = $this->prestationRepository->getById($prestation_id);
         $patient = $this->patientRepository->getById($patient_id);
-        
-        return view('dashboard.visite.create',compact('doctors','prestation_id','patient','prestation'));
+          $actes= Acte::all();
+        // $medecins = [1=>'Dr. John Doe', 2=>'Dr. Jane Smith', 3=>'Dr. Emily Johnson'];
+        $medecins = [
+            (object)['id' => 1, 'nom' => 'Dr. John Doe'],
+            (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
+            (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
+        ];
+        return view('dashboard.visite.create',compact('doctors','prestation_id','patient','prestation','medecins',"actes"));
     }
 
     /**
@@ -52,15 +59,26 @@ class VisiteController extends Controller
       
         try {
               $hospitalisation = Visite::create([
-            'prestation_id' => $inputs['prestation_id'],
-            'reference' => $this->prestationRepository->generateReference('VI'),
-            'service' => $inputs['service'],
-            'doctor' => $inputs['doctor_id'],
-            'enter_date' => $inputs['enter_date'],
-            'exit_date' => $inputs['exit_date'],
-            'comment' => $inputs['comment'] ?? null,
-        ]);
-        $prestations = Prestation::all();
+                'prestation_id' => $inputs['prestation_id'],
+                'reference' => $this->prestationRepository->generateReference('VI'),
+                'service' => $inputs['service'],
+                'doctor' => $inputs['doctor_id'],
+                'enter_date' => $inputs['enter_date'],
+                'exit_date' => $inputs['exit_date'],
+                'comment' => $inputs['comment'] ?? null,
+            ]);
+            $total = 0;
+            $prestation = $this->prestationRepository->getById($inputs['prestation_id']);
+            foreach ( $inputs['actes'] as $acte) {
+                $prestation->actes()->attach($acte['id'], [
+                    'tarif_applique' => $acte['tarif'],
+                    'doctor_id' => $acte['doctor_id'],
+                ]);
+                $total += $acte['tarif'];
+            }
+
+            $prestation->update(['amount' => $total]);
+            $prestations = $this->prestationRepository->getAll();
         return redirect()->route('prestation.index')->with(["success"=>"Visite créee avec succès",'prestations'=>$prestations]);
     
         } catch (\Throwable $th) {

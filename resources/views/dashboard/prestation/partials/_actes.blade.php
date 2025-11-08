@@ -30,6 +30,6 @@
     </button>
 
     <div class="mt-4 p-3 bg-light border rounded">
-        <h6 class="mb-0 text-center">Facture Totale : <span id="total-montant " name="amount" class="fw-bold">0</span> FCFA</h6>
+        <h6 class="mb-0 text-center">Facture Totale : <span id="total-montant" name="amount" class="fw-bold">0</span> FCFA</h6>
     </div>
 </div>
