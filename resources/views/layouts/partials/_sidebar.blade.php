@@ -33,7 +33,7 @@
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
+                        <i class="fas fa-user-md nav-icon"></i>
                         <p>
                             Personnel
                             <i class="right fas fa-angle-left"></i>
@@ -43,29 +43,60 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('specialization-host.index') }}" class="nav-link">
-                                <i class="fas fa-award"></i>
+                                {{-- <i class="fas fa-award"></i> --}}
                                 <p>Spécialisations</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('staff-type-host.index') }}" class="nav-link">
-                                <i class="fas fa-user-nurse"></i>
+                                {{-- <i class="fas fa-user-nurse"></i> --}}
                                 <p>Types de professionnels</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('pro-title-host.index') }}" class="nav-link">
-                                <i class="fas fa-briefcase-medical"></i>
+                                {{-- <i class="fas fa-briefcase-medical"></i> --}}
                                 <p>Titres professionnels</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('staff-host.index') }}" class="nav-link">
-                                <i class="fas fa-user-md nav-icon"></i>
+                                {{-- <i class="fas fa-user-md nav-icon"></i> --}}
                                 <p>Personnels de santé</p>
                             </a>
                         </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-clinic-medical"></i>
+                        <p>
+                            Pharmacie
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                {{-- <i class="fas fa-pills"></i> --}}
+                                <p>Medoc</p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-prescription-bottle-alt"></i>
+                                <p>Prod</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-first-aid"></i>
+                                <p>Prod</p>
+                            </a>
+                        </li> --}}
                     </ul>
                 </li>
 
