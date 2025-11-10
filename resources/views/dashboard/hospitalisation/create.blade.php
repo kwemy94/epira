@@ -9,10 +9,11 @@
         ],
         ['label' => 'Nouvelle hospitalisation'],
     ]" />
+    @include('dashboard.prestation.partials.details')
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
-                @include('dashboard.prestation.partials.details')
+                <div class="bg-primary text- p-2">Création des données de l'hospitalisation</div>
 
                 <div class="card-body ">
                     <form action="{{ route('hospitalisation.store')}}" method="post">
@@ -21,7 +22,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="enter_date">Date d'entrée</label>
-                                    <input type="date" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
+                                    <input type="datetime-local" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
                                     @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -30,7 +31,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exit_date">Date de sortie</label>
-                                    <input type="date" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
+                                    <input type="datetime-local" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
                                     @error('exit_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -47,12 +48,9 @@
                                     <label for="medecin_id">Médecin<em style="color:red">*</em></label>
                                     <select name="doctor_id"  required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
-                                        <option value="Dr Nyam">Dr Nyam</option>
-                                        <!-- @foreach($medecins ?? [] as $medecin)
-                                            <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
-                                                {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
-                                            </option>
-                                        @endforeach -->
+                                        <option value="1">Dr Nyam</option>
+                                        <option value="2">Dr Mvondo</option>
+                                        <option value="3">Dr Ebongue</option>
                                     </select>
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
@@ -65,11 +63,7 @@
                                         <option value="1">VIP</option>
                                         <option value="1">Moderne</option>
                                         <option value="1">Classique</option>
-                                        <!-- @foreach($medecins ?? [] as $medecin)
-                                            <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
-                                                {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
-                                            </option>
-                                        @endforeach -->
+                                        
                                     </select>
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
@@ -98,15 +92,90 @@
                                     @error('comment')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-
+                            @include("dashboard.prestation.partials._actes")
                             <div class="col-12" style="justify-content: center">
                                 <!-- <a href="{{ route('prestation.index') }}" class="btn btn-secondary">Annuler</a> -->
                                 <button type="submit" class="btn btn-primary" style="float: right;">Enregistrer</button>
                             </div>
+                            
                         </div>
                     </form>
                 </div>
            </div>
         </div>
     </section>
+@endsection
+
+@section('admin-js')
+<script>
+    let actesList = @json($actes);
+    let medecinsList = @json($medecins);
+    let actesSelectionnes = [];
+
+    function ajouterActe() {
+        const tbody = document.getElementById('actes-body');
+        const index = actesSelectionnes.length;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>
+                <select name="actes[${index}][id]" class="form-control" onchange="updateTarifs(this, ${index})">
+                    <option value="">-- Choisir un acte --</option>
+                    ${actesList.map(a => `<option value="${a.id}">${a.name}</option>`).join('')}
+                </select>
+            </td>
+            <td>
+                 <input type="number" name="actes[${index}][tarif]" class="form-control text-end" readonly placeholder="Tarif auto" />
+            </td>
+            </td>
+            <td>
+                <select name="actes[${index}][doctor_id]" class="form-control">
+                    <option value="">-- Sélectionner un médecin --</option>
+                    ${medecinsList.map(m => `<option value="${m.id}">${m.nom}</option>`).join('')}
+                </select>
+            </td>
+            <td>
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="supprimerActe(this)">×</button>
+            </td>
+        `;
+        tbody.appendChild(row);
+        actesSelectionnes.push({ id: null, tarif: null, doctor_id: null });
+    }
+
+    function supprimerActe(btn) {
+        const row = btn.closest('tr');
+        row.remove();
+        calculerTotal();
+    }
+
+    function updateTarifs(select, index) {
+       const acteId = select.value;
+        const acte = actesList.find(a => a.id == acteId);
+        const tarifInput = select.closest('tr').querySelector(`[name="actes[${index}][tarif]"]`);
+
+        if (acte) {
+            tarifInput.value = acte.tarif; // tarif direct depuis l’acte
+        } else {
+            tarifInput.value = '';
+        }
+
+        calculerTotal();
+    }
+
+    function setDefaultMedecin(select) {
+        const medecinId = select.value;
+        document.querySelectorAll('[name$="[doctor_id]"]').forEach(sel => {
+            if (!sel.value) sel.value = medecinId;
+        });
+    }
+
+    function calculerTotal() {
+        let total = 0;
+        document.querySelectorAll('[name$="[tarif]"]').forEach(sel => {
+            const val = parseFloat(sel.value) || 0;
+            total += val;
+        });
+        document.getElementById('total-montant').innerText = total;
+    }
+</script>
 @endsection

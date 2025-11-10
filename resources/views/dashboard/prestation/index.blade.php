@@ -81,7 +81,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" style="text-align: center">Aucun assureur enregistré</td>
+                                <td colspan="8" style="text-align: center">Aucune prestation enregistrée</td>
                             </tr>
                         @endforelse
 

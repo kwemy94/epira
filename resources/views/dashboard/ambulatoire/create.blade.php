@@ -21,7 +21,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="enter_date">Date d'entrée</label>
-                                    <input type="date" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
+                                    <input type="datetime-local" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
                                     @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exit_date">Date de sortie</label>
-                                    <input type="date" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
+                                    <input type="datetime-local" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
                                     @error('exit_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -48,11 +48,7 @@
                                     <select name="doctor_id"  required   id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
                                         <option value="Dr Nyam">Dr Nyam</option>
-                                        <!-- @foreach($medecins ?? [] as $medecin)
-                                            <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
-                                                {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
-                                            </option>
-                                        @endforeach -->
+                                      
                                     </select>
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
@@ -65,11 +61,7 @@
                                         <option value="1">VIP</option>
                                         <option value="1">Moderne</option>
                                         <option value="1">Classique</option>
-                                        <!-- @foreach($medecins ?? [] as $medecin)
-                                            <option value="{{ $medecin->id }}" {{ old('medecin_id') == $medecin->id ? 'selected' : '' }}>
-                                                {{ $medecin->name ?? ($medecin->prenom.' '.$medecin->nom ?? $medecin->nom_complet ?? '') }}
-                                            </option>
-                                        @endforeach -->
+                                       
                                     </select>
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>

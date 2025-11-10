@@ -31,8 +31,7 @@
                             
                         <div class="modal-body">
                             @csrf
-                            <div class="row">
-                                
+                            <div class="row">                                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="ad">Patient </label>
@@ -56,11 +55,14 @@
                                         
                                         <div>
                                             <select name="insurer_id" id="" class="form-control ">
-                                        <option value="" disabled>Sélectionner</option>
-                                        @foreach($patient->insurer as $insurer)
-                                            
-                                            <option value="{{$insurer->id}}">{{$insurer->insurer_name}}</option>
-                                        @endforeach
+                                        
+                                        @if(isset($patient))
+                                            <option value="" disabled>Sélectionner</option>
+
+                                            @foreach($patient->insurer as $insurer)                                            
+                                                <option value="{{$insurer->id}}">{{$insurer->insurer_name}}</option>
+                                            @endforeach
+                                        @endif
                                         </select>
                                         <button type="button" data-toggle="modal" data-target="#new-insurer"
                                             class="btn bg-gradient-primary btn-sm">+ Nouveau</button>
@@ -84,6 +86,7 @@
                                 
                                                                     
                             </div>
+                            
                         </div>
                         <!-- <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
@@ -129,5 +132,7 @@
     </script>
 
 @endsection
+
+
 
 

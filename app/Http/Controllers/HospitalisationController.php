@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acte;
 use Illuminate\Http\Request;
 use App\Models\Hospitalisation;
 use App\Models\Doctor;
@@ -40,8 +41,14 @@ class HospitalisationController extends Controller
         // $prestation=$this->prestationRepository->getAll();
         $prestation = $this->prestationRepository->getById($prestation_id);
         $patient = $this->patientRepository->getById($patient_id);
-        // dd($patient,$prestation);
-        return view('dashboard.hospitalisation.create',compact('doctors','prestation_id','patient','prestation'));
+        $actes= Acte::all();
+        // $medecins = [1=>'Dr. John Doe', 2=>'Dr. Jane Smith', 3=>'Dr. Emily Johnson'];
+        $medecins = [
+            (object)['id' => 1, 'nom' => 'Dr. John Doe'],
+            (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
+            (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
+        ];
+        return view('dashboard.hospitalisation.create',compact('doctors','prestation_id','patient','prestation', 'actes','medecins'));
     }
 
     /**
@@ -49,23 +56,33 @@ class HospitalisationController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->all();
-      
+        $inputs = $request->all(); 
+         
         try {
-              $hospitalisation = Hospitalisation::create([
-            'prestation_id' => $inputs['prestation_id'],
-            'reference' => $this->prestationRepository->generateReference('HOSP'),
-            'service' => $inputs['service'],
-            'doctor' => $inputs['doctor_id'],
-            'enter_date' => $inputs['enter_date'],
-            'exit_date' => $inputs['exit_date'],
-            'chambre' => $inputs['chambre'],
-            'motif' => $inputs['motif'] ?? null,
-            'comment' => $inputs['comment'] ?? null,
-        ]);
-        $prestations = Prestation::all();
+            $hospitalisation = Hospitalisation::create([
+                'prestation_id' => $inputs['prestation_id'],
+                'reference' => $this->prestationRepository->generateReference('HOSP'),
+                'service' => $inputs['service'],
+                'doctor' => $inputs['doctor_id'],
+                'enter_date' => $inputs['enter_date'],
+                'exit_date' => $inputs['exit_date'],
+                'chambre' => $inputs['chambre'],
+                'motif' => $inputs['motif'] ?? null,
+                'comment' => $inputs['comment'] ?? null,
+            ]);
+            $total = 0;
+            $prestation = $this->prestationRepository->getById($inputs['prestation_id']);
+            foreach ( $inputs['actes'] as $acte) {
+                $prestation->actes()->attach($acte['id'], [
+                    'tarif_applique' => $acte['tarif'],
+                    'doctor_id' => $acte['doctor_id'],
+                ]);
+                $total += $acte['tarif'];
+            }
 
-        return redirect()->route('prestation.index')->with(["success"=>"Hospitalisation créee avec succès",'prestations'=>$prestations]);
+            $prestation->update(['amount' => $total]);
+            $prestations = Prestation::all();
+            return redirect()->route('prestation.index')->with(["success"=>"Hospitalisation créée avec succès",'prestations'=>$prestations]);
 
         } catch (\Throwable $th) {
             dd($th);
