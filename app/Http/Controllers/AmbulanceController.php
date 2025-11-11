@@ -55,7 +55,7 @@ class AmbulanceController extends Controller
         try {
             $hospitalisation = Ambulance::create([
                 'prestation_id' => $inputs['prestation_id'],
-                'reference' => $this->prestationRepository->generateReference('ANA'),
+                'reference' => $this->prestationRepository->generateReference('AMB'),
                 'service' => $inputs['service'],
                 'doctor' => $inputs['doctor_id'],
                 'motif' => $inputs['motif'],

@@ -56,7 +56,7 @@ class RadiologieController extends Controller
         try {
             $hospitalisation = Radiologie::create([
                 'prestation_id' => $inputs['prestation_id'],
-                'reference' => $this->prestationRepository->generateReference('ANA'),
+                'reference' => $this->prestationRepository->generateReference('RAD'),
                 'service' => $inputs['service'],
                 'doctor' => $inputs['doctor_id'],
                 'exam_date' => $inputs['enter_date'],

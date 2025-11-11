@@ -57,7 +57,7 @@ class PharmacieController extends Controller
         try {
             $hospitalisation = Pharmacie::create([
                 'prestation_id' => $inputs['prestation_id'],
-                'reference' => $this->prestationRepository->generateReference('ANA'),
+                'reference' => $this->prestationRepository->generateReference('PHA'),
                 'service' => $inputs['service'],
                 'pharmacien' => $inputs['doctor_id'],
                 'date_p' => $inputs['enter_date'],
