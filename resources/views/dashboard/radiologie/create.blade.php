@@ -20,7 +20,7 @@
                             <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="enter_date">Date d'entrée</label>
+                                    <label for="enter_date">Date d'examen</label>
                                     <input type="datetime-local" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
                                     @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
@@ -29,19 +29,12 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="exit_date">Date de sortie</label>
+                                    <label for="exit_date">Date de résultat</label>
                                     <input type="datetime-local" name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
                                     @error('exit_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="motif">Motif</label>
-                                    <input type="text"  required  name="motif" id="motif" class="form-control @error('motif') is-invalid @enderror" value="{{ old('motif') }}">
-                                    @error('motif')<span class="invalid-feedback">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-
+                           
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="medecin_id">Médecin<em style="color:red">*</em></label>
@@ -53,20 +46,7 @@
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="medecin_id">Chambre<em style="color:red">*</em></label>
-                                    <select name="chambre" required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
-                                        <option value="">-- Sélectionner --</option>
-                                        <option value="1">VIP</option>
-                                        <option value="1">Moderne</option>
-                                        <option value="1">Classique</option>
-                                        
-                                    </select>
-                                    @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
-
+                           
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="service">Service<em style="color:red">*</em></label>
