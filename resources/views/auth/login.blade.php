@@ -56,6 +56,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion | HEALTHTECH AFRIQUE</title>
+    <link rel="shortcut icon" href="{{ asset('favicon-32x32.png') }}" type="image/svg" />
+    <link rel="apple-touch-icon" href="{{ asset('logo_chre22.png') }}">
 
     <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="{{ asset('template_old/dist/css/adminlte.min.css') }}">

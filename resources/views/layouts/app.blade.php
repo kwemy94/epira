@@ -12,6 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HEALTHTECH AFRIQUE | Tableau de bord</title>
 
+    <link rel="shortcut icon" href="{{ asset('favicon-32x32.png') }}" type="image/svg" />
+    <link rel="apple-touch-icon" href="{{ asset('logo_chre22.png') }}">
+
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -179,7 +182,7 @@
     <script src="{{ asset('js/custom.js') }}"></script>
     {{-- <!-- AdminLTE App --> --}}
     <script src="{{ asset('template_old/dist/js/adminlte.js') }}"></script>
-    <script src="{{ asset('template_old/dist/js/adminlte.min.js') }}"></script>
+    {{-- <script src="{{ asset('template_old/dist/js/adminlte.min.js') }}"></script> --}}
     @yield('admin-js')
     {{-- <!-- AdminLTE for demo purposes --> --}}
     <script src="{{ asset('template_old/dist/js/demo.js') }}"></script>

@@ -11,7 +11,7 @@
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+                data-accordion="true">
 
                 <li class="nav-item">
                     <a href="{{ route('patient.index') }}" class="nav-link">
