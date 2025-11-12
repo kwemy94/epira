@@ -59,7 +59,7 @@ class RadiologieController extends Controller
                 'reference' => $this->prestationRepository->generateReference('RAD'),
                 'service' => $inputs['service'],
                 'doctor' => $inputs['doctor_id'],
-                'exam_date' => $inputs['enter_date'],
+                'exams_date' => $inputs['enter_date'],
                 'result_date' => $inputs['exit_date'],
                 'comment' => $inputs['comment'] ?? null,
             ]);

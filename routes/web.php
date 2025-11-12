@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/radiologie', RadiologieController::class); 
     Route::resource('/pharmacie', PharmacieController::class);
     Route::resource('/medecine', MedecineController::class);
+    Route::post('/devis/line/create', [DevisController::class, 'createdevisLine'])->name('devis.line.create');
 });
 
 require __DIR__.'/auth.php';

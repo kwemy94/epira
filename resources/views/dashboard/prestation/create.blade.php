@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-md-12">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="ad">Prestation </label>
                                         <select name="prestation_type_id" id="" onchange="document.getElementById('formPrestation').submit()"  class="form-control required">>

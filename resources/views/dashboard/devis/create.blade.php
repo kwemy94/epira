@@ -18,13 +18,16 @@
                     <form action="{{ route('hospitalisation.store')}}" method="post">
                         @csrf
                             <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="enter_date">Date d'entrée</label>
-                                    <input type="datetime-local" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
-                                    @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
-                                </div>
-                            </div>
+                                 <div class="form-group">
+                                        <label for="ad">Prestation </label>
+                                        <select name="prestation_type_id" id="" onchange="document.getElementById('formPrestation').submit()"  class="form-control required">>
+                                        <option value="">Veuillez sélectionner une prestation</option>
+                                        @foreach($prestation_types as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                           
                             <input type="hidden" name="prestation_id" value="{{$prestation_id}}">
 
                             <div class="col-md-4">
@@ -106,3 +109,5 @@
         </div>
     </section>
 @endsection
+
+

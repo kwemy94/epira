@@ -44,7 +44,7 @@ class PharmacieController extends Controller
             (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
         ];
        
-        return view('dashboard.pharmacie.create',compact('prestation_id','patient','prestation',"actes",'medecins',));
+        return view('dashboard.pharmacie.create',compact('prestation_id','patient','prestation',"actes",'medecins'));
     }
 
     /**

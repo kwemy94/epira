@@ -47,7 +47,7 @@
                         @forelse ($prestations as $prestation)
                             <tr>
                                 <td>{{ $prestation?->reference }}</td>
-                                <td>{{ $prestation->type?->name }}</td>
+                                <td>{{ $prestation->type?->code }}</td>
                                  <td>{{ $prestation->patient?->lastname.' '.$prestation->patient?->firstname }}</td>
                                 
                                 <td>{{ $prestation?->doctor }}</td>
