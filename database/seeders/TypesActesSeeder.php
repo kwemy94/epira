@@ -23,6 +23,9 @@ class TypesActesSeeder extends Seeder
 
 
         foreach ($type_actes as $type_acte) {
+            $existing = DB::table('actes')->where('code', $type_acte['code'])->first();
+            if ($existing) {
+                continue; // Skip insertion if the record already exists
             DB::table('actes')->insert([
                 'name' => $type_acte['name'],
                 'code' => $type_acte['code'],
