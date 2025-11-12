@@ -5,10 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Acte;
 use App\Models\Analyse;
 use Illuminate\Http\Request;
-use App\Models\Doctor;
-use App\Models\Prestation;
-use App\Models\Visite;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\PrestationRepository;
 use App\Repositories\PatientRepository;
 
@@ -36,19 +32,18 @@ class AnalyseController extends Controller
      */
     public function create(Request $request)
     {
-         $doctors = Doctor::all();
+        
         $prestation_id = $request->prestation_id;
         $patient_id = $request->patient;
         $prestation = $this->prestationRepository->getById($prestation_id);
         $patient = $this->patientRepository->getById($patient_id);
-          $actes= Acte::all();
-        // $medecins = [1=>'Dr. John Doe', 2=>'Dr. Jane Smith', 3=>'Dr. Emily Johnson'];
+        $actes= Acte::all();
         $medecins = [
             (object)['id' => 1, 'nom' => 'Dr. John Doe'],
             (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
             (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
         ];
-        return view('dashboard.analyse.create',compact('doctors','prestation_id','patient','prestation',"actes",'medecins'));
+        return view('dashboard.analyse.create',compact('prestation_id','patient','prestation',"actes",'medecins'));
     }
 
     /**
@@ -60,28 +55,28 @@ class AnalyseController extends Controller
       
         try {
               $hospitalisation = Analyse::create([
-            'prestation_id' => $inputs['prestation_id'],
-            'reference' => $this->prestationRepository->generateReference('ANA'),
-            'service' => $inputs['service'],
-            'doctor' => $inputs['doctor_id'],
-            'external_doctor' => $inputs['external_doctor'],
-            'analysis_date' => $inputs['enter_date'],
-            'result_date' => $inputs['exit_date'],
-            'comment' => $inputs['comment'] ?? null,
-        ]);
-         $total = 0;
-            $prestation = $this->prestationRepository->getById($inputs['prestation_id']);
-            foreach ( $inputs['actes'] as $acte) {
-                $prestation->actes()->attach($acte['id'], [
-                    'tarif_applique' => $acte['tarif'],
-                    'doctor_id' => $acte['doctor_id'],
-                ]);
-                $total += $acte['tarif'];
-            }
+                'prestation_id' => $inputs['prestation_id'],
+                'reference' => $this->prestationRepository->generateReference('ANA'),
+                'service' => $inputs['service'],
+                'doctor' => $inputs['doctor_id'],
+                'external_doctor' => $inputs['external_doctor'],
+                'analysis_date' => $inputs['enter_date'],
+                'result_date' => $inputs['exit_date'],
+                'comment' => $inputs['comment'] ?? null,
+            ]);
+            $total = 0;
+                $prestation = $this->prestationRepository->getById($inputs['prestation_id']);
+                foreach ( $inputs['actes'] as $acte) {
+                    $prestation->actes()->attach($acte['id'], [
+                        'tarif_applique' => $acte['tarif'],
+                        'doctor_id' => $acte['doctor_id'],
+                    ]);
+                    $total += $acte['tarif'];
+                }
 
-            $prestation->update(['amount' => $total]);
-        $prestations = $this->prestationRepository->getAll();
-        return redirect()->route('prestation.index')->with(["success"=>"Analyse créee avec succès",'prestations'=>$prestations]);
+                $prestation->update(['amount' => $total]);
+            $prestations = $this->prestationRepository->getAll();
+            return redirect()->route('prestation.index')->with(["success"=>"Analyse créée avec succès",'prestations'=>$prestations]);
 
         } catch (\Throwable $th) {
             dd($th);

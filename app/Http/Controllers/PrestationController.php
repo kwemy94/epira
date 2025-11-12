@@ -60,7 +60,7 @@ class PrestationController extends Controller
                $motif = $prestation->ambulance->motif;
             }elseif($prestation->pharmacie){
                $ref = $prestation->pharmacie->reference;
-               $doc = $prestation->pharmacie->doctor;
+               $doc = $prestation->pharmacie->pharmacien;
                $motif = $prestation->pharmacie->motif;
             }elseif($prestation->devis){
                $ref = $prestation->devis->reference;

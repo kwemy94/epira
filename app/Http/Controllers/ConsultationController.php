@@ -80,7 +80,7 @@ class ConsultationController extends Controller
 
             $prestation->update(['amount' => $total]);
             $prestations =$this->prestationRepository->getAll();
-            return redirect()->route('prestation.index')->with(["success"=>"Consultation créee avec succès",'prestations'=>$prestations]);
+            return redirect()->route('prestation.index')->with(["success"=>"Consultation créée avec succès",'prestations'=>$prestations]);
 
        } catch (\Throwable $th) {
             dd($th);

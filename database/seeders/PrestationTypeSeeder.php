@@ -15,13 +15,13 @@ class PrestationTypeSeeder extends Seeder
     public function run(): void
     { 
         $prestationTypes = [
-            ['name'=>'Nouvelle hospitalisation','code'=>'hospitalisation'],
-            ['name'=>'Nouvelle consultation','code'=>'consultation'],
-            ['name'=>'Nouvelle visite','code'=>'visite'],
-            ['name'=>'Nouvelle analyse','code'=>'analyse'],
-            ['name'=>'Nouvelle imagerie','code'=>'imagerie'],
-            ['name'=>'Nouvelle ambulatoire','code'=>'ambulatoire'],
-            ['name'=>'Nouvelle pharmacie','code'=>'pharmacie'],
+            ['name'=>'Nouvelle hospitalisation','code'=>'Hospitalisation'],
+            ['name'=>'Nouvelle consultation','code'=>'Consultation'],
+            ['name'=>'Nouvelle visite','code'=>'Visite'],
+            ['name'=>'Nouvelle analyse','code'=>'Analyse'],
+            ['name'=>'Nouvelle imagerie','code'=>'Imagerie'],
+            ['name'=>'Nouvelle ambulatoire','code'=>'Ambulatoire'],
+            ['name'=>'Nouvelle pharmacie','code'=>'Pharmacie'],
             ['name'=>'Devis','code'=>'Devis']
         ];
         foreach ($prestationTypes as $type) {

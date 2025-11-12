@@ -9,7 +9,7 @@ class Pharmacie extends Model
 {
     use HasFactory;
 
-        protected $fillable = ['prestation_id','pharmacien'];
+        protected $fillable = ['prestation_id','pharmacien','reference','date_p','service'];
 
     public function prestation(){
         return $this->belongsTo(Prestation::class);

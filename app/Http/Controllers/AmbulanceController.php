@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acte;
+use App\Models\Ambulance;
 use Illuminate\Http\Request;
+use App\Repositories\PrestationRepository;
+use App\Repositories\PatientRepository;
 
 class AmbulanceController extends Controller
 {
+     private $prestationRepository;
+    private $patientRepository;
+
+     public function __construct(
+        PrestationRepository $prestationRepository ,PatientRepository $patientRepository
+    ) {
+        $this->prestationRepository = $prestationRepository;
+        $this->patientRepository = $patientRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -17,9 +30,19 @@ class AmbulanceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $prestation_id = $request->prestation_id;
+        $patient_id = $request->patient;
+        $prestation = $this->prestationRepository->getById($prestation_id);
+        $patient = $this->patientRepository->getById($patient_id);
+        $actes= Acte::all();
+        $medecins = [
+            (object)['id' => 1, 'nom' => 'Dr. John Doe'],
+            (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
+            (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
+        ];
+        return view('dashboard.ambulance.create',compact('prestation_id','patient','prestation',"actes",'medecins'));
     }
 
     /**
@@ -27,7 +50,36 @@ class AmbulanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $inputs = $request->all();
+      
+        try {
+            $hospitalisation = Ambulance::create([
+                'prestation_id' => $inputs['prestation_id'],
+                'reference' => $this->prestationRepository->generateReference('AMB'),
+                'service' => $inputs['service'],
+                'doctor' => $inputs['doctor_id'],
+                'motif' => $inputs['motif'],
+                'enter_date' => $inputs['enter_date'],
+                'exit_date' => $inputs['exit_date'],
+                'comment' => $inputs['comment'] ?? null,
+            ]);
+            $total = 0;
+                $prestation = $this->prestationRepository->getById($inputs['prestation_id']);
+                foreach ( $inputs['actes'] as $acte) {
+                    $prestation->actes()->attach($acte['id'], [
+                        'tarif_applique' => $acte['tarif'],
+                        'doctor_id' => $acte['doctor_id'],
+                    ]);
+                    $total += $acte['tarif'];
+                }
+
+                $prestation->update(['amount' => $total]);
+            $prestations = $this->prestationRepository->getAll();
+            return redirect()->route('prestation.index')->with(["success"=>"Ambulance créée avec succès",'prestations'=>$prestations]);
+
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     /**

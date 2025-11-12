@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Acte;
 use Illuminate\Http\Request;
-use App\Models\Doctor;
-use App\Models\Prestation;
 use App\Models\Visite;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\PrestationRepository;
 use App\Repositories\PatientRepository;
 
 class VisiteController extends Controller
 {
-     private $prestationRepository;
+    private $prestationRepository;
     private $patientRepository;
 
      public function __construct(
@@ -35,7 +32,6 @@ class VisiteController extends Controller
      */
     public function create(Request $request)
     {
-        $doctors = Doctor::all();
         $prestation_id = $request->prestation_id;
         $patient_id = $request->patient;
         $prestation = $this->prestationRepository->getById($prestation_id);
@@ -47,7 +43,7 @@ class VisiteController extends Controller
             (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
             (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
         ];
-        return view('dashboard.visite.create',compact('doctors','prestation_id','patient','prestation','medecins',"actes"));
+        return view('dashboard.visite.create',compact('prestation_id','patient','prestation','medecins',"actes"));
     }
 
     /**
@@ -79,7 +75,7 @@ class VisiteController extends Controller
 
             $prestation->update(['amount' => $total]);
             $prestations = $this->prestationRepository->getAll();
-        return redirect()->route('prestation.index')->with(["success"=>"Visite créee avec succès",'prestations'=>$prestations]);
+        return redirect()->route('prestation.index')->with(["success"=>"Visite créée avec succès",'prestations'=>$prestations]);
     
         } catch (\Throwable $th) {
             dd($th);

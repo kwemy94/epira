@@ -37,12 +37,12 @@
                                         <label for="ad">Patient </label>
                                         @if(isset($patient))
                                         <input type="texte" readonly class="form-control " id=""
-                                            name="patient_id" value="{{ $patient->firstname }}">
+                                            name="patient_id" value="{{ $patient->lastname.' '.$patient->firstname }}">
                                         @else
                                         <select name="patient_id" id="" class="form-control">
                                             <option value="-1">Choisir un patient</option>
                                             @foreach ($patients as $patient )
-                                                <option value="{{$patient->id}}">{{$patient->lastname.$patient->fistname}}</option>
+                                                <option value="{{$patient->id}}">{{$patient->lastname.' '. $patient->fistname}}</option>
                                                 
                                             @endforeach
                                         </select>
@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-md-12">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="ad">Prestation </label>
                                         <select name="prestation_type_id" id="" onchange="document.getElementById('formPrestation').submit()"  class="form-control required">>

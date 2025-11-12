@@ -20,8 +20,8 @@
                             <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="enter_date">Date d'analyse</label>
-                                    <input type="datetime-local" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" value="{{ old('enter_date') }}">
+                                    <label for="enter_date">Date d'analyse<em style="color:red">*</em></label>
+                                    <input type="datetime-local" name="enter_date" id="enter_date" class="form-control @error('enter_date') is-invalid @enderror" required value="{{ old('enter_date') }}">
                                     @error('enter_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -29,8 +29,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="exit_date">Date de résultat</label>
-                                    <input type="datetime-local" required  name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" value="{{ old('exit_date') }}">
+                                    <label for="exit_date">Date de résultat<em style="color:red">*</em></label>
+                                    <input type="datetime-local" required  name="exit_date" id="exit_date" class="form-control @error('exit_date') is-invalid @enderror" required value="{{ old('exit_date') }}">
                                     @error('exit_date')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="medecin_id">Médecin<em style="color:red">*</em></label>
-                                    <select name="doctor_id" required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
+                                    <select name="doctor_id" required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror" required>
                                         <option value="">-- Sélectionner --</option>
                                         <option value="Dr Nyam">Dr Nyam</option>
                                       

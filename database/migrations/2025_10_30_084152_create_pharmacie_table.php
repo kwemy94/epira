@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('reference');
             $table->string('pharmacien');
             $table->datetime('date_p');
-            $table->integer('service');
+            $table->string('service');
             $table->text('comment')->nullable();
             $table->timestamps();
         });
