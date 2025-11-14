@@ -22,7 +22,7 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-3 col-6">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                     <!-- small box -->
                     <div class="small-box" style="background: white">
                         <div class="inner">
@@ -36,7 +36,7 @@
                         <a href="#" class="small-box-footer" style="color: black">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                     <div class="small-box" style="background: white">
                         <div class="inner">
                             <h3>{{$patientsCount}}</h3>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-3 col-6">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                     <div class="small-box " style="background: white">
                         <div class="inner">
                             <h3>{{$appointments}}</h3>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-3 col-6">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                     <div class="small-box " style="background: white">
                         <div class="inner">
                             <h3>{{$prestationsCount}}</h3>
