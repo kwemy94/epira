@@ -9,7 +9,7 @@ class Consultation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['prestation_id','doctor','reference','unit_price','start_date','end_date','tarif'];
+    protected $fillable = ['prestation_id','doctor','reference','unit_price','start_date','end_date','tarif','payé'];
 
     public function prestation(){
         return $this->belongsTo(Prestation::class);

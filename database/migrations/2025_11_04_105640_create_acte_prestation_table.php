@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('prestation_id')->constrained('prestations')->cascadeOnDelete();
             $table->foreignId('acte_id')->constrained('actes')->cascadeOnDelete();
-            $table->foreignId('doctor_id')->nullable()->constrained('staffs'); // le praticien
+            $table->integer('doctor_id'); // le praticien
             $table->decimal('tarif_applique', 10, 2)->nullable(); // tarif au moment de la prestation
             $table->timestamps();
         });
