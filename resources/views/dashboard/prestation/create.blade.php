@@ -37,7 +37,7 @@
                                         <label for="ad">Patient </label>
                                         @if(isset($patient))
                                         <input type="texte" readonly class="form-control " id=""
-                                            name="patient_id" value="{{ $patient->lastname.' '.$patient->firstname }}">
+                                            name="patient_id" value="{{ $patient->lastname}}">
                                         @else
                                         <select name="patient_id" id="" class="form-control">
                                             <option value="-1">Choisir un patient</option>

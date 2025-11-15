@@ -18,7 +18,7 @@
                                         <div class="form-group">
                                             <label for="ad">Patient </label>
                                             <input type="texte" readonly class="form-control " id=""
-                                                name="patient_id" value="{{ $patient->firstname }}">
+                                                name="patient_id" value="{{ $patient->lastname }}">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
