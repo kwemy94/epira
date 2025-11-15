@@ -24,5 +24,12 @@ class PrestationTypesRepository extends ResourceRepository {
         ->orderBy('id','ASC')
         ->get();
     }
+    public function getPrestations(){
+         return $this->model
+         ->where('name','!=','Devis')
+        ->orderBy('id','ASC')
+        ->get();
+    }
+
 
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('devis_line', function (Blueprint $table) {
+        Schema::create('devis_lines', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('devis_id')->references('id')->on('devis')->onDelete('cascade');
             $table->string('label');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('devis_line');
+        Schema::dropIfExists('devis_lines');
     }
 };

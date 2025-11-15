@@ -112,6 +112,7 @@ class PrestationController extends Controller
                         $this->patientRepository->getByName($inputs['patient_id'])->id;
 
             $inputs['patient_id']=$patient_id;
+            
             $prestation = $this->prestationRepository->store($inputs);
             $type = $inputs['prestation_type_id'];
        
@@ -138,7 +139,7 @@ class PrestationController extends Controller
                      return redirect()->route('pharmacie.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;
                 case '8':
-                    redirect()->route('devis.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
+                    return redirect()->route('devis.create', ['patient' => $patient_id,'prestation_id' => $prestation->id]);
                     break;  
                     
                 default:                
@@ -157,9 +158,17 @@ class PrestationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Prestation $prestation)
+    public function show(Request $request)
     {
-        return response()->json($prestation);
+        $prestations = $this->prestationRepository->getAll();
+        $prestation_id = $request->prestation_id;
+        $patient_id = $request->patient;
+        $prestation_types = $this->prestationTypesRepository->getAll();
+        $prestation = $this->prestationRepository->getById($prestation_id);
+        $patient = $this->patientRepository->getById($patient_id);
+
+        return view('dashboard.devis.create',compact('prestations','prestation_id','patient','prestation','prestation_types'));
+        
     }
 
     /**
@@ -205,4 +214,6 @@ class PrestationController extends Controller
             return redirect()->back()->with('error', 'Echec de suppression de la prestation');
         }
     }
+
+    
 }

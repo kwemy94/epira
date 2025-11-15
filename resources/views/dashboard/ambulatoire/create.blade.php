@@ -9,11 +9,14 @@
         ],
         ['label' => 'Nouvelle ambulance'],
     ]" />
+    @include('dashboard.prestation.partials.details')
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
-                @include('dashboard.prestation.partials.details')
-
+                
+                 <div class="bg-primary text- p-2">
+                            Création de l'ambulatoire
+                        </div>
                 <div class="card-body ">
                     <form action="{{ route('analyse.store')}}" method="post">
                         @csrf

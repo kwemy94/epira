@@ -25,7 +25,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-outline-primary btn-sm" style="width: 10%;" onclick="ajouterActe()">
+    <button type="button" class="btn btn-outline-primary btn-sm"  onclick="ajouterActe()">
         + Ajouter un acte
     </button>
 
