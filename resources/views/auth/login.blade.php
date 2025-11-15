@@ -56,6 +56,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion | HEALTHTECH AFRIQUE</title>
+
     <link rel="shortcut icon" href="{{ asset('favicon-32x32.png') }}" type="image/svg" />
     <link rel="apple-touch-icon" href="{{ asset('logo_chre22.png') }}">
 
@@ -63,14 +64,24 @@
     <link rel="stylesheet" href="{{ asset('template_old/dist/css/adminlte.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('template_old/plugins/fontawesome-free/css/all.min.css') }}">
+
     <style>
         body {
             background-color: #f4f6f9;
         }
 
+        /* Container principal responsive */
         .login-container {
             display: flex;
-            height: 100vh;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Desktop ONLY */
+        @media (min-width: 768px) {
+            .login-container {
+                flex-direction: row;
+            }
         }
 
         .login-left {
@@ -80,7 +91,7 @@
             justify-content: center;
             align-items: center;
             background-color: #fff;
-            padding: 40px;
+            padding: 40px 20px;
         }
 
         .login-right {
@@ -89,8 +100,10 @@
             background-size: cover;
         }
 
+        /* Logo responsive */
         .logo {
             width: 400px;
+            max-width: 90%;
             margin-bottom: 30px;
         }
 
@@ -117,6 +130,13 @@
         .text-muted {
             font-size: 0.8rem;
             margin-top: 20px;
+        }
+
+        /* Ajustement mobile */
+        @media (max-width: 767px) {
+            .login-left {
+                padding: 30px 15px;
+            }
         }
     </style>
 </head>
@@ -165,9 +185,8 @@
             </div>
         </div>
 
-        <!-- Partie droite (image docteur) -->
-        <div class="login-right d-none d-md-block" {{-- style="background: url('{{ asset('back.webp') }}') center center no-repeat; background-size: cover;" --}}>
-        </div>
+        <!-- Partie droite (image docteur) - masquée sur mobile -->
+        <div class="login-right d-none d-md-block"></div>
 
     </div>
 

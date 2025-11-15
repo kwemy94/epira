@@ -24,7 +24,13 @@ class DatabaseSeeder extends Seeder
             BloodTypeSeeder::class,
             PrestationTypeSeeder::class,
             TypesActesSeeder::class,
-            PrestationSeeder::class
+            PrestationSeeder::class,
+
+            CategoryPharmacieSeeder::class,
+            ProductTypeSeeder::class,
+            UnitSeeder::class,
+            StockTypeSeeder::class,
+            WarehouseSeeder::class,
         ]);
     }
 }

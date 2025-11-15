@@ -3,8 +3,13 @@
 <style>
     body {
         font-family: 'Nunito', sans-serif;
-        margin: revert !important;
+        /* margin: revert !important; */
     }
+    @media (max-width: 768px) {
+    .content-wrapper {
+        padding: 10px !important;
+    }
+}
 </style>
 
 <head>
@@ -25,7 +30,6 @@
     <link rel="stylesheet"
         href="{{ asset('template_old/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('template_old/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template_old/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('template_old/dist/css/adminlte.min.css') }}">
@@ -67,7 +71,8 @@
     @yield('admin-css')
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+{{-- <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse"> --}}
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         <!-- Preloader -->

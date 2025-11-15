@@ -70,9 +70,18 @@
             background-color: #f4f6f9;
         }
 
+        /* Container principal responsive */
         .login-container {
             display: flex;
-            height: 100vh;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Desktop ONLY */
+        @media (min-width: 768px) {
+            .login-container {
+                flex-direction: row;
+            }
         }
 
         .login-left {
@@ -82,7 +91,7 @@
             justify-content: center;
             align-items: center;
             background-color: #fff;
-            padding: 40px;
+            padding: 40px 20px;
         }
 
         .login-right {
@@ -91,8 +100,10 @@
             background-size: cover;
         }
 
+        /* Logo responsive */
         .logo {
             width: 400px;
+            max-width: 90%;
             margin-bottom: 30px;
         }
 
@@ -119,6 +130,13 @@
         .text-muted {
             font-size: 0.8rem;
             margin-top: 20px;
+        }
+
+        /* Ajustement mobile */
+        @media (max-width: 767px) {
+            .login-left {
+                padding: 30px 15px;
+            }
         }
     </style>
 </head>

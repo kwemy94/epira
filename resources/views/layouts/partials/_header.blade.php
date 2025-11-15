@@ -2,8 +2,13 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item  d-flex align-items-center">
-            {{-- <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a> --}}
-            <h5 class="ml-2">Centre Hospitalier Régional d’Ebolowa</h5>
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                <i class="fas fa-bars"></i>
+            </a>
+
+            {{-- Titre (caché sur mobile) --}}
+            <h5 class="ml-2 d-none d-md-block">Centre Hospitalier Régional d’Ebolowa</h5>
+            <h6 class="ml-2 d-md-none">CHRE</h6>
         </li>
     </ul>
 
