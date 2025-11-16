@@ -68,7 +68,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="pname">Prénom <em class="text-danger">*</em></label>
-                                                <input type="text" class="form-control" id="pname" name="lastname"
+                                                <input type="text" class="form-control required" id="pname" name="lastname"
                                                     value="{{ old('lastname', $staff->firstname ?? '') }}">
                                             </div>
                                         </div>
