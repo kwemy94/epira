@@ -31,6 +31,9 @@ class DatabaseSeeder extends Seeder
             UnitSeeder::class,
             StockTypeSeeder::class,
             WarehouseSeeder::class,
+            ProfesionnalTitleSeeder::class,
+            SpecializationSeeder::class,
+            StaffTypeSeeder::class,
         ]);
     }
 }

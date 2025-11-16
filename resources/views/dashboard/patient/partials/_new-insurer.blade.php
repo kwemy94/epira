@@ -1,5 +1,5 @@
 
-            <div class="modal fade" id="new-insurer">
+            <div class="modal fade" id="new-insurer" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form action="{{ route('insurer.store') }}" method="POST" id="formInsurer">

@@ -50,7 +50,7 @@
                                 <tbody>
                                     @forelse ($staffTypes as $spec)
                                         <tr>
-                                            <td>{{ $spec->name }}</td>
+                                            <td>{{ Str::upper($spec->name) }}</td>
                                             <td>{{ $spec->description }}</td>
                                             <td>
                                                 <div class="btn-group">

@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\StaffType;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class StaffTypeSeeder extends Seeder
 {
@@ -12,6 +13,17 @@ class StaffTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+         $staffTypes = [
+            ['name' => 'Medécin'],
+            ['name' => 'Infirmier'],
+            ['name' => 'Pharmacien'],
+            ['name' => 'Technicien'],
+        ];
+
+        foreach ($staffTypes as $type) {
+            StaffType::firstOrCreate(
+                ['name' => $type['name']],
+            );
+        }
     }
 }

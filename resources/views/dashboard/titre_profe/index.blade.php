@@ -50,34 +50,37 @@
                                 <tbody>
                                     @forelse ($proTitles as $spec)
                                         <tr>
-                                            <td>{{ $spec->name }}</td>
+                                            <td>{{ Str::upper($spec->name) }}</td>
                                             <td>{{ $spec->description }}</td>
                                             <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-default btn-sm"
-                                                        data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
+                                                @if (Str::lower($spec?->name) !== 'dr')
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm"
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                            <a href="#" data-toggle="modal" data-target="#new-cat"
+                                                                class="dropdown-item text-primary btn-edit-specialisation"
+                                                                data-id="{{ $spec->id }}"
+                                                                data-name="{{ $spec->name }}"
+                                                                data-description="{{ $spec->description }}">
+                                                                <i class="fas fa-edit mr-2"></i> Modifier
+                                                            </a>
 
-                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                                        <a href="#" data-toggle="modal" data-target="#new-cat"
-                                                            class="dropdown-item text-primary btn-edit-specialisation"
-                                                            data-id="{{ $spec->id }}" data-name="{{ $spec->name }}"
-                                                            data-description="{{ $spec->description }}">
-                                                            <i class="fas fa-edit mr-2"></i> Modifier
-                                                        </a>
-
-                                                        <form action="{{ route('pro-title-host.destroy', $spec->id) }}"
-                                                            method="POST"
-                                                            onsubmit="return confirm('Voulez-vous vraiment supprimer ce titre de personnel ?');">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="dropdown-item ">
-                                                                <i class="fas fa-trash-alt text-danger"></i> Supprimer
-                                                            </button>
-                                                        </form>
+                                                            <form action="{{ route('pro-title-host.destroy', $spec->id) }}"
+                                                                method="POST"
+                                                                onsubmit="return confirm('Voulez-vous vraiment supprimer ce titre de personnel ?');">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="dropdown-item ">
+                                                                    <i class="fas fa-trash-alt text-danger"></i> Supprimer
+                                                                </button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endif
+
                                             </td>
                                         </tr>
                                     @empty
