@@ -139,7 +139,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="profesionnal_title_id">Titre <em
-                                                        class="text-primary">*</em></label>
+                                                        class="text-danger">*</em></label>
                                                 <select id="profesionnal_title_id" class="form-control select2 required"
                                                     name="profesionnal_title_id" required>
                                                     <option disabled

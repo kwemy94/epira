@@ -86,8 +86,8 @@ class StaffController extends Controller
             return redirect()->route('staff-host.index')
                 ->with('success', 'Professionnel enregistré avec succès.');
         } catch (\Exception $e) {
-            // En cas d'erreur, on redirige avec le message
-            return back()->with('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
+            Log::error("STORE STAFF ERROR : " . $e->getMessage());
+            return back()->with('error', 'Erreur lors de l\'enregistrement : ');
         }
     }
 
@@ -152,6 +152,7 @@ class StaffController extends Controller
             return redirect()->route('staff-host.index')
                 ->with('success', 'Professionnel mis à jour avec succès.');
         } catch (\Exception $e) {
+            Log::error("UPDATE STAFF ERROR : " . $e->getMessage());
             return back()->with('error', 'Erreur lors de la mise à jour : ' . $e->getMessage());
         }
     }
