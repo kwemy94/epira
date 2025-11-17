@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Specialization;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SpecializationSeeder extends Seeder
 {
@@ -12,6 +13,16 @@ class SpecializationSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+         $specializations = [
+            ['name' => 'Chirurgie'],
+            ['name' => 'Sage-femme'],
+            ['name' => 'Ophtalmologie'],
+        ];
+
+        foreach ($specializations as $type) {
+            Specialization::firstOrCreate(
+                ['name' => $type['name']],
+            );
+        }
     }
 }

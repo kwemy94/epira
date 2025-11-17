@@ -1,7 +1,7 @@
-  <div class="modal fade" id="new-appointment">
+  <div class="modal fade" id="new-appointment" aria-hidden="true" data-backdrop="static">
       <div class="modal-dialog modal-lg">
           <div class="modal-content">
-              
+
 
               <form id="formAppointment" action="{{ route('fix.appointment') }}" method="POST">
                   <div class="modal-body">
@@ -13,7 +13,11 @@
                           <select id="modal_doctor_id" name="doctor_id" class="form-control required">
                               <option value="">-- Choisir --</option>
                               @foreach ($doctors as $doc)
-                                  <option value="{{ $doc->id }}">{{ $doc->firstname }} {{ $doc->lastname }}</option>
+                                  @if (Str::lower($doc->profesionnalTitle?->name) == 'dr')
+                                      <option value="{{ $doc->id }}">
+                                          {{ $doc->firstname }} {{ $doc->lastname }}
+                                      </option>
+                                  @endif
                               @endforeach
                           </select>
                       </div>
@@ -22,19 +26,21 @@
                           <div class="col-md-4">
                               <div class="form-group mt-3">
                                   <label for="date">Sélectionner un jour <span class="text-danger">*</span></label>
-                                  <input type="date" id="date" name="appointment_date" class="form-control required" >
+                                  <input type="date" id="date" name="appointment_date"
+                                      class="form-control required">
                               </div>
                           </div>
                           <div class="col-md-4">
                               <div class="form-group mt-3">
                                   <label for="time1">Heure début</label>
-                                  <input type="time" id="time1" name="appointment_start_time" class="form-control required" >
+                                  <input type="time" id="time1" name="appointment_start_time"
+                                      class="form-control required">
                               </div>
                           </div>
                           <div class="col-md-4">
                               <div class="form-group mt-3">
                                   <label for="time">Heure fin</label>
-                                  <input type="time" id="time" name="appointment_end_time" class="form-control" >
+                                  <input type="time" id="time" name="appointment_end_time" class="form-control">
                               </div>
                           </div>
                       </div>

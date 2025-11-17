@@ -60,16 +60,16 @@
                                             <div class="form-group">
                                                 <label for="name">Nom <em class="text-danger">*</em></label>
                                                 <input type="text" class="form-control required" id="name"
-                                                    name="lastname" value="{{ old('lastname', $staff->lastname ?? '') }}"
+                                                    name="firstname" value="{{ old('firstname', $staff->lastname ?? '') }}"
                                                     autofocus>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="pname">Prénom</label>
-                                                <input type="text" class="form-control" id="pname" name="firstname"
-                                                    value="{{ old('firstname', $staff->firstname ?? '') }}">
+                                                <label for="pname">Prénom <em class="text-danger">*</em></label>
+                                                <input type="text" class="form-control required" id="pname" name="lastname"
+                                                    value="{{ old('lastname', $staff->firstname ?? '') }}">
                                             </div>
                                         </div>
 
@@ -139,7 +139,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="profesionnal_title_id">Titre <em
-                                                        class="text-primary">*</em></label>
+                                                        class="text-danger">*</em></label>
                                                 <select id="profesionnal_title_id" class="form-control select2 required"
                                                     name="profesionnal_title_id" required>
                                                     <option disabled
