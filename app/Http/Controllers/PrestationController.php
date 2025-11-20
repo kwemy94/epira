@@ -215,5 +215,11 @@ class PrestationController extends Controller
         }
     }
 
+    public function showPrestationDetails($id)
+    {
+
+        return view('dashboard.prestation.show', compact('id'));
+    }
+
     
 }
