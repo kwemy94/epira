@@ -65,7 +65,7 @@
                                         <div class="dropdown-menu dropdown-menu-right"
                                             aria-labelledby="actionsDropdown{{ $prestation->id }}">
                                             <!-- Show -->
-                                            <a href="#" class="dropdown-item text-success btn-show-prestation"
+                                            <a href="{{ route('prestation.show.details', $prestation->id) }}" class="dropdown-item text-success btn-show-prestation"
                                                 data-id="{{ $prestation->id }}" title="Détails">
                                                 <i class="fas fa-eye mr-2"></i>Visualiser
                                             </a>

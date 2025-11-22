@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('specialization-host', SpecializationController::class);
     Route::resource('staff-type-host', StaffTypeController::class);
     Route::resource('pro-title-host', ProfesionnalTitleController::class);
+    Route::get('prestation/show/{id}', [PrestationController::class, 'showPrestationDetails'])->name('prestation.show.details');
 
     # Patient
     Route::resource('/appointments', AppointmentController::class);

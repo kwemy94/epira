@@ -51,7 +51,7 @@ class InsurerController extends Controller
             Log::error("Erreur create insurer : " . $th->getMessage());
             return redirect()->back()->with('error', 'Echec création assureur');
         }
-        return redirect()->back()->with(['success', 'Assureur crée avec succès','insurer'=>$insurer]);
+        return redirect()->back()->with('success', 'Assureur crée avec succès!' );
     }
 
     /**
