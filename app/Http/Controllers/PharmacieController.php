@@ -7,18 +7,22 @@ use App\Models\Pharmacie;
 use Illuminate\Http\Request;
 use App\Repositories\PrestationRepository;
 use App\Repositories\PatientRepository;
+use App\Repositories\StaffRepository;
 
 class PharmacieController extends Controller
 {
     
     private $prestationRepository;
     private $patientRepository;
+    private $staffRepository;
 
      public function __construct(
+        StaffRepository $staffRepository,
         PrestationRepository $prestationRepository ,PatientRepository $patientRepository
     ) {
         $this->prestationRepository = $prestationRepository;
         $this->patientRepository = $patientRepository;
+        $this->staffRepository = $staffRepository;
     }
     /**
      * Display a listing of the resource.
@@ -38,13 +42,10 @@ class PharmacieController extends Controller
         $prestation = $this->prestationRepository->getById($prestation_id);
         $patient = $this->patientRepository->getById($patient_id);
         $actes= Acte::all();
-        $medecins = [
-            (object)['id' => 1, 'nom' => 'Dr. John Doe'],
-            (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
-            (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
-        ];
+        $pharmaciens = $this->staffRepository->getPharmaciens();
+        $medecins = $this->staffRepository->getDoctors();
        
-        return view('dashboard.pharmacie.create',compact('prestation_id','patient','prestation',"actes",'medecins'));
+        return view('dashboard.pharmacie.create',compact('prestation_id','patient','prestation',"actes",'medecins','pharmaciens'));
     }
 
     /**

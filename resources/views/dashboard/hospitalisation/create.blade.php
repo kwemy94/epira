@@ -48,10 +48,9 @@
                                     <label for="medecin_id">Médecin<em style="color:red">*</em></label>
                                     <select name="doctor_id"  required  id="medecin_id" class="form-control @error('medecin_id') is-invalid @enderror">
                                         <option value="">-- Sélectionner --</option>
-                                        <option value="1">Dr Nyam</option>
-                                        <option value="2">Dr Mvondo</option>
-                                        <option value="3">Dr Ebongue</option>
-                                    </select>
+                                         @foreach ($medecins as $medecin)
+                                            <option value="{{$medecin->id}}">{{$medecin->lastname.' '.$medecin->firstname}}</option>
+                                        @endforeach</select>
                                     @error('medecin_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
                                 </div>
                             </div>
@@ -131,7 +130,7 @@
             <td>
                 <select name="actes[${index}][doctor_id]" class="form-control">
                     <option value="">-- Sélectionner un médecin --</option>
-                    ${medecinsList.map(m => `<option value="${m.id}">${m.nom}</option>`).join('')}
+                    ${medecinsList.map(m => `<option value="${m.id}">${m.lastname}</option>`).join('')}
                 </select>
             </td>
             <td>

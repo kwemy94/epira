@@ -16,6 +16,7 @@ class ProfesionnalTitleSeeder extends Seeder
          $titles = [
             ['name' => 'Dr'],
             ['name' => 'Pr'],
+            ['name' => 'Ph'],
         ];
 
         foreach ($titles as $type) {

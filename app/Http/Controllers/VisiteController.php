@@ -3,21 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acte;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Models\Visite;
 use App\Repositories\PrestationRepository;
 use App\Repositories\PatientRepository;
+use App\Repositories\StaffRepository;
 
 class VisiteController extends Controller
 {
     private $prestationRepository;
     private $patientRepository;
+    private $staffRepository;
 
      public function __construct(
+        StaffRepository $staffRepository,
         PrestationRepository $prestationRepository ,PatientRepository $patientRepository
     ) {
         $this->prestationRepository = $prestationRepository;
         $this->patientRepository = $patientRepository;
+        $this->staffRepository = $staffRepository;
     }
     /**
      * Display a listing of the resource.
@@ -37,12 +42,7 @@ class VisiteController extends Controller
         $prestation = $this->prestationRepository->getById($prestation_id);
         $patient = $this->patientRepository->getById($patient_id);
           $actes= Acte::all();
-        // $medecins = [1=>'Dr. John Doe', 2=>'Dr. Jane Smith', 3=>'Dr. Emily Johnson'];
-        $medecins = [
-            (object)['id' => 1, 'nom' => 'Dr. John Doe'],
-            (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
-            (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
-        ];
+        $medecins = $this->staffRepository->getDoctors();
         return view('dashboard.visite.create',compact('prestation_id','patient','prestation','medecins',"actes"));
     }
 

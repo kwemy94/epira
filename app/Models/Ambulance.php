@@ -9,7 +9,7 @@ class Ambulance extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['prestation_id','doctor'];
+    protected $fillable = ['prestation_id','doctor','reference','type_ambulance',"motif","start_date",'end_date','service','comment'];
 
     public function prestation(){
         return $this->belongsTo(Prestation::class);
