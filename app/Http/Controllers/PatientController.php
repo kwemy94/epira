@@ -75,7 +75,7 @@ class PatientController extends Controller
     {
         $search = $request->input('search');
         // dd($search);
-        $patients = $this->patientRepository->getAll(3, $search);
+        $patients = $this->patientRepository->getAll(25, $search);
 
         return View('dashboard.patient.index', compact('patients'));
     }
