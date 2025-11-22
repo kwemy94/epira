@@ -637,4 +637,45 @@
             }, 3000);
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+
+            function calculateAge(dateString) {
+                if (!dateString) return;
+
+                let birthDate = new Date(dateString);
+                let today = new Date();
+
+                let years = today.getFullYear() - birthDate.getFullYear();
+                let months = today.getMonth() - birthDate.getMonth();
+                let days = today.getDate() - birthDate.getDate();
+
+                // Ajustement si l'anniversaire n’est pas encore passé ce mois-ci
+                if (days < 0) {
+                    months--;
+                }
+
+                // Ajustement si les mois sont négatifs
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+
+                // Mettre à jour les champs
+                $("#age_years").val(years);
+                $("#age_months").val(months + (years * 12)); // âge total en mois
+            }
+
+            // Quand la date change
+            $("#dat").on("change", function() {
+                calculateAge($(this).val());
+            });
+
+            // Si un patient existe déjà (mode édition)
+            if ($("#dat").val()) {
+                calculateAge($("#dat").val());
+            }
+        });
+    </script>
 @endsection

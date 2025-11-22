@@ -71,9 +71,11 @@ class PatientController extends Controller
         $this->staffRepository = $staffRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $patients = $this->patientRepository->getAll();
+        $search = $request->input('search');
+        // dd($search);
+        $patients = $this->patientRepository->getAll(3, $search);
 
         return View('dashboard.patient.index', compact('patients'));
     }

@@ -1,13 +1,12 @@
 <div class="row">
     @if (isset($edit))
-        
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="name">Référence  </label>
-            <input type="text" readonly class="form-control required" id="name"
-                value="{{ $patient->reference }}">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="name">Référence </label>
+                <input type="text" readonly class="form-control required" id="name"
+                    value="{{ $patient->reference }}">
+            </div>
         </div>
-    </div>
     @endif
     <div class="col-md-4">
         <div class="form-group">
@@ -52,6 +51,19 @@
             <label for="dat">Date de naissance <em style="color:red">*</em></label>
             <input type="date" class="form-control required" id="dat" name="birth_date"
                 value="{{ old('birth_date', $patient->birth_date ?? '') }}" placeholder="">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Âge (années)</label>
+            <input type="text" id="age_years" class="form-control" readonly>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Âge (mois)</label>
+            <input type="text" id="age_months" class="form-control" readonly>
         </div>
     </div>
     <div class="col-md-4">
@@ -148,19 +160,22 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="mob">Numero mobile</label>
-            <input type="text" class="form-control" id="mob" name="phone" value="{{ old('phone', $patient->phone ?? '') }}" >
+            <input type="text" class="form-control" id="mob" name="phone"
+                value="{{ old('phone', $patient->phone ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label for="pho">Autre numéro</label>
-            <input type="text" class="form-control" id="pho" name="other_phone" value="{{ old('other_phone', $patient->other_phone ?? '') }}" >
+            <input type="text" class="form-control" id="pho" name="other_phone"
+                value="{{ old('other_phone', $patient->other_phone ?? '') }}">
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $patient->email ?? '') }}" >
+            <input type="email" class="form-control" id="email" name="email"
+                value="{{ old('email', $patient->email ?? '') }}">
         </div>
     </div>
 

@@ -25,16 +25,28 @@
 
 
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control float-right"
-                                        placeholder="Search">
+                                {{-- <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" id="search" name="table_search"
+                                        class="form-control float-right" placeholder="Search">
 
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
-                                </div>
+                                </div> --}}
+                                <form method="GET" action="{{ route('patient.index') }}">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" name="search" class="form-control" placeholder="Search"
+                                            value="{{ request('search') }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -61,7 +73,7 @@
                                             <td><span
                                                     class="tag tag-success">{{ isset($patient->category) ? $patient->category->name : '' }}</span>
                                             </td>
-                                            <td>{{ $patient->phone}}</td>
+                                            <td>{{ $patient->phone }}</td>
                                             <td>
                                                 <div class="btn-group" style="z-index: 9999;">
                                                     <button type="button" class="btn btn-default btn-sm"
@@ -75,15 +87,15 @@
                                                             <i class="fas fa-eye text-primary"></i> Détails
                                                         </a>
                                                         <!-- <a class="dropdown-item" href="{{ route('prestation.create') }}"  data-toggle="modal" data-target="#new-prestation" -->
-                                                        <a  class="dropdown-item" href="{{ route('prestation.create2',$patient->id) }}"  
-                                                           
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('prestation.create2', $patient->id) }}"
                                                             title="Ajouter une prestation">
                                                             <i class="fas fa-plus text-success"></i> Prestation
                                                         </a>
                                                         <!-- <button type="button" data-toggle="modal" data-target="#new-prestation"
-                                                            class="btn bg-gradient-primary btn-sm dropdown-item">
-                                                            <i class="fa fa-plus text-success"></i> Prestation
-                                                        </button> -->
+                                                                            class="btn bg-gradient-primary btn-sm dropdown-item">
+                                                                            <i class="fa fa-plus text-success"></i> Prestation
+                                                                        </button> -->
                                                         {{-- <form action="{{ route('patient.destroy', $patient->id) }}" method="POST"
                                                             onsubmit="return confirm('Voulez-vous vraiment supprimer ce patient ?');">
                                                             @csrf
@@ -106,10 +118,33 @@
                                     @include('dashboard.patient.partials.create-prestation')
                                 </tbody>
                             </table>
+                            <div class="card-footer clearfix">
+                                <div class="float-right">
+                                    {{ $patients->links('pagination::bootstrap-4') }}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </section>
+@endsection
+
+@section('admin-js')
+    <script>
+        document.getElementById('search').addEventListener('keyup', function() {
+            let query = this.value.toLowerCase();
+            let rows = document.querySelectorAll('table tbody tr');
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+
+                // Si le texte contient la recherche -> afficher
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+    </script>
 @endsection
