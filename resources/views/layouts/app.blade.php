@@ -67,12 +67,20 @@
             border-radius: 0.5rem !important;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
+        html, body {
+            overflow-x: hidden;
+        }
+
+.os-host, .os-host-textarea{
+    position: inherit !important;
+    margin-top: 10px !important;
+}
     </style>
     @yield('admin-css')
 </head>
 
-{{-- <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse"> --}}
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+{{-- <body class="hold-transition sidebar-mini layout-fixed"> --}}
     <div class="wrapper">
 
         <!-- Preloader -->

@@ -2,7 +2,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item  d-flex align-items-center">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+            <a class="nav-link d-md-none" data-widget="pushmenu" href="#" role="button">
                 <i class="fas fa-bars"></i>
             </a>
 
