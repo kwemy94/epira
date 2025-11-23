@@ -72,7 +72,7 @@
         }
 
 .os-host, .os-host-textarea{
-    position: inherit !important;
+    /* position: inherit !important; */
     margin-top: 10px !important;
 }
     </style>
