@@ -6,17 +6,21 @@ use App\Models\Acte;
 use App\Models\Ambulance;
 use Illuminate\Http\Request;
 use App\Repositories\PrestationRepository;
+use App\Repositories\StaffRepository;
 use App\Repositories\PatientRepository;
 
 class AmbulanceController extends Controller
 {
-     private $prestationRepository;
+    private $prestationRepository;
     private $patientRepository;
+    private $staffRepository;
 
      public function __construct(
+        StaffRepository $staffRepository,
         PrestationRepository $prestationRepository ,PatientRepository $patientRepository
     ) {
         $this->prestationRepository = $prestationRepository;
+        $this->staffRepository = $staffRepository;
         $this->patientRepository = $patientRepository;
     }
     /**
@@ -37,12 +41,12 @@ class AmbulanceController extends Controller
         $prestation = $this->prestationRepository->getById($prestation_id);
         $patient = $this->patientRepository->getById($patient_id);
         $actes= Acte::all();
-        $medecins = [
-            (object)['id' => 1, 'nom' => 'Dr. John Doe'],
-            (object)['id' => 2, 'nom' => 'Dr. Jane Smith'],
-            (object)['id' => 3, 'nom' => 'Dr. Emily Johnson'],
+        $medecins =  $this->staffRepository->getDoctors();
+        $type_ambulances = [
+            (object)['id' => 1, 'type' => 'mini '],
+            (object)['id' => 2, 'type' => 'Moyen'],
         ];
-        return view('dashboard.ambulance.create',compact('prestation_id','patient','prestation',"actes",'medecins'));
+        return view('dashboard.ambulatoire.create',compact('prestation_id','patient','prestation',"actes",'medecins','type_ambulances'));
     }
 
     /**
@@ -59,11 +63,13 @@ class AmbulanceController extends Controller
                 'service' => $inputs['service'],
                 'doctor' => $inputs['doctor_id'],
                 'motif' => $inputs['motif'],
-                'enter_date' => $inputs['enter_date'],
-                'exit_date' => $inputs['exit_date'],
+                'type_ambulance' => $inputs['type_ambulance'],
+                'start_date' => $inputs['enter_date'],
+                'end_date' => $inputs['exit_date'],
                 'comment' => $inputs['comment'] ?? null,
             ]);
             $total = 0;
+
                 $prestation = $this->prestationRepository->getById($inputs['prestation_id']);
                 foreach ( $inputs['actes'] as $acte) {
                     $prestation->actes()->attach($acte['id'], [

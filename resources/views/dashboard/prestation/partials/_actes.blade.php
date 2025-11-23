@@ -6,7 +6,7 @@
         <select id="medecin_default" class="form-control" onchange="setDefaultMedecin(this)">
             <option value="">Veuillez sélectionner un élément</option>
             @foreach($medecins as $medecin)
-                <option value="{{ $medecin->id }}">{{ $medecin->nom }}</option>
+                <option value="{{ $medecin->id }}">{{ $medecin->lastname.'  '.$medecin->firstname }}</option>
             @endforeach
         </select>
     </div>

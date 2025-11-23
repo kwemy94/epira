@@ -22,7 +22,7 @@ function ajouterActe() {
         <td>
             <select name="actes[${index}][doctor_id]" class="form-control">
                 <option value="">-- Sélectionner un médecin --</option>
-                ${medecinsList.map(m => `<option value="${m.id}">${m.nom}</option>`).join('')}
+                ${medecinsList.map(m => `<option value="${m.id}">${m.lastname}</option>`).join('')}
             </select>
         </td>
         <td>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AllergyController;
+use App\Http\Controllers\AmbulanceController;
 use App\Http\Controllers\AnalyseController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CategoryController;
@@ -70,7 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/hospitalisation', HospitalisationController::class);
     Route::resource('/devis', DevisController::class); 
     Route::resource('/analyse', AnalyseController::class);
-    Route::resource('/ambulance', AnalyseController::class);
+    Route::resource('/ambulance', AmbulanceController::class);
     Route::resource('/radiologie', RadiologieController::class); 
     Route::resource('/pharmacie', PharmacieController::class);
     Route::resource('/medecine', MedecineController::class);
