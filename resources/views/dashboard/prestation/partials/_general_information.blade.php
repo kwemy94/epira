@@ -66,13 +66,13 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Début *</label>
-                        <input type="date" class="form-control">
+                        <label>Début <em class="text-danger">*</em></label>
+                        <input type="datetime-local" class="form-control">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Fin *</label>
-                        <input type="date" class="form-control">
+                        <label>Fin <em class="text-danger">*</em></label>
+                        <input type="datetime-local" class="form-control">
                     </div>
 
                 </div>
