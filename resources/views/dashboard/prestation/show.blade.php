@@ -25,28 +25,7 @@
 
     <div class="card mb-3">
         <div class="card-body p-3">
-
-            <ul class="nav nav-tabs bg-white px-3 pt-2" id="menuTabs">
-                <li class="nav-item">
-                    <a class="nav-link" data-target="#medicaments">Médicaments</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-target="#documents">Documents</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-target="#honoraires">Honoraire</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" data-target="#facturation">Facturation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-target="#teletransmission">Télétransmission</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-target="#paiement">Paiement</a>
-                </li>
-            </ul>
-
+            @include('dashboard.prestation.partials._header_navigation', ['active' => $active ?? 'consultation'])
         </div>
     </div>
 
