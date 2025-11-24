@@ -25,7 +25,9 @@
 
     <div class="card mb-3">
         <div class="card-body p-3">
-            @include('dashboard.prestation.partials._header_navigation', ['active' => $active ?? 'consultation'])
+            @include('dashboard.prestation.partials._header_navigation', [
+                'active' => $active ?? 'consultation',
+            ])
         </div>
     </div>
 
@@ -33,38 +35,38 @@
         <div class="container-fluid">
 
             <div class="p-3">
+                @include('dashboard.prestation.partials._general_information', [
+                    'type' => 'facturation',
+                ])
 
                 <!-- SECTION MÉDICAMENTS -->
                 <section id="medicaments" class="menu-section d-none">
-                    @include('dashboard.prestation.partials._general_information')
+
                 </section>
 
                 <!-- SECTION DOCUMENTS -->
                 <section id="documents" class="menu-section d-none">
-                    @include('dashboard.prestation.partials._general_information')
+
                 </section>
 
                 <!-- SECTION HONORAIRES -->
                 <section id="honoraires" class="menu-section d-none">
-                    @include('dashboard.prestation.partials._general_information')
+
                 </section>
 
                 <!-- SECTION Facturation -->
                 <section id="facturation" class="menu-section">
-                    @include('dashboard.prestation.partials._general_information', [
-                        'type' => 'facturation',
-                    ])
-                    
                     @include('dashboard.prestation.partials._facturation')
 
                 </section>
+
                 <!-- SECTION T -->
                 <section id="teletransmission" class="menu-section d-none">
-                    @include('dashboard.prestation.partials._general_information')
+
                 </section>
                 <!-- SECTION OPÉRATIONS -->
                 <section id="paiement" class="menu-section d-none">
-                    @include('dashboard.prestation.partials._general_information')
+
                 </section>
     </section>
 
