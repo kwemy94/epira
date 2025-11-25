@@ -3,7 +3,7 @@
     <!-- Identité patient -->
     <div class="col-md-6">
         <div class="card card-identite">
-            <div class="card-header bg-light">
+            <div class="card-header" style="background:#cde4fb;">
                 <strong>Identité Patient(e)</strong>
             </div>
 
@@ -25,7 +25,7 @@
     <!-- Informations prestation -->
     <div class="col-md-6">
         <div class="card card-pharmacie">
-            <div class="card-header bg-light">
+            <div class="card-header" style="background:#cde4fb;">
                 <strong>Informations générales de {{ Str::ucfirst($prestation->type->code) }}</strong>
             </div>
 

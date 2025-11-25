@@ -1,6 +1,6 @@
 <div class="card shadow-sm rounded-3 mx-auto" style="max-width: 700px;">
     <div class="card-header py-2 bg-info-light">
-        <h5 class="m-0">Prise en charge / Tarif</h5>
+        <strong class="m-0">Prise en charge / Tarif</strong>
     </div>
 
     <div class="card-body">
@@ -45,7 +45,7 @@
     <div class="col-md-6 mb-3 mb-md-0">
         <div class="card shadow-sm" style="border-radius:10px;">
             <div class="card-header py-2" style="background:#cde4fb;">
-                <h5 class="m-0">Détail Prix</h5>
+                <strong class="m-0">Détail Prix</strong>
             </div>
 
             <div class="card-body">
@@ -96,7 +96,7 @@
     <div class="col-md-6 mb-3 mb-md-0">
         <div class="card shadow-sm" style="border-radius:10px;">
             <div class="card-header py-2" style="background:#cde4fb;">
-                <h5 class="m-0">Quote-Part</h5>
+                <strong class="m-0">Quote-Part</strong>
             </div>
 
             <div class="card-body">
@@ -119,7 +119,7 @@
 
 <div class="card shadow-sm rounded-3 mx-auto" style="max-width: 700px;">
     <div class="card-header py-2" style="background:#cde4fb;">
-        <h5 class="m-0">Facture</h5>
+        <strong class="m-0">Facture</strong>
     </div>
     <div class="card-body">
 
