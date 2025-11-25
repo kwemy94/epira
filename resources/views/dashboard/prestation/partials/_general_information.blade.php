@@ -1,44 +1,58 @@
-{{-- <div class="card-body"> --}}
 <div class="row">
+
+    <!-- Identité patient -->
     <div class="col-md-6">
         <div class="card card-identite">
-            <div class="card-header" style="background:#cde4fb;">
+            <div class="card-header bg-light">
                 <strong>Identité Patient(e)</strong>
             </div>
+
             <div class="card-body">
+                @php $p = $prestation?->patient; @endphp
 
-                <div class="row">
-                    <div class="col-12">
-                        <p><strong>Référence Patient :</strong> P202500001xx</p>
-                        <p><strong>Nom complet :</strong> xx</p>
-                        <p><strong>Sexe :</strong> xx</p>
-                        <p><strong>Date de naissance :</strong> xx</p>
-                        <p><strong>Adresse :</strong> xx</p>
-                        <p><strong>Mobile :</strong> xx</p>
-                        <p><strong>Mail :</strong> xx</p>
-                        <p><strong>Autre numéro :</strong> xx</p>
-                    </div>
-                </div>
-
+                <p><strong>Référence Patient :</strong> {{ $p?->reference }}</p>
+                <p><strong>Nom complet :</strong> {{ $p?->lastname }} {{ $p?->firstname }}</p>
+                <p><strong>Sexe :</strong> {{ $p?->sexe }}</p>
+                <p><strong>Date de naissance :</strong> {{ $p?->birth_date }}</p>
+                <p><strong>Adresse :</strong> {{ $p?->address }}</p>
+                <p><strong>Mobile :</strong> {{ $p?->phone }}</p>
+                <p><strong>Email :</strong> {{ $p?->email }}</p>
+                <p><strong>Autre numéro :</strong> {{ $p?->other_phone }}</p>
             </div>
         </div>
     </div>
 
-
+    <!-- Informations prestation -->
     <div class="col-md-6">
         <div class="card card-pharmacie">
-            <div class="card-header" style="background:#cde4fb;">
-                <strong>Informations générales de Pharmacie</strong>
+            <div class="card-header bg-light">
+                <strong>Informations générales de {{ Str::ucfirst($prestation->type->code) }}</strong>
             </div>
+
             <div class="card-body">
+
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>Référence :</strong> ...</p>
-                        <p><strong>Médecin :</strong> ...</p>
+
+                        <p><strong>Référence :</strong>
+                            {{ $current?->reference ?? '—' }}
+                        </p>
+
+                        <p><strong>Médecin :</strong>
+                            {{ $current?->medecin ?? '—' }}
+                        </p>
+
                     </div>
                     <div class="col-md-6">
-                        <p><strong>Objet/Motif :</strong> ....</p>
-                        <p><strong>Crée par / Crée le :</strong>...</p>
+
+                        <p><strong>Objet/Motif :</strong>
+                            {{ $current?->motif ?? '—' }}
+                        </p>
+
+                        <p><strong>Créé par / Le :</strong>
+                            {{ $current?->created_at ?? '—' }}
+                        </p>
+
                     </div>
                 </div>
 
@@ -83,4 +97,3 @@
         </div>
     </div>
 </div>
-{{-- </div> --}}

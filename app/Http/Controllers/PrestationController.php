@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Acte;
 use App\Models\Prestation;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Repositories\PrestationRepository;
 use App\Repositories\PatientRepository;
+use App\Repositories\PrestationRepository;
 use App\Repositories\PrestationTypesRepository;
 
 class PrestationController extends Controller
@@ -217,8 +218,24 @@ class PrestationController extends Controller
 
     public function showPrestationDetails($id)
     {
+        $prestation = $this->prestationRepository->getById($id);
 
-        return view('dashboard.prestation.show', compact('id'));
+        $relations = [
+            'visite', 'devis', 'hospitalisation', 'radiologie',
+            'pharmacie', 'consultation', 'ambulance', 'analyse'
+        ];
+
+        $current = null;
+        foreach ($relations as $rel) {
+            if ($prestation->$rel) {
+                $current = $prestation->$rel;
+                break; # on prend le premier trouvé
+            }
+        }
+        
+        $devis = Str::lower($prestation->type->code) == 'devis';
+        // dd($prestation, $devis);
+        return view('dashboard.prestation.show', compact('prestation', 'devis', 'current'));
     }
 
     

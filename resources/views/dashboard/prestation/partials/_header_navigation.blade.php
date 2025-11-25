@@ -1,7 +1,7 @@
 @php
     $tabs = [];
 
-    if (in_array($active, ['consultation', 'ambulatoire', 'visite'])) {
+    if (in_array(Str::lower($active), ['consultation', 'ambulatoire', 'visite'])) {
         $tabs = [
             'acte' => 'Actes médicaux',
             'traitement' => 'Traitements',
@@ -15,7 +15,7 @@
         ];
     }
 
-    if ($active === 'hospitalisation') {
+    if (Str::lower($active) === 'hospitalisation') {
         $tabs = [
             'acte' => 'Actes médicaux',
             'traitement' => 'Traitements',
@@ -30,7 +30,7 @@
         ];
     }
 
-    if ($active === 'devis') {
+    if (Str::lower($active) === 'devis') {
         $tabs = [
             'acte' => 'Actes médicaux',
             'teletransmission' => 'Télétransmission',
@@ -38,7 +38,7 @@
         ];
     }
 
-    if (in_array($active, ['pharmacie'])) {
+    if (in_array(Str::lower($active), ['pharmacie'])) {
         $tabs = [
             'medicaments' => 'Médicaments',
             'documents' => 'Documents',
@@ -49,7 +49,7 @@
         ];
     }
 
-    if (in_array($active, ['analyse', 'imagerie'])) {
+    if (in_array(Str::lower($active), ['analyse', 'imagerie'])) {
         $tabs = [
             'acte' => 'Actes médicaux',
             'traitement' => 'Traitements',
@@ -62,11 +62,27 @@
     }
 @endphp
 
-
+{{-- @dd($devis); --}}
 <ul class="nav nav-tabs bg-white px-3 pt-2" id="menuTabs">
     @foreach ($tabs as $target => $label)
+        @php
+            $isActive = 'facturation';
+            // if ($devis && $target === 'responses') {
+            //     $isActive = 'devis';
+            // }
+
+            if (in_array($target, ['facturation', 'reponses'])) {
+                if ($devis) {
+                    if($target === 'reponses'){
+                        $isActive = 'reponses';
+                    }
+                }
+            }
+        @endphp
         <li class="nav-item">
-            <a class="nav-link {{ $target == 'facturation' ? 'active' : '' }}" data-target="#{{ $target }}">
+            {{-- <a class="nav-link {{ $isActive ? 'active' : '' }}" data-target="#{{ $target }}"> --}}
+            <a class="nav-link {{ $isActive == $target ? 'active' : '' }}"
+                data-target="#{{ $target }}">
                 {{ $label }}
             </a>
         </li>

@@ -24,9 +24,10 @@
     ]" />
 
     <div class="card mb-3">
+        {{-- @dd($prestation->patient) --}}
         <div class="card-body p-3">
             @include('dashboard.prestation.partials._header_navigation', [
-                'active' => $active ?? 'consultation',
+                'active' => $prestation->type->code ?? 'consultation', 'devis' => $prestation->type->code,
             ])
         </div>
     </div>
