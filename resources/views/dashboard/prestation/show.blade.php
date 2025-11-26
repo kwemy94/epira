@@ -69,6 +69,9 @@
                 <section id="paiement" class="menu-section d-none">
 
                 </section>
+                <section id="reponses" class="menu-section d-none">
+                    <h5>resp session</h5>
+                </section>
     </section>
 
     </div>

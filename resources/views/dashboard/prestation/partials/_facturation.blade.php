@@ -6,31 +6,36 @@
     <div class="card-body">
 
         <div class="row">
-            <!-- Colonne gauche -->
+            @php
+                use Carbon\Carbon;
+                $validInsurance = Carbon::parse($prestation?->insurer->end_date) > now();
+
+            @endphp
             <div class="col-6 col-md-6 mb-6 mb-md-0">
                 <p class="mb-2">Prise en charge en cours de validité</p>
             </div>
             <div class="col-6 col-md-6 mb-6 mb-md-0">
-                <p class="mb-2 fw-bold">-- ---- -----</p>
+                <p class="mb-2 fw-bold">{{ $prestation?->insurer->insurer_name ?? '-' }}</p>
             </div>
             <div class="col-6 col-md-6 mb-6 mb-md-0">
                 <p class="mb-2">Période de validité</p>
             </div>
             <div class="col-6 col-md-6 mb-6 mb-md-0">
-                <div class="value-box mb-2">--/--/-- 00:00 - --/--/-- 00:00</div>
+                <div class="value-box mb-2">{{ $prestation?->insurer->start_date ?? '-' }} -
+                    {{ $prestation?->insurer->end_date ?? '-' }}</div>
             </div>
 
             <div class="col-6 col-md-6 mb-6 mb-md-0">
                 <p class="mb-2">Pourcentage pris en charge</p>
             </div>
             <div class="col-6 col-md-6 mb-6 mb-md-0">
-                <div class="value-box mb-2">---</div>
+                <div class="value-box mb-2"> {{ $prestation?->insurer->percentage ?? '-' }} </div>
             </div>
             <div class="col-6 col-md-6 mb-6 mb-md-0">
                 <p class="mb-2">Plafond</p>
             </div>
             <div class="col-6 col-md-6 mb-6 mb-md-0">
-                <div class="value-box mb-2">---</div>
+                <div class="value-box mb-2"> {{ $prestation?->insurer->max_insurance ?? '-' }} </div>
             </div>
             <div class="col-6 col-md-6 mb-6 mb-md-0">
                 <p class="mb-2">Tarifs disponibles</p>
@@ -92,7 +97,7 @@
 
     </div>
 
-     {{-- SECTION 3 : Quote-Part   --}}
+    {{-- SECTION 3 : Quote-Part   --}}
     <div class="col-md-6 mb-3 mb-md-0">
         <div class="card shadow-sm" style="border-radius:10px;">
             <div class="card-header py-2" style="background:#cde4fb;">
