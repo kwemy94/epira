@@ -15,19 +15,19 @@
 @endsection
 
 @section('admin-content')
-    <x-page-header title="Détails prestation" :breadcrumbs="[
+    <x-page-header title="" :breadcrumbs="[
         [
             'label' => 'Prestation',
             'url' => route('prestation.index'),
         ],
-        ['label' => 'Détails'],
+        ['label' => 'Détails prestation : ' . ($current?->reference ?? '—')],
     ]" />
 
     <div class="card mb-3">
-        {{-- @dd($prestation->patient) --}}
         <div class="card-body p-3">
             @include('dashboard.prestation.partials._header_navigation', [
-                'active' => $prestation->type->code ?? 'consultation', 'devis' => $prestation->type->code,
+                'active' => $prestation->type->code ?? 'consultation',
+                'devis' => $prestation->type->code,
             ])
         </div>
     </div>
@@ -56,7 +56,7 @@
                 </section>
 
                 <!-- SECTION Facturation -->
-                <section id="facturation" class="menu-section">
+                <section id="facturation" class="menu-section {{ $prestation->type->code !== 'devis' ? '' : 'd-none' }}">
                     @include('dashboard.prestation.partials._facturation')
 
                 </section>
@@ -69,7 +69,7 @@
                 <section id="paiement" class="menu-section d-none">
 
                 </section>
-                <section id="reponses" class="menu-section d-none">
+                <section id="reponses" class="menu-section {{ $prestation->type->code === 'devis' ? '' : 'd-none' }}">
                     <h5>resp session</h5>
                 </section>
     </section>

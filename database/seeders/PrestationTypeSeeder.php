@@ -22,7 +22,7 @@ class PrestationTypeSeeder extends Seeder
             ['name'=>'Nouvelle imagerie','code'=>'Imagerie'],
             ['name'=>'Nouvelle ambulatoire','code'=>'Ambulatoire'],
             ['name'=>'Nouvelle pharmacie','code'=>'Pharmacie'],
-            ['name'=>'Devis','code'=>'Devis']
+            ['name'=>'Devis','code'=>'devis']
         ];
         foreach ($prestationTypes as $type) {
             $pres = PrestationType::where('name', $type['name'])->first();

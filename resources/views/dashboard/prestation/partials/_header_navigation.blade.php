@@ -66,23 +66,14 @@
 <ul class="nav nav-tabs bg-white px-3 pt-2" id="menuTabs">
     @foreach ($tabs as $target => $label)
         @php
-            $isActive = 'facturation';
-            // if ($devis && $target === 'responses') {
-            //     $isActive = 'devis';
-            // }
-
+            $isActive = false;
             if (in_array($target, ['facturation', 'reponses'])) {
-                if ($devis) {
-                    if($target === 'reponses'){
-                        $isActive = 'reponses';
-                    }
-                }
+                $isActive = true;
             }
         @endphp
         <li class="nav-item">
             {{-- <a class="nav-link {{ $isActive ? 'active' : '' }}" data-target="#{{ $target }}"> --}}
-            <a class="nav-link {{ $isActive == $target ? 'active' : '' }}"
-                data-target="#{{ $target }}">
+            <a class="nav-link {{ $isActive ? 'active' : '' }}" data-target="#{{ $target }}">
                 {{ $label }}
             </a>
         </li>
