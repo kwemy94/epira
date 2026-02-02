@@ -28,6 +28,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     // return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
     return view('auth.login');
 })->name('home');
 

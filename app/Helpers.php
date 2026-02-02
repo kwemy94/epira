@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Génère une référence unique au format : PREFIX + année + numéro incrémental
@@ -36,4 +37,113 @@ if (!function_exists('generateReference')) {
 
         return $prefix . $year . $formattedNumber;
     }
+}
+
+if (!function_exists('toggleDatabase')) {
+    function toggleDatabase($isClientDatabase = true)
+    {
+        if ($isClientDatabase) {
+            // $userRepository = new UserRepository(new User());
+
+            $user = \Auth::user(); //
+            // dd('test', $user);
+            if ($user):
+                // dd(session());
+                // dd($user);
+                $company = DB::table('companies')->where('id', $user->company_id)->first();
+                // dd($etablissement);
+                $settings = json_decode($company->settings);
+
+
+                config()->set('database.connections.mobility', [
+                    'driver' => 'mysql',
+                    'host' => env('DB_HOST', '127.0.0.1'),
+                    'port' => env('DB_PORT', '3306'),
+                    'database' => $settings->db->database,
+                    'username' => $settings->db->username,
+                    'password' => $settings->db->password,
+                    'unix_socket' => env('DB_SOCKET', ''),
+                    'charset' => 'utf8mb4',
+                    'collation' => 'utf8mb4_unicode_ci',
+                    'prefix' => '',
+                    'strict' => true,
+                    'engine' => null,
+                    'modes' => [
+                        //'ONLY_FULL_GROUP_BY', // Disable this to allow grouping by one column
+                        'STRICT_TRANS_TABLES',
+                        'NO_ZERO_IN_DATE',
+                        'NO_ZERO_DATE',
+                        'ERROR_FOR_DIVISION_BY_ZERO',
+                        //'NO_AUTO_CREATE_USER', // This has been deprecated and will throw an error in mysql v8
+                        'NO_ENGINE_SUBSTITUTION',
+                    ],
+                ]);
+                DB::purge('mobility');
+                $connection = DB::connection('mobility');
+                Config::set('database.default', $connection->getName());
+            else:
+                dd('test2');
+                $connection = null;
+            endif;
+        } else {
+
+            $connection = DB::connection('mysql');
+            Config::set('database.default', 'mysql');
+
+        }
+
+        return $connection;
+    }
+
+}
+
+if (!function_exists('toggleDatabaseById')) {
+    function toggleDatabaseById($companyId)
+    {
+        toggleDatabase(false);
+        $ets = DB::table('companies')->where('id', $companyId)->first();
+
+        if ($ets):
+            try {
+                $settings = json_decode($ets->settings);
+
+                config()->set('database.connections.client_db', [
+                    'driver' => 'mysql',
+                    'host' => env('DB_HOST', '127.0.0.1'),
+                    'port' => env('DB_PORT', '3306'),
+                    'database' => $settings->db->database,
+                    'username' => $settings->db->username,
+                    'password' => $settings->db->password,
+                    'unix_socket' => env('DB_SOCKET', ''),
+                    'charset' => 'utf8mb4',
+                    'collation' => 'utf8mb4_unicode_ci',
+                    'prefix' => '',
+                    'strict' => true,
+                    'engine' => null,
+                    'modes' => [
+                        //'ONLY_FULL_GROUP_BY', // Disable this to allow grouping by one column
+                        'STRICT_TRANS_TABLES',
+                        'NO_ZERO_IN_DATE',
+                        'NO_ZERO_DATE',
+                        'ERROR_FOR_DIVISION_BY_ZERO',
+                        //'NO_AUTO_CREATE_USER', // This has been deprecated and will throw an error in mysql v8
+                        'NO_ENGINE_SUBSTITUTION',
+                    ],
+                ]);
+                DB::purge('client_db');
+
+                $connection = DB::connection('client_db');
+                Config::set('database.default', $connection->getName());
+            } catch (\Throwable $th) {
+                dd($th);
+                //throw $th;
+            }
+        else:
+            $connection = null;
+
+        endif;
+
+        return $connection;
+    }
+
 }

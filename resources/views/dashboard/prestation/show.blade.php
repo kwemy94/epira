@@ -43,6 +43,54 @@
                 <!-- SECTION MÉDICAMENTS -->
                 <section id="medicaments" class="menu-section d-none">
 
+                    <div class="card shadow-sm rounded-3 mx-auto" style="max-width: 700px;">
+                        <div class="card-header py-2 bg-info-light">
+                            <strong class="m-0">Prise en charge / Tarif</strong>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+                                @php
+                                    use Carbon\Carbon;
+                                    $validInsurance = Carbon::parse($prestation?->insurer->end_date) > now();
+
+                                @endphp
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <p class="mb-2">Prise en charge en cours de validité</p>
+                                </div>
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <p class="mb-2 fw-bold">{{ $prestation?->insurer->insurer_name ?? '-' }}</p>
+                                </div>
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <p class="mb-2">Période de validité</p>
+                                </div>
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <div class="value-box mb-2">{{ $prestation?->insurer->start_date ?? '-' }} -
+                                        {{ $prestation?->insurer->end_date ?? '-' }}</div>
+                                </div>
+
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <p class="mb-2">Pourcentage pris en charge</p>
+                                </div>
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <div class="value-box mb-2"> {{ $prestation?->insurer->percentage ?? '-' }} </div>
+                                </div>
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <p class="mb-2">Plafond</p>
+                                </div>
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <div class="value-box mb-2"> {{ $prestation?->insurer->max_insurance ?? '-' }} </div>
+                                </div>
+                                <div class="col-6 col-md-6 mb-6 mb-md-0">
+                                    <p class="mb-2">Tarifs disponibles</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+
                 </section>
 
                 <!-- SECTION DOCUMENTS -->

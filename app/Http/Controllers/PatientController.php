@@ -17,6 +17,7 @@ use App\Repositories\InsurerRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\DocumentRepository;
+use App\Repositories\BloodTypeRepository;
 use App\Repositories\PathologyRepository;
 use App\Repositories\PrestationRepository;
 use App\Repositories\ContactTypeRepository;
@@ -39,6 +40,7 @@ class PatientController extends Controller
     private $allergyRepository;
     private $doctorRepository;
     private $staffRepository;
+    private $bloodTypesRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -54,6 +56,7 @@ class PatientController extends Controller
         AllergyRepository $allergyRepository,
         DoctorRepository $doctorRepository,
         StaffRepository $staffRepository,
+        BloodTypeRepository $bloodTypeRepository,
     ) {
         $this->patientRepository = $patientRepository;
         $this->categoryRepository = $categoryRepository;
@@ -73,6 +76,7 @@ class PatientController extends Controller
 
     public function index(Request $request)
     {
+        toggleDatabase(true);
         $search = $request->input('search');
         // dd($search);
         $patients = $this->patientRepository->getAll(25, $search);
@@ -82,6 +86,8 @@ class PatientController extends Controller
 
     public function create()
     {
+        toggleDatabase(true);
+
         $categories = $this->categoryRepository->getAll();
         $matrimonials = $this->matrimonialRepository->getAll();
         $countries = $this->countryRepository->getAll();
@@ -95,6 +101,8 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
+        toggleDatabase(true);
+
         $inputs = $request->all();
 
         try {
@@ -150,7 +158,8 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
     {
-        // dd($patient);
+        toggleDatabase(true);
+
         $categories = $this->categoryRepository->getAll();
         $matrimonials = $this->matrimonialRepository->getAll();
         $countries = $this->countryRepository->getAll();
@@ -158,7 +167,7 @@ class PatientController extends Controller
         $contactTypes = $this->contactTypeRepository->getAll();
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
-        $bloodTypes = BloodType::all();
+        $bloodTypes = $this->bloodTypesRepository->getAll();
 
         // $prestations = $this->prestationRepository->getAll();
         $prestations = $this->prestationRepository->getByPatientId($patient->id);
@@ -233,6 +242,8 @@ class PatientController extends Controller
 
     public function update(Request $request, Patient $patient)
     {
+        toggleDatabase(true);
+
         try {
             $inputs = $request->all();
             // dd($inputs);
@@ -271,6 +282,7 @@ class PatientController extends Controller
 
     public function fixAppointment(Request $request)
     {
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
             // dd($inputs);
@@ -293,6 +305,8 @@ class PatientController extends Controller
 
     public function generate(string $table, string $column = 'reference', string $prefix = 'P'): string
     {
+        toggleDatabase(true);
+
         $year = date('Y');
 
         $last = DB::table($table)
@@ -314,6 +328,8 @@ class PatientController extends Controller
 
     public function dossierPatient($id)
     {
+        toggleDatabase(true);
+
         $patient = $this->patientRepository->getById($id);
         // dd($patient);
         $categories = $this->categoryRepository->getAll();
@@ -323,7 +339,7 @@ class PatientController extends Controller
         $contactTypes = $this->contactTypeRepository->getAll();
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
-        $bloodTypes = BloodType::all();
+        $bloodTypes = $this->bloodTypesRepository->getAll();
 
         // $prestations = $this->prestationRepository->getAll();
         $prestations = $this->prestationRepository->getByPatientId($patient->id);
