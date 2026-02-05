@@ -37,6 +37,7 @@ class AnalyseController extends Controller
      */
     public function create(Request $request)
     {
+        toggleDatabase(true);
         
         $prestation_id = $request->prestation_id;
         $patient_id = $request->patient;
@@ -52,6 +53,7 @@ class AnalyseController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         $inputs = $request->all();
       
         try {

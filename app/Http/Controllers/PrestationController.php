@@ -12,6 +12,8 @@ use App\Repositories\PatientRepository;
 use App\Repositories\PrestationRepository;
 use App\Repositories\PrestationTypesRepository;
 
+use function Symfony\Component\Translation\t;
+
 class PrestationController extends Controller
 {
     private $prestationRepository;
@@ -31,6 +33,7 @@ class PrestationController extends Controller
      */
     public function index()
     {
+        toggleDatabase(true);
         $prestations=$this->prestationRepository->getAll();
        
         //formater les prestations pour recuperer les references des relations et le nom du medecin
@@ -85,6 +88,7 @@ class PrestationController extends Controller
      */
     public function create(Request $request)
     {
+        toggleDatabase(true);
         //get patient_id from route parameter
         $patient_id = $request->route('patient_id');
         $prestation_types = $this->prestationTypesRepository->getAll();
@@ -104,7 +108,7 @@ class PrestationController extends Controller
      */
     public function store(Request $request)
     {
-        
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
            
@@ -161,6 +165,7 @@ class PrestationController extends Controller
      */
     public function show(Request $request)
     {
+        toggleDatabase(true);
         $prestations = $this->prestationRepository->getAll();
         $prestation_id = $request->prestation_id;
         $patient_id = $request->patient;
@@ -183,9 +188,11 @@ class PrestationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Prestation $prestation)
+    public function update(Request $request, $id)
     {
+        toggleDatabase(true);
          try {
+            $prestation = $this->prestationRepository->getById($id);
             $inputs = $request->all();
             $patient_id = $this->patientRepository->getByName($inputs['patient_id'])->id;
             $inputs['patient_id']=$patient_id;
@@ -201,9 +208,11 @@ class PrestationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prestation $prestation)
+    public function destroy($id)
     {
+        toggleDatabase(true);
          try {
+            $prestation = $this->prestationRepository->getById($id);
             DB::beginTransaction();
             $this->prestationRepository->destroy($prestation->id);
             DB::commit();
@@ -218,6 +227,7 @@ class PrestationController extends Controller
 
     public function showPrestationDetails($id)
     {
+        toggleDatabase(true);
         $prestation = $this->prestationRepository->getById($id);
 
         $relations = [

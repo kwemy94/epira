@@ -21,6 +21,7 @@ class StaffTypeController extends Controller
      */
     public function index()
     {
+        toggleDatabase(true);
         $staffTypes = $this->staffTypeRepository->getAll();
 
         return view('dashboard.staff_type.index', compact('staffTypes'));
@@ -39,6 +40,7 @@ class StaffTypeController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             $validated = $request->validate([
                 'name' => 'required|string|unique:staff_types',
@@ -76,6 +78,7 @@ class StaffTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        toggleDatabase(true);
         try {
             $spec = $this->staffTypeRepository->getById($id);
 
@@ -98,6 +101,7 @@ class StaffTypeController extends Controller
      */
     public function destroy($id)
     {
+        toggleDatabase(true);
         try {
             $spec = $this->staffTypeRepository->getById($id);
 

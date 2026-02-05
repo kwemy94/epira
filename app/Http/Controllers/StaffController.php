@@ -38,6 +38,7 @@ class StaffController extends Controller
      */
     public function index()
     {
+        toggleDatabase(true);
         $staffs = $this->staffRepository->getAll();
 
         return view('dashboard.staff.index', compact('staffs'));
@@ -48,6 +49,7 @@ class StaffController extends Controller
      */
     public function create()
     {
+        toggleDatabase(true);
         $staffTypes = $this->staffTypeRepository->getAll();
         $profesionnalTitles = $this->profesionnalTitleRepository->getAll();
         $specializations = $this->specializationRepository->getAll();
@@ -61,6 +63,7 @@ class StaffController extends Controller
 
     public function store(Request $request)
     {
+        toggleDatabase(true);
         // dd(1);
         try {
 
@@ -104,6 +107,7 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
+        toggleDatabase(true);
         $staff = $this->staffRepository->getById($id);
         $staffTypes = $this->staffTypeRepository->getAll();
         $profesionnalTitles = $this->profesionnalTitleRepository->getAll();
@@ -117,6 +121,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
+        toggleDatabase(true);
         try {
             $staff = $this->staffRepository->getById($id);
             if (!$staff) {
@@ -162,6 +167,7 @@ class StaffController extends Controller
      */
     public function destroy($id)
     {
+        toggleDatabase(true);
         try {
             $spec = $this->staffRepository->getById($id);
 

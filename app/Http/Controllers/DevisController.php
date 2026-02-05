@@ -35,7 +35,7 @@ class DevisController extends Controller
      */
     public function create(Request $request)
     {
-
+        toggleDatabase(true);
         $prestations = $this->prestationRepository->getAll();
         $prestation_id = $request->prestation_id;
         $patient_id = $request->patient;
@@ -51,6 +51,7 @@ class DevisController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
 
         $inputs = $request->all();
         $total = array_sum($request->montant_total);

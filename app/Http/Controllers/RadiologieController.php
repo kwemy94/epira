@@ -36,6 +36,7 @@ class RadiologieController extends Controller
      */
     public function create(Request $request)
     {
+        toggleDatabase(true);
          $prestation_id = $request->prestation_id;
         $patient_id = $request->patient;
         $prestation = $this->prestationRepository->getById($prestation_id);
@@ -51,6 +52,7 @@ class RadiologieController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         $inputs = $request->all();
       
         try {

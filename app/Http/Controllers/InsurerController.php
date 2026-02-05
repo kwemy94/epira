@@ -38,6 +38,7 @@ class InsurerController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
             // dd($inputs);
@@ -73,10 +74,12 @@ class InsurerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Insurer $insurer)
+    public function update(Request $request, $id)
     {
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
+            $insurer = $this->insurerRepository->getById($id);
             $this->insurerRepository->update($insurer->id, $inputs);
             return redirect()->back()->with('success', "Assureur mis à jour");
             
@@ -89,10 +92,12 @@ class InsurerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Insurer $insurer)
+    public function destroy($id)
     {
+        toggleDatabase(true);
          try {
             DB::beginTransaction();
+            $insurer = $this->insurerRepository->getById($id);
             $insurer->patient()->detach();
             $this->insurerRepository->destroy($insurer->id);
             DB::commit();

@@ -39,6 +39,7 @@ class PathologyController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'string|unique:pathologies,name',

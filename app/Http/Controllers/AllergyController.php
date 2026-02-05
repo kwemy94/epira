@@ -38,6 +38,7 @@ class AllergyController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
             DB::beginTransaction();
@@ -89,6 +90,7 @@ class AllergyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
             DB::beginTransaction();
@@ -117,6 +119,7 @@ class AllergyController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        toggleDatabase(true);
 
         # supprimer l'allergie sur le patient (table pivot) et non  supprimer l'allergie en elle meme
         try {

@@ -21,6 +21,7 @@ class SpecializationController extends Controller
      */
     public function index()
     {
+        toggleDatabase(true);
         $specializations = $this->specializationRepository->getAll();
 
         return view('dashboard.specialisation.index', compact('specializations'));
@@ -39,6 +40,7 @@ class SpecializationController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             $validated = $request->validate([
                 'name' => 'required|string|unique:specializations',
@@ -76,6 +78,7 @@ class SpecializationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        toggleDatabase(true);
         try {
             $spec = $this->specializationRepository->getById($id);
 
@@ -101,6 +104,7 @@ class SpecializationController extends Controller
      */
     public function destroy($id)
     {
+        toggleDatabase(true);
         try {
             $spec = $this->specializationRepository->getById($id);
 

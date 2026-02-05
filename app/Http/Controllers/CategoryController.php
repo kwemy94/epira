@@ -20,6 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        toggleDatabase(true);
         $categories =  $this->categoryRepository->getAll();
         return view('dashboard.category.index', compact('categories'));
     }
@@ -37,6 +38,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             // $validator = Validator::make($request->all(), [
             //     'name' => 'string|unique:pathologies,name',

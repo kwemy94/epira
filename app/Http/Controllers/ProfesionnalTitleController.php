@@ -21,6 +21,7 @@ class ProfesionnalTitleController extends Controller
      */
     public function index()
     {
+        toggleDatabase(true);
         $proTitles = $this->profesionnalTitleRepository->getAll();
 
         return view('dashboard.titre_profe.index', compact('proTitles'));
@@ -31,6 +32,7 @@ class ProfesionnalTitleController extends Controller
      */
     public function create()
     {
+        toggleDatabase(true);
         $profesionnalTitles = $this->profesionnalTitleRepository->getAll();
 
         return view('', compact('profesionnalTitles'));
@@ -42,6 +44,7 @@ class ProfesionnalTitleController extends Controller
 
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             $validated = $request->validate([
                 'name' => 'required|string|unique:profesionnal_titles',
@@ -80,6 +83,7 @@ class ProfesionnalTitleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        toggleDatabase(true);
         try {
             $spec = $this->profesionnalTitleRepository->getById($id);
 

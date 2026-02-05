@@ -40,7 +40,7 @@ class PatientController extends Controller
     private $allergyRepository;
     private $doctorRepository;
     private $staffRepository;
-    private $bloodTypesRepository;
+    private $bloodTypeRepository;
     public function __construct(
         PatientRepository $patientRepository,
         CategoryRepository $categoryRepository,
@@ -72,6 +72,7 @@ class PatientController extends Controller
         $this->allergyRepository = $allergyRepository;
         $this->doctorRepository = $doctorRepository;
         $this->staffRepository = $staffRepository;
+        $this->bloodTypeRepository = $bloodTypeRepository;
     }
 
     public function index(Request $request)
@@ -156,9 +157,10 @@ class PatientController extends Controller
         return redirect()->route('patient.index')->with("success", "Patient crée avec succès");
     }
 
-    public function show(Patient $patient)
+    public function show($id)
     {
         toggleDatabase(true);
+        $patient = $this->patientRepository->getById($id);
 
         $categories = $this->categoryRepository->getAll();
         $matrimonials = $this->matrimonialRepository->getAll();
@@ -167,7 +169,7 @@ class PatientController extends Controller
         $contactTypes = $this->contactTypeRepository->getAll();
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
-        $bloodTypes = $this->bloodTypesRepository->getAll();
+        $bloodTypes = $this->bloodTypeRepository->getAll();
 
         // $prestations = $this->prestationRepository->getAll();
         $prestations = $this->prestationRepository->getByPatientId($patient->id);
@@ -240,12 +242,13 @@ class PatientController extends Controller
         return view('dashboard.patient.edit');
     }
 
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, $id)
     {
         toggleDatabase(true);
 
         try {
             $inputs = $request->all();
+            $patient = $this->patientRepository->getById($id);
             // dd($inputs);
             if (isset($request->groupe_sang)) {
                 $inputs = array_replace([
@@ -339,7 +342,7 @@ class PatientController extends Controller
         $contactTypes = $this->contactTypeRepository->getAll();
         $documents = $this->documentRepository->getAll();
         $levels = $this->levelRepository->getAll();
-        $bloodTypes = $this->bloodTypesRepository->getAll();
+        $bloodTypes = $this->bloodTypeRepository->getAll();
 
         // $prestations = $this->prestationRepository->getAll();
         $prestations = $this->prestationRepository->getByPatientId($patient->id);

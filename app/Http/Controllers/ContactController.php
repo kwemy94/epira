@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+use function Symfony\Component\Translation\t;
+
 class ContactController extends Controller
 {
     private $contactRepository;
@@ -38,6 +40,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
             // dd($inputs);
@@ -56,8 +59,10 @@ class ContactController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Contact $contact)
+    public function show($id)
     {
+        toggleDatabase(true);
+        $contact = $this->contactRepository->getById($id);
         $contact->load('typeContact');
         return response()->json($contact);
     }
@@ -73,10 +78,12 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, $id)
     {
+        toggleDatabase(true);
         try {
             $inputs = $request->all();
+            $contact = $this->contactRepository->getById($id);
             $this->contactRepository->update($contact->id, $inputs);
 
         } catch (\Throwable $th) {
