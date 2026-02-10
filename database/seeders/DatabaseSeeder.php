@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             // DocumentTypeSeeder::class,
             // MatrimonialSeeder::class,
             // StudyLevelSeeder::class,
+            RoleSeeder::class,
             UserSeeder::class,
             // BloodTypeSeeder::class,
             // PrestationTypeSeeder::class,
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
             // SpecializationSeeder::class,
             // StaffTypeSeeder::class,
             CompanySeeder::class,
+            PermissionSeeder::class,
         ]);
     }
 }

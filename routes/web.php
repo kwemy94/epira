@@ -1,29 +1,31 @@
 <?php
 
-use App\Http\Controllers\AllergyController;
-use App\Http\Controllers\AmbulanceController;
-use App\Http\Controllers\AnalyseController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ConsultationController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\VisiteController;
+use App\Http\Controllers\AllergyController;
+use App\Http\Controllers\AnalyseController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InsurerController;
-use App\Http\Controllers\PathologyController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PrestationController;
-use App\Http\Controllers\HospitalisationController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MedecineController;
+use App\Http\Controllers\AmbulanceController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PathologyController;
 use App\Http\Controllers\PharmacieController;
-use App\Http\Controllers\ProfesionnalTitleController;
-use App\Http\Controllers\RadiologieController;
-use App\Http\Controllers\SpecializationController;
-use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffTypeController;
-use App\Http\Controllers\VisiteController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PrestationController;
+use App\Http\Controllers\RadiologieController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\SpecializationController;
+use App\Http\Controllers\HospitalisationController;
+use App\Http\Controllers\ProfesionnalTitleController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
@@ -79,6 +81,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('/pharmacie', PharmacieController::class);
     Route::resource('/medecine', MedecineController::class);
     Route::post('/devis/line/create', [DevisController::class, 'createdevisLine'])->name('devis.line.create');
+
+    # route users
+    Route::resource('users', UserController::class);
+
+    # Gestion des permissions
+    Route::resource('/permissions', PermissionController::class);
+    Route::get('/users/{user}/permissions', [PermissionController::class, 'editUserPermissions'])
+        ->name('users.permissions.edit');
+
+    Route::post('/users/{user}/permissions', [PermissionController::class, 'updateUserPermissions'])
+        ->name('users.permissions.update');
 });
 
 require __DIR__.'/auth.php';

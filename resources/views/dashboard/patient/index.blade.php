@@ -75,7 +75,7 @@
                                             </td>
                                             <td>{{ $patient->phone }}</td>
                                             <td>
-                                                <div class="btn-group" style="z-index: 9999;">
+                                                <div class="btn-group" style="z-index: 999;">
                                                     <button type="button" class="btn btn-default btn-sm"
                                                         data-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>

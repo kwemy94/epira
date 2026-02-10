@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pharmacie;
 
-use App\Models\pharmacie\StockType;
 use Illuminate\Http\Request;
+use App\Models\pharmacie\StockType;
+use App\Http\Controllers\Controller;
 
 class StockTypeController extends Controller
 {

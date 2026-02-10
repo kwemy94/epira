@@ -5,11 +5,12 @@
         font-family: 'Nunito', sans-serif;
         /* margin: revert !important; */
     }
+
     @media (max-width: 768px) {
-    .content-wrapper {
-        padding: 10px !important;
+        .content-wrapper {
+            padding: 10px !important;
+        }
     }
-}
 </style>
 
 <head>
@@ -67,20 +68,23 @@
             border-radius: 0.5rem !important;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
-        html, body {
+
+        html,
+        body {
             overflow-x: hidden;
         }
 
-.os-host, .os-host-textarea{
-    /* position: inherit !important; */
-    margin-top: 10px !important;
-}
+        .os-host,
+        .os-host-textarea {
+            /* position: inherit !important; */
+            margin-top: 10px !important;
+        }
     </style>
     @yield('admin-css')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
-{{-- <body class="hold-transition sidebar-mini layout-fixed"> --}}
+    {{-- <body class="hold-transition sidebar-mini layout-fixed"> --}}
     <div class="wrapper">
 
         <!-- Preloader -->
@@ -153,9 +157,35 @@
         @include('layouts.partials._footer')
 
         <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
+        <aside class="control-sidebar control-sidebar-light">
+            <div class="p-3">
+                <h6 class="text-muted text-uppercase mb-3">Configurations</h6>
+
+                <ul class="nav nav-pills nav-sidebar flex-column">
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link text-dark">
+                            <i class="nav-icon fas fa-users mr-2"></i>
+                            Utilisateurs
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-dark">
+                            <i class="nav-icon fas fa-cogs mr-2"></i>
+                            Paramétrages
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-dark">
+                            <i class="nav-icon fas fa-building mr-2"></i>
+                            Gestions companies
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </aside>
+
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
@@ -198,7 +228,7 @@
     {{-- <script src="{{ asset('template_old/dist/js/adminlte.min.js') }}"></script> --}}
     @yield('admin-js')
     {{-- <!-- AdminLTE for demo purposes --> --}}
-    <script src="{{ asset('template_old/dist/js/demo.js') }}"></script>
+    {{-- <script src="{{ asset('template_old/dist/js/demo.js') }}"></script> --}}
     {{-- <!-- AdminLTE dashboard demo (This is only for demo purposes) --> --}}
     <script src="{{ asset('template_old/dist/js/pages/dashboard.js') }}"></script>
     <script>

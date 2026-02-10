@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pharmacie;
 
-use App\Models\pharmacie\BuyUnit;
 use Illuminate\Http\Request;
+use App\Models\pharmacie\BuyUnit;
+use App\Http\Controllers\Controller;
 
 class BuyUnitController extends Controller
 {
@@ -34,7 +35,7 @@ class BuyUnitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BuyUnit $buyUnit)
+    public function show($id)
     {
         //
     }
@@ -42,7 +43,7 @@ class BuyUnitController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BuyUnit $buyUnit)
+    public function edit($id)
     {
         //
     }
@@ -50,7 +51,7 @@ class BuyUnitController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BuyUnit $buyUnit)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -58,7 +59,7 @@ class BuyUnitController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BuyUnit $buyUnit)
+    public function destroy($id)
     {
         //
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 
@@ -51,7 +52,7 @@ if (!function_exists('toggleDatabase')) {
                 // dd(session());
                 // dd($user);
                 $company = DB::table('companies')->where('id', $user->company_id)->first();
-                // dd($etablissement);
+                // dd($company);
                 $settings = json_decode($company->settings);
 
 
@@ -146,4 +147,50 @@ if (!function_exists('toggleDatabaseById')) {
         return $connection;
     }
 
+}
+if (!function_exists('checkCompany')) {
+    function checkCompany()
+    {
+        toggleDatabase(false);
+        $user = \Auth::user();
+
+        if (!$user || !$user->company_id) {
+            return null;
+        }
+
+        return User::where('company_id', $user->company_id)
+            ->role('super-admin') // Spatie
+            ->first();
+    }
+}
+
+if (!function_exists('adminCompany')) {
+    function adminCompany()
+    {
+        toggleDatabase(false);
+        $user = Auth::user();
+        $company = DB::table('companies')
+        ->where('email', $user->email)
+        ->first();
+        // dd($user->getRoleNames()->first());
+
+        return ($company && $user->getRoleNames()->first() == 'admin') ? true : false;
+    }
+}
+
+
+if (!function_exists('generateRandomPassword')) {
+    function generateRandomPassword($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz$@_-%+ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
+
+    }
 }
