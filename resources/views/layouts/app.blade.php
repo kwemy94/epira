@@ -176,12 +176,14 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ route('company.index') }}" class="nav-link text-dark">
-                            <i class="nav-icon fas fa-building mr-2"></i>
-                            Gestions companies
-                        </a>
-                    </li>
+                    @if (auth()->user()?->roles?->first()->name == 'super-admin')
+                        <li class="nav-item">
+                            <a href="{{ route('company.index') }}" class="nav-link text-dark">
+                                <i class="nav-icon fas fa-building mr-2"></i>
+                                Gestions companies
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </aside>
