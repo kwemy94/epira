@@ -60,8 +60,8 @@
                         @can ('manage company')
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Etablissement <em class="text-danger">*</em></label>
-                                    <select name="etablissement_id" class="form-control form-control-sm required">
+                                    <label>Companie <em class="text-danger">*</em></label>
+                                    <select name="company_id" class="form-control form-control-sm required">
                                         <option value="" selected disabled>Sélectionner la structure</option>
                                         @foreach ($companies as $company)
                                             <option value="{{ $company->id }}">{{ $company->name }}</option>

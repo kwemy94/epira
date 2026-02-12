@@ -5,6 +5,7 @@ return [
         'create user',
         'update user',
         'delete user',
+        'manage company',
     ],
     'medecin' => [
         'view patient',

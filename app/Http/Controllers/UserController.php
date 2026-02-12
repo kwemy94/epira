@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendNotificationEmail;
 use App\Models\User;
 use App\Models\Company;
-use App\Mail\MessageGoogle;
 use Illuminate\Http\Request;
 use App\Models\Etablissement;
 use Spatie\Permission\Models\Role;
@@ -33,10 +33,10 @@ class UserController extends Controller
         // 🔹 Récupération des utilisateurs selon le rôle
         if ($superAdmin) {
             // $users = User::with(['company.license.plan'])->get();
-            $users = User::with(['company'])->get();
+            $users = User::with(['company', 'roles'])->get();
         } else {
             // $query = User::with(['company.license.plan']);
-            $query = User::with(['company']);
+            $query = User::with(['company', 'roles']);
 
             $query->where('company_id', auth()->user()->company_id);
             $users = $query->get();
@@ -112,11 +112,11 @@ class UserController extends Controller
 
             }
 
-            // Mail::to($input['email'])
-            //     ->queue(new MessageGoogle($input + [
-            //         'created_account' => true,
-            //         'pwd' => $pwd
-            //     ]));
+            Mail::to($input['email'])
+                ->queue(new SendNotificationEmail($input + [
+                    'created_account' => true,
+                    'pwd' => $pwd
+                ]));
 
             return redirect()
                 ->route('users.index')

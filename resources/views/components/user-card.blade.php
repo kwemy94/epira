@@ -7,11 +7,27 @@
                 <i class="fas fa-user"></i>
             </span>
 
+            @php
+                $role = $user->roles->first()?->name;
+                $badgeClass = match ($role) {
+                    'super-admin' => 'badge-danger',
+                    'admin' => 'badge-warning',
+                    'medecin' => 'badge-info',
+                    default => 'badge-secondary',
+                };
+            @endphp
             {{-- Infos --}}
             <div class="flex-fill">
-                <strong>{{ $user->name }}</strong>
 
-                <small class="text-muted d-block">
+                <div class="d-flex align-items-center justify-content-between">
+                    <strong class="mb-0">{{ $user->name }}</strong>
+
+                    <span class="badge badge-pill {{ $badgeClass }}">
+                        {{ $user->roles->first()?->name ?? 'Aucun rôle' }}
+                    </span>
+                </div>
+
+                <small class="text-muted d-block mt-1">
                     <i class="fas fa-building mr-1"></i>
                     {{ $user->company->name ?? '—' }}
                 </small>
@@ -30,10 +46,12 @@
                     <i class="fas fa-id-card mr-1"></i>
                     {{ $user->cni ?? '—' }}
                 </small>
+
             </div>
 
-            
-             @php
+
+
+            @php
                 $canEditUser = $adminCompany;
             @endphp
 
@@ -42,8 +60,7 @@
                     data-id="{{ $user->id }}">
                     <i class="fas fa-trash"></i>
                 </button> --}}
-                <a class=" text-primary"
-                    href="{{ route('users.permissions.edit', $user->id) }}">
+                <a class=" text-primary" href="{{ route('users.permissions.edit', $user->id) }}">
                     <i class="fas fa-pen"></i>
                 </a>
                 <form action="{{ route('users.destroy', $user->id) }}" method="POST"

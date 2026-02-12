@@ -10,13 +10,11 @@
                     <i class="fas fa-users mr-1"></i> Utilisateurs
                 </h5>
 
-                @can('créer un utilisateur')
-                {{-- @if ($canCreateUser) --}}
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createUserModal">
-                    <i class="fas fa-plus mr-1"></i> Nouvel utilisateur
-                </button>
-                {{-- @endif --}}
-                @endcan
+                @if (auth()->user()->can('créer un utilisateur') || $superAdmin)
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createUserModal">
+                        <i class="fas fa-plus mr-1"></i> Nouvel utilisateur
+                    </button>
+                @endif
             </div>
 
             @forelse ($usersByCompany as $companyName => $companyUsers)
@@ -79,7 +77,7 @@
             if (ControlRequiredFields($('#formUser .required'))) {
                 $('#formUser').submit()
             }
-        });
-    </>
+        }); <
+        />
     </script>
 @endsection
