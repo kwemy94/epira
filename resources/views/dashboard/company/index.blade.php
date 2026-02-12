@@ -74,7 +74,7 @@
 
                                                     @if ($ets->status == 2)
                                                         <i class="fa fa-eye-slash" style="color:green"
-                                                            id="activer_{{ $ets->id }}" title="désactiver"
+                                                            id="activer_{{ $ets->id }}" title="Désactiver Env"
                                                             onclick="activer({{ $ets->id }})"> </i>
                                                     @else
                                                         {{-- <i class="fa fa-eye" style="color:green" title="désactiver" onclick="activer({{ $ets->id }})"> </i> --}}
