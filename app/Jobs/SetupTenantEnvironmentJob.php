@@ -34,23 +34,23 @@ class SetupTenantEnvironmentJob implements ShouldQueue
         $company = Company::findOrFail($this->companyId);
 
         try {
-            // 1️⃣ Création DB
+            # Création DB
             Artisan::call('db:create', ['name' => $this->database]);
 
-            // 2️⃣ Switch DB
+            # Switch DB
             toggleDatabaseById($company->id);
 
-            // 3️⃣ Migration
+            # Migration
             Artisan::call('migrate', ['--path' => 'database/migrations/backend_db', '--force' => true]);
 
-            // 4️⃣ Seed
+            # Seed
             Artisan::call('db:seed', ['--class' => 'SettingSeeder', '--force' => true]);
 
-            // 5️⃣ Update status
+            # Update status
             toggleDatabase(false);
             $company->update(['status' => 1]);
 
-            // 6️⃣ Mail activation
+            # Mail activation
             Mail::to($company->email)
                 ->queue(new CompanyActivationMail(
                     $this->token,
